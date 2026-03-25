@@ -1,0 +1,280 @@
+## Creación del nodo suscriptor
+Después de implementar el nodo publicador, el siguiente paso consiste en crear un nodo suscriptor, el cual se encargará de recibir los mensajes enviados al tópico /robot_news.
+
+Para ello, se seguirá el mismo procedimiento utilizado anteriormente para la creación de nodos dentro del paquete.
+
+![](imagenes/phone.png)
+
+
+Primero, ubíquese en el directorio del paquete dentro del workspace:
+
+```bash
+cd abc_ws/src/my_pkg/my_pkg
+```
+
+A continuación, verifique el contenido del directorio utilizando el comando:
+
+```bash
+ls
+```
+
+En este punto se pueden observar los archivos existentes del paquete, entre ellos first_node.py, robot_station.py y la carpeta __pycache__.
+
+Posteriormente, se crea el archivo que contendrá el nodo suscriptor mediante el siguiente comando. Finalmente, se asignan permisos de ejecución al archivo recién creado para que pueda ejecutarse como un nodo dentro de ROS 2:
+
+```bash
+
+touch phone.py
+
+chmod +x phone.py
+```
+
+Este comando genera un nuevo archivo llamado phone.py, donde se implementará el código del nodo suscriptor.
+
+Después de crear el archivo, se elimina la carpeta __pycache__, ya que contiene archivos temporales generados automáticamente por Python:
+
+```bash
+rm -r __pycache__/
+```
+Con estos pasos, el archivo phone.py queda listo para implementar el código del nodo suscriptor que recibirá los mensajes publicados en el tópico /robot_news.
+
+## Programación del nodo suscriptor phone.py
+
+El siguiente código implementa un nodo suscriptor, cuya función es recibir los mensajes publicados en el tópico /robot_news por el nodo publicador creado anteriormente. Este nodo forma parte del sistema desarrollado en ROS 2 Jazzy Jalisco.
+
+```python
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from example_interfaces.msg import String
+
+class PhoneNode(Node):
+    def __init__(self):
+        super().__init__("phone")
+        self.subscriber_ =self.create_subscription(
+            String, "robot_news", self.callback_robot_news, 10)
+        self.get_logger().info("Phone has been started.")
+    
+    def callback_robot_news(self, msg: String):
+        self.get_logger().info(msg.data)
+
+def main(args=None):
+    rclpy.init(args=args)
+    node=PhoneNode()
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
+```
+
+## Explicación del código
+
+### 1️⃣ Definición del intérprete de Python
+
+```python
+#!/usr/bin/env python3
+```
+
+Esta línea indica que el archivo debe ejecutarse utilizando Python 3, permitiendo que el sistema operativo interprete el script correctamente.
+
+### 2️⃣ Importación de librerías
+
+```python
+import rclpy
+from rclpy.node import Node
+from example_interfaces.msg import String
+```
+
+Aquí se importan las bibliotecas necesarias para trabajar con ROS 2:
+
+rclpy → biblioteca principal para programar nodos en Python.
+
+Node → clase base utilizada para crear nodos dentro del sistema.
+
+String → tipo de mensaje que se utilizará para recibir datos desde el tópico.
+
+### 3️⃣ Creación de la clase del nodo
+
+```python
+class PhoneNode(Node):
+```
+
+Se define una clase llamada PhoneNode, la cual hereda de la clase Node. Esto permite que el programa funcione como un nodo dentro de ROS 2.
+
+### 4️⃣ Constructor del nodo
+
+```python
+def __init__(self):
+    super().__init__("phone")
+```
+
+El método __init__ se ejecuta cuando el nodo es creado.
+La función super().__init__("phone") asigna el nombre phone al nodo dentro del sistema ROS 2.
+
+### 5️⃣ Creación del suscriptor
+
+```python
+self.subscriber_ = self.create_subscription(
+    String, "robot_news", self.callback_robot_news, 10)
+```
+
+Esta línea crea un suscriptor, el cual se conectará al tópico donde se publican los mensajes.
+
+Los parámetros utilizados son:
+
+String → tipo de mensaje esperado.
+
+robot_news → nombre del tópico al que el nodo se suscribe.
+
+self.callback_robot_news → función que se ejecutará cuando llegue un mensaje.
+
+10 → tamaño de la cola de mensajes.
+
+De esta manera, el nodo phone escuchará los mensajes publicados en el tópico:
+
+/robot_news
+
+### 6️⃣ Mensaje de inicio del nodo
+
+```python
+self.get_logger().info("Phone has been started.")
+```
+
+Este comando muestra un mensaje en la terminal indicando que el nodo ha iniciado correctamente.
+
+### 7️⃣ Función de recepción de mensajes (Callback)
+
+```python
+def callback_robot_news(self, msg: String):
+```
+
+Esta función se ejecuta automáticamente cada vez que el nodo recibe un mensaje desde el tópico /robot_news.
+
+El parámetro msg contiene el mensaje recibido.
+
+### 8️⃣ Mostrar el mensaje recibido
+
+```python
+self.get_logger().info(msg.data)
+```
+
+Esta línea imprime en la terminal el contenido del mensaje recibido desde el nodo publicador.
+
+### 9️⃣ Función principal del programa
+
+```python
+def main(args=None):
+```
+
+Esta función es el punto de inicio del programa.
+
+### 🔟 Inicialización del sistema ROS 2
+
+```python
+rclpy.init(args=args)
+```
+
+Inicializa la comunicación con el sistema ROS 2.
+
+### 11️⃣ Creación del nodo
+
+```python
+node = PhoneNode()
+```
+
+Aquí se crea una instancia del nodo PhoneNode.
+
+### 12️⃣ Ejecución del nodo
+
+```python
+rclpy.spin(node)
+```
+
+Mantiene el nodo en ejecución para que continúe escuchando mensajes del tópico.
+
+### 13️⃣ Cierre del sistema ROS
+
+```python
+rclpy.shutdown()
+```
+
+Finaliza correctamente la ejecución del sistema ROS 2.
+
+### 14️⃣ Ejecución del programa
+
+```python
+if __name__ == "__main__":
+    main()
+```
+
+Esta condición permite ejecutar la función main() cuando el archivo se ejecuta directamente.
+Ejecución del nodo suscriptor y comunicación entre nodos
+
+![](imagenes/ejecutar_phone.png)
+
+En la imagen se observa la ejecución del nodo suscriptor phone, junto con el nodo publicador robot_station, lo que permite evidenciar el funcionamiento de la comunicación en ROS 2 Jazzy Jalisco.
+
+Primero, se compila el paquete utilizando el comando:
+```bash
+colcon build --packages-select my_pkg --symlink-install
+```
+Luego, se carga el entorno del workspace:
+```bash
+source install/setup.bash
+```
+Posteriormente, se ejecuta el nodo suscriptor:
+```bash
+ros2 run my_pkg phone
+```
+Al iniciar, el nodo muestra el mensaje:
+
+[phone]: Phone has been started.
+
+Esto indica que el nodo se encuentra activo y en espera de recibir información.
+
+En otra terminal, se ejecuta el nodo publicador:
+```bash
+ros2 run my_pkg robot_station
+```
+Este nodo comienza a enviar mensajes de forma periódica al tópico /robot_news.
+
+
+![](imagenes/node_node.png)
+Asegúrese de registrar el nodo en el archivo setup.py, ya que este paso es necesario para que el código pueda ejecutarse correctamente utilizando ros2 run.
+
+## ¿Cómo funciona el nodo suscriptor?
+
+El nodo suscriptor phone está constantemente escuchando el tópico /robot_news. Cuando el nodo publicador envía un mensaje, ocurre lo siguiente:
+
+El nodo robot_station publica un mensaje en el tópico.
+
+El tópico /robot_news actúa como canal de comunicación.
+
+El nodo phone recibe automáticamente el mensaje.
+
+Se ejecuta la función callback, que imprime el contenido en la terminal.
+
+En la imagen se puede observar cómo el nodo suscriptor muestra repetidamente mensajes como:
+
+Hi, this C3PO is C3PO from the robot station
+
+Esto confirma que la comunicación entre nodos está funcionando correctamente mediante el modelo publish/subscribe.
+
+## Comportamiento del sistema
+
+El nodo suscriptor no envía información, solo recibe datos.
+
+Permanece en ejecución escuchando el tópico hasta que se detiene manualmente.
+
+Si el nodo publicador se detiene, el suscriptor deja de recibir mensajes automáticamente.
+
+Cuando el publicador se vuelve a ejecutar, el suscriptor retoma la recepción de mensajes sin necesidad de reiniciarse.
+
+# Conclusión :
+
+El desarrollo de los nodos publicador y suscriptor permitió comprender la arquitectura fundamental de comunicación en ROS 2. A través de este ejercicio, se evidenció cómo los nodos funcionan como procesos independientes que intercambian información mediante tópicos, utilizando el modelo publish/subscribe.
+
+El nodo publicador se encarga de generar y enviar información, mientras que el nodo suscriptor permanece en espera para recibir y procesar dichos datos mediante funciones callback. Este mecanismo permite una comunicación desacoplada, donde los nodos no necesitan conocerse directamente, sino únicamente el nombre del tópico y el tipo de mensaje.
+
+En conclusión, el uso de nodos y tópicos constituye la base del funcionamiento de ROS 2, permitiendo el desarrollo de sistemas distribuidos, modulares y eficientes, características esenciales en aplicaciones modernas de robótica.

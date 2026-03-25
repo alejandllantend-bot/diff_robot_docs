@@ -1,0 +1,38 @@
+# CREAR PAQUETE EN ROS2.
+
+Para iniciar la creación del paquete en ROS 2, primero se debe abrir la terminal en Ubuntu y ubicarse dentro de la carpeta src del workspace, que es donde se almacenan los paquetes del proyecto. 
+
+![](imagenes/pkg.png)
+
+Para hacerlo, se utiliza el siguiente comando:
+```bash
+cd abc_ws/src/
+```
+dentro de esta carpeta escribes:
+
+```bash
+ros2 pkg create my_pkg --build-type ament_python --dependencies rclpy
+```
+
+El comando se utiliza en ROS 2 para crear un nuevo paquete dentro de un workspace. "ros2 pkg create" indica que se quiere crear un paquete nuevo, "my_pkg" es el nombre del paquete. Este nombre también será el de la carpeta que se creará dentro del directorio src del workspace,"--build-type ament_python" especifica que el paquete será desarrollado en Python, utilizando el sistema de construcción ament_python. Esto permite que ROS2 configure automáticamente archivos como setup.py y package.xml, necesarios para compilar y gestionar el paquete.
+
+Finalmente, la opción --dependencies rclpy agrega una dependencia al paquete. La librería rclpy es la biblioteca de Python de ROS2 que permite crear nodos, publicar y suscribirse a topics, y manejar la comunicación dentro del sistema robótico.
+
+```bash
+ls
+```
+Con el comando ls se puede comprobar que el paquete fue creado correctamente dentro de la carpeta. 
+
+Después, se abre VSC, para observar la estructura de directorios y los archivos que se generaron automáticamente al crear el paquete.
+```bash
+code .
+```
+
+
+![](imagenes/ok.png)
+
+Para finalizar, se ejecuta el comando colcon build, el cual permite compilar el paquete dentro del workspace en ROS 2. Este proceso toma el código que se encuentra en la carpeta src y genera los archivos necesarios para que el paquete pueda ser utilizado correctamente dentro del sistema.
+
+![](imagenes/fin.png)
+
+Durante este proceso, la herramienta colcon organiza y prepara los paquetes según su tipo de construcción (por ejemplo, ament_python o ament_cmake). Además, crea las carpetas build, install y log, donde se almacenan los archivos de compilación, los paquetes instalados y los registros del proceso.

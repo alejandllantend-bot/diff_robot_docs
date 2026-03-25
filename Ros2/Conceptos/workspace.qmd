@@ -1,0 +1,82 @@
+# WORKSPACE
+
+Como parte de este proceso, se iniciará con la creación de un workspace, el cual servirá como espacio de trabajo para organizar los paquetes y el código que se desarrollará durante las prácticas.
+
+Para ello, abra una terminal de ubuntu y cree el directorio del workspace con el siguiente comando:
+
+```bash
+mkdir abc_ws/
+
+cd abc_ws/
+
+mkdir src/
+```
+![](imagenes/abc.png)
+
+Este comando crea el directorio abc_ws, que funcionará como el espacio de trabajo principal, y dentro de él la carpeta src, donde se almacenarán los paquetes y archivos de código del proyecto.
+
+![](imagenes/colcon.png)
+
+Una vez creado el workspace, es necesario compilarlo para que ROS 2 genere la estructura completa del entorno de trabajo. Para ello, ubíquese dentro del directorio del workspace ejecutando:
+
+```bash
+cd ..
+```
+
+Luego, ejecute el siguiente comando para construir el espacio de trabajo:
+
+```bash
+colcon build
+```
+Después de ejecutar este comando, ROS 2 generará automáticamente varios directorios necesarios para la compilación y ejecución de los paquetes. La estructura del workspace quedará de la siguiente manera:
+
+```markdown
+ros2_ws/
+ ├── build/
+ ├── install/
+ ├── log/
+ └── src/
+```
+
+Cada uno de estos directorios cumple una función específica:
+
+### src: 
+contiene los paquetes y el código fuente del proyecto.
+
+### build: 
+almacena los archivos generados durante el proceso de compilación.
+
+### install: 
+contiene los paquetes listos para ser ejecutados.
+
+### log: 
+guarda los registros generados durante la compilación.
+
+Después de compilar el workspace, es necesario cargar su entorno para que ROS 2 pueda reconocer los paquetes que se encuentren dentro de este espacio de trabajo. Para ello, ejecute el siguiente comando en la terminal:
+
+![](imagenes/install.png)
+
+```bash
+cd install/
+
+ls
+
+source setup.bash
+
+cd
+
+```
+Este comando permite que la terminal actual reconozca el workspace recién creado.
+
+::: {.callout-warning}
+Nota: Si desea que esta configuración se cargue automáticamente cada vez que abra una nueva terminal, recuerde que puede agregar el siguiente comando en el archivo .bashrc, tal como se explicó en la sección anterior:
+:::
+
+
+```bash
+source ~/abc_ws/install/setup.bash
+```
+![](imagenes/bash.png)
+
+Con esto, el workspace quedará disponible automáticamente en cada nueva sesión de terminal.
+

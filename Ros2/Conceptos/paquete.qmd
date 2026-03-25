@@ -1,0 +1,32 @@
+## Que es un paquete?
+Un paquete en ROS 2 es la unidad básica de organización dentro de un proyecto robótico. Consiste en una carpeta que agrupa todos los archivos necesarios para desarrollar una funcionalidad específica dentro del sistema.
+
+Dentro de un paquete se pueden incluir diferentes elementos como nodos, archivos de configuración, scripts, archivos de lanzamiento (launch), definiciones de mensajes y dependencias con otros paquetes. Esta estructura permite organizar el desarrollo de forma modular, facilitando la reutilización del código, el mantenimiento del proyecto y la integración con otros componentes del sistema.
+
+```{mermaid}
+flowchart LR
+
+A[Workspace]
+B[Paquete ROS2]
+C[Nodo]
+D[Topic]
+E[Robot o Simulador]
+
+A --> B
+B --> C
+C -->|Publica o recibe datos| D
+D -->|Transporta mensajes| C
+C -->|Controla| E
+```
+
+## Qué representa el diagrama.
+
+Workspace → espacio de trabajo donde se encuentran los paquetes.
+
+Paquete → organiza el código y los recursos del proyecto.
+
+Nodo → programa que ejecuta una tarea específica.
+
+Topic → canal de comunicación entre nodos.
+
+Robot o simulador → recibe las instrucciones y ejecuta acciones.

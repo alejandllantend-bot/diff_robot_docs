@@ -1,0 +1,104 @@
+# Instalar ROS_2 JAZZY en Ubuntu.
+![](imagenes/ros2_jazzy.png)
+
+El procedimiento se divide en tres etapas principales:
+
+- Configuración inicial del sistema, donde se preparan los repositorios y dependencias.
+- Instalación de ROS 2 Jazzy, ejecutando los comandos proporcionados en la documentación.
+- Configuración del entorno, incluyendo la carga de variables necesarias para el funcionamiento correcto del sistema.
+
+Iniciamos el proceso de instalación. Copia y pega los siguientes comandos en la terminal de Ubuntu, ejecutándolos uno por uno en el orden indicado. Estos comandos también pueden consultarse en la documentación oficial de ROS 2, donde encontrarás información adicional sobre la instalación y el funcionamiento del sistema, puedes buscarlos en Google como “instalar ROS2 Jazzy”.
+
+# Comandos.
+
+## Configuración inicial del sistema.
+```bash
+locale  # check for UTF-8
+
+sudo apt update && sudo apt install locales
+sudo locale-gen en_US en_US.UTF-8
+sudo update-locale LC_ALL=en_US.UTF-8 LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
+
+locale  # verify settings
+
+```
+## Habilitar los repositorios.
+
+```bash
+sudo apt install software-properties-common
+sudo add-apt-repository universe
+
+sudo apt update && sudo apt install curl -y
+
+export ROS_APT_SOURCE_VERSION=$(curl -s https://api.github.com/repos/ros-infrastructure/ros-apt-source/releases/latest | grep -F "tag_name" | awk -F'"' '{print $4}')
+
+curl -L -o /tmp/ros2-apt-source.deb "https://github.com/ros-infrastructure/ros-apt-source/releases/download/${ROS_APT_SOURCE_VERSION}/ros2-apt-source_${ROS_APT_SOURCE_VERSION}.$(. /etc/os-release && echo ${UBUNTU_CODENAME:-${VERSION_CODENAME}})_all.deb"
+
+sudo dpkg -i /tmp/ros2-apt-source.deb
+```
+
+## Instalar herramientas de desarrollo.
+```bash
+sudo apt update && sudo apt install ros-dev-tools
+```
+# Instalación de ROS 2 Jazzy.
+```bash
+sudo apt update
+sudo apt upgrade
+sudo apt install ros-jazzy-desktop
+sudo apt install ros-jazzy-ros-base
+```
+
+Una vez finalizada la instalación de ROS 2 Jazzy, es importante tener en cuenta que el sistema aún no está listo para utilizarse. Antes de ejecutar cualquier comando, es necesario configurar el entorno de trabajo mediante un script bash.
+
+# Configuración del entorno.
+Para verificar el estado de la instalación, abra una terminal en Ubuntu y escriba:
+
+```bash
+ros2
+```
+
+Si el sistema muestra el mensaje “command not found”, significa que ROS 2 fue instalado correctamente, pero no se ha configurado el entorno. En la imagen anexada se muestra el resultado esperado cuando el entorno está correctamente configurado.
+
+![](imagenes/entorno_ros2.png)
+
+Luego, presione Ctrl + Shift + E para abrir una nueva ventana de terminal en Ubuntu. En esta nueva terminal deberá verificar la existencia del archivo setup.bash dentro del directorio de instalación (observe la imagen de referencia para confirmar el procedimiento).
+
+![](imagenes/ubuntu_ros2.png)
+
+Una vez verificada la presencia del archivo, regrese a su terminal principal y ejecute el siguiente comando:
+
+```bash
+source /opt/ros/jazzy/setup.bash
+```
+
+
+Con este comando se cargan las variables de entorno necesarias, quedando ROS 2 configurado y listo para su uso. No obstante, esta configuración solo aplica para la sesión actual de la terminal; si se cierra la ventana, será necesario volver a ejecutar el comando.
+
+Para evitar repetir este procedimiento cada vez que se abra una nueva terminal, se recomienda hacer la configuración permanente agregando la línea source /opt/ros/jazzy/setup.bash al archivo .bashrc, el cual se ejecuta automáticamente al iniciar Ubuntu. Para ello, abra una nueva terminal y ejecute el comando.
+
+```bash
+gedit .bashrc
+```
+
+![](imagenes/setup.bash.png)
+
+se desplegará una ventana con el archivo de configuración. Al final del archivo, agregue la línea mencionada, guarde los cambios y cierre la ventana. De esta manera, cada vez que se abra una nueva terminal, el entorno de ROS 2 se cargará automáticamente sin necesidad de configurarlo manualmente.
+
+## Finalización de la instalación y configuración del entorno. 
+
+<div style="display: flex; align-items: center; gap: 30px;">
+
+<img src="imagenes/happy_robot-gif.gif" width="180">
+
+<div style="flex: 1;">
+Con la ejecución correcta de los pasos anteriores, se da por finalizada la instalación de ROS 2 Jazzy, así como la configuración permanente de su entorno de trabajo. A partir de este momento, el sistema se encuentra listo para ejecutar comandos y desarrollar aplicaciones robóticas dentro de Ubuntu.
+
+En la siguiente sección se realizarán ejercicios prácticos de prueba, cuyo objetivo es comprender el manejo básico de ROS 2, su estructura interna y la interacción entre sus componentes. Se trabajará con la ejecución de nodos y la comunicación mediante tópicos (modelo publicador–suscriptor), además de explorar otros mecanismos como servicios y acciones.
+
+Estos ejercicios permitirán entender cómo los distintos nodos se conectan e intercambian información dentro del sistema, estableciendo la base para el desarrollo de aplicaciones más complejas.
+
+</div>
+
+</div>

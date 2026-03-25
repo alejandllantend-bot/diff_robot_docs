@@ -1,0 +1,47 @@
+# Que es ROS2:
+
+El Sistema Operativo para Robots (ROS) es un marco de trabajo de código abierto orientado al desarrollo de aplicaciones robóticas distribuidas. Más que un sistema operativo convencional, ROS funciona como un middleware que proporciona servicios fundamentales como comunicación entre procesos, gestión de paquetes, abstracción de hardware y herramientas para simulación y visualización.
+
+Su arquitectura se basa en un modelo modular compuesto por nodos independientes que intercambian información mediante mecanismos de comunicación como tópicos (modelo publicador–suscriptor), servicios (modelo cliente–servidor) y acciones (ejecución de tareas con retroalimentación). Esta organización permite estructurar sistemas robóticos como conjuntos de componentes desacoplados que colaboran entre sí.
+
+Gracias a esta estructura, ROS facilita la implementación de comportamientos robóticos complejos y robustos en una amplia variedad de plataformas físicas y entornos de simulación.
+
+
+## Objetivo General:
+
+Brindar al estudiante los fundamentos teóricos y prácticos necesarios para la instalación, configuración y uso de ROS 2 y Gazebo, permitiéndole comprender la arquitectura basada en nodos y desarrollar aplicaciones robóticas básicas en entornos de simulación.
+
+## Objetivos Especificos:
+
+- Analizar la arquitectura distribuida de ROS 2 y su modelo de comunicación basado en tópicos, servicios y acciones.
+  
+- Configurar un entorno de desarrollo funcional para la simulación de sistemas robóticos en ROS 2 y Gazebo.
+
+- Implementar un sistema básico de control para un robot diferencial en un entorno simulado.
+
+
+## Materiales y Equipo Requerido
+
+Para el desarrollo de la guía, el estudiante deberá contar con:
+
+💻 Hardware
+
+- Procesador Intel i5 / Ryzen 5 o superior
+- 8 GB de RAM (recomendado 16 GB)
+- 20 GB de espacio libre en disco
+- Conexión estable a internet
+
+🖥 Software
+
+- Sistema operativo Linux (preferiblemente Ubuntu 22.04 LTS)
+- ROS 2 (distribución recomendada según compatibilidad del sistema)
+- Gazebo Simulator
+- Visual Studio Code u otro editor de código
+- Terminal con herramientas de compilación (colcon, git)
+
+## Metodologia.
+
+- El estudiante debe:
+     - Instalar ROS 2 completamente.
+     - Crear workspace.
+     - Finalmente integrar Gazebo.

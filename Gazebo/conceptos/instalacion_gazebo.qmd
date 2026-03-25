@@ -1,0 +1,66 @@
+# Gazebo.
+
+Gazebo es un simulador de robots en 3D que se utiliza junto con ROS 2 para diseñar, probar y validar robots sin necesidad de tenerlos físicamente. Permite crear un entorno virtual donde puedes colocar un robot, agregarle sensores (como cámaras o LIDAR), aplicar físicas reales (gravedad, fricción, colisiones) y observar cómo se comporta. Esto es especialmente útil porque puedes probar algoritmos de navegación, control o percepción de manera segura y económica antes de implementarlos en un robot real.
+
+Una de sus principales ventajas es que simula condiciones bastante cercanas a la realidad, lo que permite detectar errores de diseño o programación sin riesgos. Además, al integrarse con ROS 2, puedes usar los mismos nodos, tópicos y servicios que usarías en un robot físico, haciendo que la transición entre simulación y realidad sea mucho más sencilla.
+
+![Cmake](imagenes_G/cmake.png)
+![Robot_developer](imagenes_G/robot_dev.png)
+
+Como parte del entorno de trabajo para simulaciones con Gazebo, se recomienda instalar las extensiones “CMake Tools” y “ROS 2 Developer Tools”, ya que facilitan la gestión de proyectos, la compilación de paquetes y la navegación del código cuando se trabaja con modelos y simulaciones integradas con ROS 2.
+
+## Instalación de ROS-GZ
+Para instalar Gazebo y las herramientas necesarias en ROS 2, primero se debe abrir una terminal en Ubuntu y ejecutar el siguiente comando. Durante este proceso, el sistema solicitará la contraseña del usuario para continuar con la instalación. Este paquete permite la integración entre ROS 2 y Gazebo, facilitando la simulación de robots en un entorno virtual.
+
+```bash
+sudo apt install ros-jazzy-ros-gz
+
+source /opt/ros/jazzy/setup.bash 
+```
+
+## Instalación de URDF-TUTORIAL
+Una vez completada la instalación anterior, se procede a instalar el siguiente paquete el cual incluye ejemplos y recursos para trabajar con archivos URDF, utilizados en la descripción de la estructura y componentes de un robot.
+
+```bash
+sudo apt install ros-jazzy-urdf-tutorial
+
+source /opt/ros/jazzy/setup.bash
+```
+
+instala los paquetes necesarios para conectar ROS 2 con el simulador Gazebo, lo que permite la comunicación entre ambos sistemas, facilitando el envío y recepción de datos como sensores y comandos de control del robot dentro del entorno simulado.
+
+## Instalación de TF2-TOOLS
+Finalmente, se debe ejecutar el comando:
+
+```bash
+sudo apt install ros-jazzy-tf2-tools
+
+source /opt/ros/jazzy/setup.bash
+```
+Instala herramientas asociadas al sistema TF2. Este sistema es fundamental en robótica, ya que permite gestionar y visualizar las transformaciones entre los distintos sistemas de coordenadas de un robot, facilitando la comprensión de la relación espacial entre sus partes.
+
+Para que todos estos paquetes funcionen correctamente, es necesario ejecutar el comando source /opt/ros/jazzy/setup.bash, el cual carga las variables de entorno de ROS 2 en la terminal. Sin este paso, los comandos de ROS no estarán disponibles. Con el fin de evitar ejecutar este comando manualmente en cada sesión, se recomienda agregar la línea source /opt/ros/jazzy/setup.bash al final del archivo .bashrc, lo que permite que el entorno se configure automáticamente al abrir una nueva terminal.
+
+# Que es URDF
+
+El URDF (Unified Robot Description Format) es un formato basado en XML utilizado en ROS 2 para describir de manera estructurada la configuración cinemática y dinámica de un robot. A través de este formato, se definen los links (cuerpos rígidos) y los joints (articulaciones) que los conectan, especificando propiedades como geometría, masas, inercias y relaciones de transformación entre sistemas de coordenadas. Esta representación permite a herramientas como Gazebo y RViz interpretar el modelo del robot para su visualización, simulación y análisis, facilitando el cálculo de transformaciones espaciales y el desarrollo de algoritmos de control y percepción.
+
+# Que es RViz
+
+RViz (ROS Visualization) es una herramienta de visualización 3D utilizada en ROS 2 para representar el estado de un robot y sus datos en tiempo real.
+
+Desde un enfoque técnico, RViz permite visualizar información proveniente de distintos nodos de ROS, como modelos URDF, nubes de puntos, mapas, trayectorias, sensores (LIDAR, cámaras) y transformaciones del sistema TF2. Esta herramienta se basa en la suscripción a tópicos, lo que le permite actualizar dinámicamente la escena en función de los datos que recibe, facilitando el análisis del comportamiento del robot dentro de su entorno.
+
+Además, RViz utiliza el árbol de transformaciones (TF2) para posicionar correctamente cada elemento en el espacio, garantizando coherencia entre los distintos sistemas de coordenadas. Esto lo convierte en una herramienta fundamental para depuración, monitoreo y validación de algoritmos de percepción, localización y navegación en robótica.
+
+![RViz](imagenes_G/rviz.png)
+
+Para visualizar un robot en RViz, primero se debe abrir una terminal en Ubuntu y ejecutar el comando:
+
+```bash
+ros2 launch urdf_tutorial display.launch.py model:=/opt/ros/jazzy/share/urdf_tutorial/urdf/08-macroed.urdf.xacro
+```
+el cual lanza un archivo de configuración que carga el modelo del robot definido en formato XACRO.
+
+Al ejecutar este comando, se abrirá la interfaz gráfica de RViz mostrando el modelo del robot en un entorno tridimensional. De manera simultánea, se desplegará una ventana adicional que contiene controles deslizantes (sliders), los cuales permiten manipular las articulaciones del robot en tiempo real. Esto facilita la visualización del movimiento de sus partes y la comprensión de su estructura cinemática.
+

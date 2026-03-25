@@ -1,0 +1,73 @@
+## Conceptos básicos de ROS 2.
+
+Antes de comenzar con los ejercicios prácticos, es importante recordar algunos conceptos fundamentales de la arquitectura de ROS 2. Este sistema se basa en un modelo distribuido donde diferentes componentes del software robótico se ejecutan de forma independiente y se comunican entre sí.
+
+### Nodos
+
+Los nodos son los procesos principales dentro de ROS 2. Cada nodo realiza una tarea específica dentro del sistema, por ejemplo, controlar sensores, procesar información o enviar comandos a los actuadores. Un sistema robótico suele estar compuesto por varios nodos que trabajan de manera coordinada.
+
+### Tópicos
+
+Los tópicos permiten la comunicación entre nodos mediante el modelo publicador–suscriptor. Un nodo puede publicar información en un tópico, mientras que otros nodos pueden suscribirse a ese mismo tópico para recibir los datos. Este mecanismo es ampliamente utilizado para el intercambio continuo de información, como lecturas de sensores o comandos de control.
+
+### Servicios
+
+Los servicios permiten la comunicación entre nodos mediante un modelo cliente–servidor. A diferencia de los tópicos, los servicios se utilizan cuando se requiere enviar una solicitud y recibir una respuesta inmediata.
+
+### Acciones
+
+Las acciones se emplean para ejecutar tareas que requieren más tiempo de procesamiento. Permiten enviar una meta a un nodo y recibir retroalimentación sobre el progreso de la tarea hasta su finalización.
+
+Con estos conceptos claros, en la siguiente sección se realizarán ejercicios prácticos que permitirán observar cómo los nodos se ejecutan, cómo se comunican mediante tópicos y cómo se puede visualizar la interacción entre ellos dentro del sistema.   
+
+### Relación entre nodos y mecanismos de comunicación en ROS 2
+```{mermaid}
+flowchart TD
+
+A[👤 Usuario<br>Ejecuta un nodo] 
+--> B[🧠 Nodo Publicador<br>Envía comandos]
+
+B -->|Publica mensajes| C[📡 Topic<br>/cmd_vel]
+
+C -->|Envía datos| D[⚙️ Nodo Suscriptor<br>Recibe comandos]
+
+D --> E[🐢 Robot / Turtlesim<br>Se mueve en la simulación]
+
+F[📨 Mensaje<br>Velocidad lineal<br>Velocidad angular] --> C
+
+subgraph Comunicación ROS2
+B
+C
+D
+end
+
+style A fill:#E3F2FD,stroke:#1E88E5,color:#000
+style B fill:#E8F5E9,stroke:#43A047,color:#000
+style C fill:#FFF3E0,stroke:#FB8C00,color:#000
+style D fill:#E8F5E9,stroke:#43A047,color:#000
+style E fill:#F3E5F5,stroke:#8E24AA,color:#000
+style F fill:#FFFDE7,stroke:#FDD835,color:#000
+
+```
+
+## Explicación del diagrama
+
+### Nodo Publicador (Publisher Node)
+Es un programa que envía información.
+En el ejemplo envía velocidad y dirección.
+
+### Topic
+Es como un canal de comunicación donde se publican los mensajes.
+En el ejemplo: /cmd_vel.
+
+### Nodo Suscriptor (Subscriber Node)
+Es un programa que recibe la información del topic.
+
+### Mensaje
+Es la información que viaja por el topic.
+Ejemplo:
+velocidad = 2 m/s
+dirección = izquierda
+
+### Resultado
+El robot (o la tortuga de turtlesim) recibe el mensaje y se mueve.

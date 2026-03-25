@@ -1,0 +1,99 @@
+## Ejercicio final: Persecución en turtlesim
+
+### Objetivo
+
+Desarrollar un nodo en ROS 2 que implemente un comportamiento de persecución en Turtlesim, donde una tortuga controlada por el usuario debe evitar ser alcanzada por una tortuga enemiga que la sigue automáticamente.
+
+### Descripción del ejercicio
+
+En esta práctica se trabajará con dos tortugas dentro del entorno de simulación:
+
+turtle1: controlada por el usuario mediante el teclado.
+turtle2: generada automáticamente por un nodo y programada para perseguir a la tortuga principal.
+
+El nodo desarrollado calcula en tiempo real la posición de ambas tortugas y ajusta la trayectoria de turtle2 para dirigirse hacia turtle1, generando un comportamiento de seguimiento.
+
+### Funcionamiento
+
+El nodo crea una segunda tortuga utilizando el servicio spawn.
+Se suscribe a los tópicos de posición de ambas tortugas.
+Calcula la dirección hacia la tortuga principal.
+Publica comandos de velocidad para que la tortuga enemiga la persiga.
+Si la distancia entre ambas tortugas es menor a un umbral definido, se considera que el usuario ha sido alcanzado.
+
+En ese momento, el sistema mostrará el siguiente mensaje en la terminal:
+
+💀 ¡El enemigo te ha atrapado!
+
+### Ejecución del ejercicio
+
+#### Ejecutar el entorno de simulación:
+
+```bash
+ros2 run turtlesim turtlesim_node
+```
+
+#### Controlar la tortuga principal:
+
+```bash
+ros2 run turtlesim turtle_teleop_key
+```
+
+#### Ejecutar el nodo de persecución:
+
+```bash
+ros2 run my_pkg chase_turtle
+```
+
+#### Resultado esperado
+
+El usuario deberá controlar la tortuga e intentar evitar ser alcanzado por la tortuga enemiga. A medida que el enemigo se aproxima, el movimiento se vuelve más dinámico, generando una interacción en tiempo real.
+
+Cuando la tortuga enemiga logra alcanzar a la tortuga principal, el programa finaliza su ejecución. Sin embargo, la simulación permanece abierta, por lo que el nodo puede ejecutarse nuevamente para repetir la experiencia.
+
+
+```{mermaid}
+graph LR
+    %% Entidades externas
+    Usuario((Usuario <br> teclado))
+    
+    %% Nodos
+    teleop([**turtle_teleop_key** <br/> Nodo de Control])
+    turtlesim([**turtlesim_node** <br/> Entorno de Simulación])
+    chase([**chase_turtle** <br/> Nodo de Persecución])
+    %% Interacciones del Usuario
+    Usuario -- "Ingresa comandos" --> teleop
+    
+    %% Relaciones de Tópicos
+    teleop -- "Publica velocidad <br> (/turtle1/cmd_vel)" --> turtlesim
+    
+    turtlesim -- "Publica posición <br> (/turtle1/pose)" --> chase
+    turtlesim -- "Publica posición <br> (/turtle2/pose)" --> chase
+    
+    chase -- "Publica velocidad <br> (/turtle2/cmd_vel)" --> turtlesim
+    
+    %% Relaciones de Servicios
+    chase -. "Llama servicio <br> (/spawn) crea turtle2" .-> turtlesim
+    
+    %% Estilos
+    classDef node fill:#f5f5f5,stroke:#4CAF50,stroke-width:2px,color:#333;
+    classDef actor fill:#E3F2FD,stroke:#2196F3,stroke-width:2px,color:#333;
+    class teleop,turtlesim,chase node;
+    class Usuario actor;
+```
+
+### Análisis del ejercicio
+
+Este ejercicio integra múltiples conceptos fundamentales de ROS 2, tales como:
+
+Comunicación entre nodos mediante tópicos
+Uso de publicadores y suscriptores
+Procesamiento de datos en tiempo real
+Control de movimiento basado en posición
+Uso de servicios (spawn)
+
+Además, introduce una lógica de comportamiento autónomo, común en aplicaciones de robótica móvil como el seguimiento de objetivos.
+
+### Conclusión
+
+La implementación de este ejercicio permite al estudiante aplicar de manera práctica los conceptos adquiridos durante la guía, demostrando cómo es posible construir sistemas interactivos y dinámicos en ROS 2 a partir de componentes simples. Este tipo de aplicaciones constituye la base para el desarrollo de algoritmos más avanzados en robótica, como navegación autónoma, evasión de obstáculos y seguimiento inteligente.

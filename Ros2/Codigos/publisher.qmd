@@ -1,0 +1,238 @@
+
+# Creación del nodo publicador robot_station
+
+En ROS 2, un nodo publisher (publicador) es un nodo encargado de enviar o publicar información a un topic dentro del sistema. Este tipo de nodo genera datos y los transmite continuamente para que otros nodos puedan recibirlos y utilizarlos.
+
+![](imagenes/robot_station.png)
+
+Siguiendo el mismo procedimiento utilizado anteriormente para la creación del nodo Hello World, se procederá a crear un nuevo nodo publicador llamado robot_station dentro del paquete del proyecto.
+
+Primero, ubíquese en el directorio del paquete dentro del workspace:
+```bash
+cd abc_ws/src/my_pkg/my_pkg
+```
+Una vez dentro de la carpeta, se crea el archivo que contendrá el nuevo nodo utilizando el comando, Posteriormente, se asignan permisos de ejecución al archivo para que pueda ejecutarse como un nodo dentro de ROS 2 Jazzy Jalisco:
+
+```bash
+touch robot_station.py
+
+chmod +x robot_station.py
+```
+
+Finalmente, se puede regresar al directorio src del workspace y abrir el proyecto en el editor de código para comenzar a implementar el programa del nodo:
+```bash
+cd ../..
+code .
+```
+De esta manera, el archivo robot_station.py queda listo para escribir el código correspondiente al nodo publicador.
+
+## Programación del nodo publicador robot_station.
+
+A continuación, se presenta el código del nodo publicador robot_station, el cual enviará mensajes de tipo texto a un tópico dentro de ROS 2.
+
+```bash
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+from example_interfaces.msg import String
+
+class RobotStationNode(Node):
+    def __init__(self):
+        super().__init__("robot_station")
+        self.robot_name_ ="C3PO"
+        self.publisher_ =self.create_publisher(String, "robot_news", 10)
+        self.timer_ =self.create_timer(0.5, self.publish_news)
+        self.get_logger().info("Robot News Station has been started.")
+
+    def publish_news(self):
+        msg = String()
+        msg.data = "Hi, this " + self.robot_name_ + " is C3PO from the robot station"
+        self.publisher_.publish(msg)
+
+def main(args=None):
+    rclpy.init(args=args)
+    node=RobotStationNode()
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
+
+```
+
+## Explicación del código.
+
+1️⃣ Definición del intérprete de Python
+
+```bash
+#!/usr/bin/env python3
+```
+Esta línea indica que el archivo debe ejecutarse utilizando Python 3, permitiendo que el sistema operativo reconozca el script como un programa ejecutable.
+
+2️⃣ Importación de librerías
+```bash
+import rclpy
+from rclpy.node import Node
+from example_interfaces.msg import String
+```
+Aquí se importan las librerías necesarias para trabajar con ROS 2:
+
+rclpy: biblioteca principal que permite interactuar con ROS 2 usando Python.
+
+Node: clase base utilizada para crear nodos dentro del sistema.
+
+String: tipo de mensaje que se enviará a través del tópico.
+
+3️⃣ Creación de la clase del nodo
+```bash
+class RobotStationNode(Node):
+```
+Se define una clase llamada RobotStationNode que hereda de la clase Node, lo que permite que el programa funcione como un nodo dentro de ROS 2.
+
+4️⃣ Constructor del nodo
+```bash
+def __init__(self):
+    super().__init__("robot_station")
+```
+El método __init__ se ejecuta al iniciar el nodo.
+
+La función super().__init__("robot_station") establece el nombre del nodo, que en este caso será:
+
+robot_station
+
+Este nombre es el que ROS 2 utilizará para identificar el nodo dentro del sistema.
+
+5️⃣ Definición del nombre del robot
+```bash
+self.robot_name_ ="C3PO"
+```
+Se crea una variable que almacena el nombre del robot que enviará el mensaje.
+
+6️⃣ Creación del publicador
+```bash
+self.publisher_ =self.create_publisher(String, "robot_news", 10)
+```
+Aquí se crea un publisher, el cual enviará mensajes a un tópico.
+
+Los parámetros utilizados son:
+
+String → tipo de mensaje
+
+robot_news → nombre del tópico
+
+10 → tamaño de la cola de mensajes
+
+Esto significa que el nodo publicará mensajes de texto en el tópico llamado:
+```bash
+/robot_news
+```
+7️⃣ Creación del temporizador
+```bash
+self.timer_ =self.create_timer(0.5, self.publish_news)
+```
+Se crea un temporizador que ejecutará la función publish_news() cada 0.5 segundos.
+
+Esto permite que el nodo publique mensajes de forma periódica.
+
+8️⃣ Mensaje de inicio del nodo
+```bash
+self.get_logger().info("Robot News Station has been started.")
+```
+Este comando muestra un mensaje en la terminal indicando que el nodo ha sido iniciado correctamente.
+
+9️⃣ Función que publica el mensaje
+```bash
+def publish_news(self):
+    msg = String()
+```
+Se crea un objeto de tipo String, que será el mensaje que se enviará al tópico.
+
+🔟 Definición del contenido del mensaje
+```bash
+msg.data = "Hi, this " + self.robot_name_ + " is C3PO from the robot station"
+```
+Se asigna el contenido del mensaje que será publicado.
+
+11️⃣ Publicación del mensaje
+```bash
+self.publisher_.publish(msg)
+```
+Esta línea envía el mensaje al tópico robot_news, permitiendo que otros nodos suscriptores puedan recibirlo.
+
+12️⃣ Función principal
+```bash
+def main(args=None):
+```
+Esta función es el punto de inicio del programa.
+
+13️⃣ Inicialización de ROS 2
+```bash
+rclpy.init(args=args)
+```
+Inicializa la comunicación con el sistema ROS 2.
+
+14️⃣ Creación del nodo
+```bash
+node=RobotStationNode()
+```
+Aquí se crea una instancia del nodo que se definió anteriormente.
+
+15️⃣ Ejecución del nodo
+```bash
+rclpy.spin(node)
+```
+Mantiene el nodo en ejecución para que continúe publicando mensajes.
+
+16️⃣ Cierre del sistema ROS
+```bash
+rclpy.shutdown()
+```
+Finaliza correctamente la ejecución del sistema ROS 2.
+
+17️⃣ Ejecución del programa
+
+```bash
+if __name__ == "__main__":
+    main()
+```
+Esta condición permite ejecutar la función main() cuando el archivo se ejecuta directamente.
+
+![](imagenes/station.mp4)
+
+## Ejecución del nodo publicador
+
+Una vez implementado el código del nodo, se puede ejecutar utilizando el siguiente comando:
+
+```bash
+ros2 run my_pkg robot_station
+```
+Con este comando se pone en funcionamiento el nodo publicador robot_station en ROS 2 Jazzy Jalisco.
+
+Para observar los mensajes publicados, abra una nueva terminal (puede hacerlo con el atajo Ctrl + Shift + O o Ctrl + Shift + E, dependiendo de la configuración del sistema). En esta nueva terminal se pueden utilizar algunos comandos de ROS 2 para verificar el estado del sistema.
+
+Primero, ejecute el siguiente comando para visualizar los nodos que se encuentran activos:
+
+```bash
+ros2 node list
+```
+
+Este comando mostrará todos los nodos que están ejecutándose en el sistema, incluyendo el nodo robot_station.
+
+A continuación, utilice el siguiente comando para ver los tópicos disponibles:
+
+```bash
+ros2 topic list
+```
+
+Entre los tópicos mostrados deberá aparecer el tópico /robot_news, que es donde el nodo publicador envía los mensajes.
+
+Finalmente, para visualizar en tiempo real los mensajes publicados en ese tópico, ejecute:
+
+```bash
+ros2 topic echo /robot_news
+```
+
+Este comando permite recibir y mostrar en la terminal los mensajes enviados por el nodo publicador. Cuando el nodo robot_station deja de ejecutarse, la publicación de mensajes se detiene automáticamente, y se reanudará cuando el nodo vuelva a activarse.
+
+![](imagenes/node_station.png)
+Asegúrese de registrar el nodo en el archivo setup.py, ya que este paso es necesario para que el código pueda ejecutarse correctamente utilizando ros2 run.

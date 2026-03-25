@@ -1,0 +1,154 @@
+# Primer nodo en Python en ROS2
+
+![](imagenes/node.png)
+
+Para crear nuestro primer nodo, primero debemos ubicarnos en la carpeta del paquete donde se almacenarán los archivos del nodo. Para ello, abrimos la terminal en Ubuntu y nos dirigimos a la carpeta interna del paquete con los siguientes comandos:
+
+```bash
+cd abc_ws/src/my_pkg/my_pkg/
+```
+Una vez dentro de esta carpeta, creamos el archivo que contendrá el código de nuestro primer nodo utilizando el comando touch. Luego, podemos usar ls para verificar que el archivo fue creado correctamente.
+
+```bash
+touch first_node.py
+
+ls
+```
+Finalmente, abrimos Visual Studio Code para visualizar el archivo creado. Allí podremos observar que el archivo first_node.py aparece dentro de la carpeta my_pkg, y será en este archivo donde escribiremos el código de nuestro primer nodo en Python.
+
+![](imagenes/vsc.png)
+
+Abre el archivo first_node.py, copia y pega el siguiente código dentro del archivo para crear el primer nodo en Python en ROS 2.
+
+```bash
+#!/usr/bin/env python3
+import rclpy
+from rclpy.node import Node
+
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = Node("py_test")
+    node.get_logger().info("Hello_Word")
+    rclpy.spin(node)
+    rclpy.shutdown()
+
+if __name__ == "__main__":
+    main()
+
+```
+![](imagenes/chmod.png)
+
+Inicialmente, el archivo se encuentra inactivo, por lo que es necesario darle permisos de ejecución para poder utilizarlo como un nodo en Python dentro de ROS 2. Para activar el archivo, utilizamos el siguiente comando en la terminal de Ubuntu:
+
+```bash
+chmod +x first_node.py
+
+ls
+```
+El comando chmod +x otorga permisos de ejecución al archivo first_node.py. Después, con ls podemos verificar el cambio; generalmente el nombre del archivo aparecerá en color verde, lo que indica que ahora es un archivo ejecutable.
+
+Finalmente, podemos comprobar que el archivo funciona ejecutándolo directamente con el siguiente comando:
+
+```bash
+./first_node.py
+```
+
+![](imagenes/hello_word.png)
+
+Si todo está correcto, el script se ejecutará y podremos confirmar que nuestro primer nodo funciona correctamente dentro de ROS 2. Al ejecutarlo, en la terminal de Ubuntu deberá mostrarse el mensaje:
+
+Hello_world
+
+La aparición de este mensaje indica que el archivo first_node.py se está ejecutando correctamente y que el entorno está configurado adecuadamente para comenzar a desarrollar nodos en Python.
+
+![](imagenes/nodo.png)
+Para ejecutar el nodo utilizando el comando estándar de ROS 2 Jazzy Jalisco, es necesario registrarlo previamente en el archivo setup.py del paquete. Esto permite que el nodo sea reconocido como un ejecutable dentro del sistema ROS 2. 
+
+Para ello, se debe agregar el nombre del nodo en la sección entry_points, asociándolo con el archivo correspondiente. Una vez realizado este paso y recompilado el workspace, el nodo podrá ejecutarse mediante el comando:
+![](imagenes/ros2_run_node.png)
+```bash
+ros2 run my_pkg node
+```
+De esta manera, el nodo no solo podrá ejecutarse de forma directa como script, sino también integrarse correctamente al ecosistema de ROS 2, facilitando su uso dentro de aplicaciones más complejas.
+
+## Explicación del código.
+La primera línea:
+```bash
+#!/usr/bin/env python3
+```
+se conoce como shebang y le indica al sistema operativo que el archivo debe ejecutarse utilizando Python 3. Esto permite ejecutar el archivo directamente desde la terminal en Ubuntu sin necesidad de escribir python3 antes del nombre del archivo.
+
+Las siguientes líneas:
+```bash
+import rclpy
+from rclpy.node import Node
+```
+importan la biblioteca rclpy, que es la librería de Python utilizada para trabajar con nodos en ROS2. Con Node se puede crear un nodo que participará en la comunicación dentro del sistema.
+
+Luego se define la función principal del programa:
+```bash
+def main(args=None):
+```
+Esta función contiene las instrucciones que se ejecutarán cuando el programa inicie.
+
+Dentro de esta función, la línea:
+```bash
+rclpy.init(args=args)
+``` 
+inicializa el sistema de comunicación de ROS2, permitiendo que el nodo pueda interactuar con otros nodos dentro del entorno.
+
+Después se crea el nodo con:
+```bash
+node = Node("py_test")
+```
+Aquí se instancia un nodo y se le asigna el nombre py_test, que será el identificador del nodo dentro de ROS2.
+
+La línea:
+```bash
+node.get_logger().info("Hello_Word")
+```
+
+inicializa el sistema de comunicación de ROS2, permitiendo que el nodo pueda interactuar con otros nodos dentro del entorno.
+
+Después se crea el nodo con:
+```bash
+node = Node("py_test")
+```
+Aquí se instancia un nodo y se le asigna el nombre py_test, que será el identificador del nodo dentro de ROS2.
+
+La línea:
+```bash
+node.get_logger().info("Hello_Word")
+```
+
+muestra un mensaje en la terminal usando el sistema de logging de ROS2. En este caso, imprimirá el texto “Hello_Word”, confirmando que el nodo se está ejecutando correctamente.
+
+Luego aparece:
+```bash
+rclpy.spin(node)
+```
+Este comando mantiene el nodo activo, permitiendo que continúe ejecutándose y escuchando eventos dentro del sistema ROS2.
+
+Finalmente:
+```bash
+rclpy.shutdown()
+```
+cierra correctamente el sistema de ROS2 cuando el nodo termina su ejecución.
+
+Las últimas líneas:
+```bash
+if __name__ == "__main__":
+    main()
+```
+indican que la función main() se ejecutará cuando el archivo se ejecute directamente. Esto permite que el programa inicie correctamente cuando se llama desde la terminal.
+
+::: {.callout-warning}
+## ⚠️ Nota importante
+
+Para poder ejecutar un nodo utilizando el comando `ros2 run`, es obligatorio registrarlo en el archivo `setup.py` del paquete.
+
+Recuerda agregar el nombre del nodo en la sección `entry_points`, asociándolo correctamente con el script correspondiente.
+
+**Todos los nodos que desarrolles deben ser añadidos a este archivo**; de lo contrario, no podrán ejecutarse mediante `ros2 run`, aunque el código funcione correctamente al ejecutarse de forma directa.
+:::

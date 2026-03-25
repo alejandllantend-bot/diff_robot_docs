@@ -1,0 +1,249 @@
+# My_car.urdf
+
+Se inicia el desarrollo de un modelo robótico mediante su descripción en formato URDF, con el objetivo de ser visualizado en RViz. Para ello, se debe abrir una terminal en Ubuntu y crear un archivo base utilizando el comando touch my_car.urdf, el cual contendrá la definición estructural del robot. A continuación, se procede a abrir el archivo en un editor de código, mediante el comando code my_car.urdf, con el fin de comenzar la implementación del modelo.
+
+```bash
+touch my_car.urdf
+
+code my_car.urdf
+```
+
+El archivo my_car.urdf se abre en el editor de código, donde se debe comenzar a implementar el modelo robótico. Para ello, se debe comenzar por definir la estructura del robot, es decir, la jerarquía de sus componentes. En este caso, el siguiente código define la primera parte del robot, que es el chasis (`base_link`).
+
+```xml
+<?xml version="1.0"?>
+<robot name="my_car">
+    <link name="base_link">
+        <visual>
+            <geometry>
+                <box size="0.6 0.4 0.2" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </visual>
+    </link>
+</robot>
+```
+para verificar que el codigo funciona ejecuta en tu terminal el siguiente comando y observas el resultado:
+
+```bash
+ros2 launch urdf_tutorial display.launch.py model:=/home/ersonal/my_car.urdf
+```
+![](imagenes_G/base_link.png)
+
+En ROS, casi siempre se llama `base_link` al cuerpo principal del robot. Es el punto de referencia para todas las demás piezas.
+```bahs
+visual 
+```
+Indica cómo se va a renderizar el cuerpo en la pantalla.
+```bahs
+geometry
+```
+Define la forma geométrica del cuerpo.
+```bahs
+box size="0.6 0.4 0.2"
+```
+Define una caja (prisma rectangular) con las siguientes dimensiones en metros:
+Largo (X): 0.6 m (60 cm)
+Ancho (Y): 0.4 m (40 cm)
+Alto (Z): 0.2 m (20 cm)
+```bahs
+origin xyz="0 0 0" rpy="0 0 0"
+```
+Coloca el centro de esta caja exactamente en el origen de coordenadas (0,0,0) sin ninguna rotación.
+
+
+Para cambiar el color del robot, se debe agregar el siguiente código al archivo my_car.urdf:
+
+```xml
+<material name="blue">
+    <color rgba="0 0 1 1" />
+</material>
+```
+y dentro del tag `<visual>` se agrega la siguiente línea de código:
+
+```xml
+<material name="blue" />
+```
+Quedando de la siguiente manera:
+
+![](imagenes_G/azul.png)
+
+## Ruedas
+
+Se procede a la creación de la primera rueda del robot móvil, iniciando con las ruedas. En esta etapa se definirá su estructura dentro del modelo URDF, especificando tanto sus propiedades geométricas como su relación con el chasis del robot. Para ello, se debe agregar el siguiente código al archivo my_car.urdf:
+
+## Rueda derecha.
+```xml
+    <link name="right_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.05" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="1.57 0 0" />
+        </visual>
+    </link>
+
+    <joint name="base_right_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="right_wheel_link" />
+        <origin xyz="-0.15 -0.225 0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+    </joint>
+
+```
+![](imagenes_G/rueda_der.png)
+## Rueda izquierda.
+
+```xml
+    <link name="left_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius="0.1" length="0.05" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="1.57 0 0" />
+        </visual>
+    </link>
+
+    <joint name="base_left_wheel_joint" type="continuous">
+        <parent link="base_link" />
+        <child link="left_wheel_link" />
+        <origin xyz="-0.15 0.225 0" rpy="0 0 0" />
+        <axis xyz="0 1 0" />
+    </joint>
+
+```
+![](imagenes_G/ruedas.png)
+```bahs
+geometry
+```
+Aquí se define la forma. El tag "cylinder" indica que es un cilindro con un radio de 0.1m (10 cm) y un largo (grosor) de 0.05m (5 cm).
+```bahs
+origin xyz="0 0 0" rpy="1.57 0 0"
+```
+Rota el cilindro 90 grados (1.57 radianes) sobre el eje X, se usa para "acostar" el cilindro y que ruede como una llanta.
+```bahs
+axis xyz="0 1 0"
+```
+Define el eje de rotación del motor. En este caso, es el eje Y (el eje "ancho" del cilindro), lo que permite que gire como una rueda.
+```bahs
+joint name="base_right_wheel_joint" type="continuous"
+```
+Define la unión entre el chasis y la rueda. type ="continuous" Indica que es una articulación que puede girar infinitamente sin límites
+```bahs
+parent y child
+```
+Establece la jerarquía. La base_link es el cuerpo principal (padre) y la right_wheel_link es la pieza que cuelga de ella (hijo). Si la base se mueve, la rueda se mueve con ella.
+```bahs
+origin xyz="-0.15 -0.225 0"
+```
+Define la posición donde se ancla la rueda respecto al centro del robot.
+x="-0.15": Un poco hacia atrás.
+y="-0.225": Desplazada a la derecha, "0.225" Desplazada a la izquierda.
+
+```bahs
+axis xyz="0 1 0"
+```
+Define el eje sobre el cual gira la rueda. El 1 en la segunda posición indica que la rueda girará alrededor del eje Y.
+
+
+## Rueda loca.
+Este bloque de código define la rueda loca (o caster wheel). En un robot de dos ruedas motorizadas, esta es la rueda pequeña (generalmente una esfera) que sirve de apoyo para que el robot no se caiga hacia adelante o hacia atrás, permitiéndole girar en cualquier dirección.
+
+```xml
+    <link name="caster_wheel_link">
+        <visual>
+            <geometry>
+                <sphere radius="0.05" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+            <material name="grey" />
+        </visual>
+    </link>
+
+    <joint name="base_caster_wheel_joint" type="fixed">
+        <parent link="base_link" />
+        <child link="caster_wheel_link" />
+        <origin xyz="0.2 0 -0.05" rpy="0 0 0" />
+    </joint>
+
+![](imagenes_G/rueda_loca.png)
+
+```bahs
+sphere radius="0.05"
+``` 
+A diferencia de las ruedas principales que eran cilindros, aquí usas una esfera con un radio de 0.05 m (5 cm). Se usa una esfera en simulación para simplificar el contacto con el suelo, ya que puede "rodar" en cualquier dirección.
+```bahs
+origin xyz="0 0 0" rpy="0 0 0"
+```
+El centro de la esfera coincide con el origen del link.
+```bahs
+type="fixed"
+```
+A diferencia de las ruedas motorizadas (que eran continuous), esta es fija.
+```bahs
+parent link="base_link"
+```
+Se cuelga directamente del chasis principal.
+```bahs
+origin xyz="0.2 0 -0.05" rpy="0 0 0" 
+```
+Define la posición exacta de la rueda respecto al centro del robot:
+
+x="0.2": Se mueve 20 cm hacia adelante.
+
+y="0": Se mantiene en el centro (eje de simetría).
+
+z="-0.05": Se baja 5 cm respecto al centro del base_link.
+
+## Base footprint.
+
+```xml
+    <joint name="base_joint" type="fixed">
+        <parent link="base_footprint" />
+        <child link="base_link" />
+        <origin xyz="0 0 0.1" rpy="0 0 0"/>
+    </joint>
+
+    <link name="base_footprint" />
+    
+```
+```bahs
+El Link "Fantasma"
+```
+Fíjate que este bloque está vacío (no tiene visual, ni geometry, ni collision).
+¿Qué es?: Es un enlace puramente matemático o virtual.
+Su función es representar la proyección del robot en el suelo. Es el punto Z=0.
+Los algoritmos de navegación y los mapas en ROS necesitan un punto de referencia que siempre esté tocando el piso, independientemente de si el robot salta, se inclina o tiene el chasis muy alto.
+Este joint conecta el punto del suelo (base_footprint) con el cuerpo del robot (base_link).
+```bahs
+type="fixed"
+```
+Significa que la distancia entre el suelo y el chasis no cambia. Es una conexión rígida.
+```bahs
+parent link="base_footprint"
+```
+El origen del robot (el suelo) es el padre.
+```bahs
+child link="base_link"
+```
+El chasis es el hijo.
+```bahs
+origin xyz="0 0 0.1" rpy="0 0 0"
+```
+Le indica al sistema que el base_link (el centro de la caja de 20 cm de alto) está elevado 0.1 metros (10 cm) respecto al suelo. Como la caja mide 20 cm de alto, al subir su centro 10 cm, la base de la caja queda exactamente rozando el suelo.
+
+## Robot completo.
+
+Si juntamos todo lo que hemos analizado, el robot se estructura así:
+
+Suelo (base_footprint): El punto 0 en el eje Z.
+
+Chasis (base_link): Una caja que flota a 10 cm del suelo (gracias al base_joint).
+
+Ruedas laterales: Cilindros de radio 10 cm pegados a los lados del chasis. Como el chasis está a 10 cm de altura, las ruedas tocan el suelo perfectamente.
+
+Rueda Loca: Una esfera de radio 5 cm pegada debajo de la parte delantera para dar estabilidad.
+
+![](imagenes_G/robot_complet.png)
+
+

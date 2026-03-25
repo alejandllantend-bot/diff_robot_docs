@@ -1,0 +1,137 @@
+## Desarrollo del ejercicio paso a paso.
+
+A continuación, se presentan los pasos necesarios para implementar el nodo de persecución en ROS 2 utilizando Turtlesim.
+
+### Crear el script de Python ejecutable
+
+![crear script chase_turtle.py](imagenes/chase_turtle.png)
+
+### Copiar el código en Visual Studio Code.
+
+```python
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from turtlesim.msg import Pose
+from math import atan2, sqrt
+
+class ChaseTurtleNode(Node):
+    def __init__(self):
+        super().__init__('chase_turtle')
+        
+        # Crear publisher para controlar la tortuga enemiga
+        self.publisher_ = self.create_publisher(Twist, '/turtle2/cmd_vel', 10)
+        
+        # Suscribirse a la posición de ambas tortugas
+        self.subscription1 = self.create_subscription(
+            Pose, '/turtle1/pose', self.listener_callback1, 10)
+        self.subscription2 = self.create_subscription(
+            Pose, '/turtle2/pose', self.listener_callback2, 10)
+        
+        # Variables para almacenar las posiciones
+        self.pose1 = Pose()
+        self.pose2 = Pose()
+        
+        # Timer para ejecutar la lógica de persecución cada 0.1 segundos
+        self.timer = self.create_timer(0.1, self.timer_callback)
+        
+        self.get_logger().info('Chase Turtle Node ha sido iniciado')
+
+    def listener_callback1(self, msg):
+        self.pose1 = msg
+
+    def listener_callback2(self, msg):
+        self.pose2 = msg
+
+    def timer_callback(self):
+        # Calcular la distancia entre las dos tortugas
+        distance = sqrt((self.pose1.x - self.pose2.x)**2 + (self.pose1.y - self.pose2.y)**2)
+        
+        # Si la distancia es menor a 1.0, el enemigo ha atrapado a la tortuga
+        if distance < 1.0:
+            self.get_logger().info('💀 ¡El enemigo te ha atrapado!')
+            self.publisher_.publish(Twist())  # Detener la tortuga
+            return
+
+        # Calcular el ángulo hacia la tortuga principal
+        angle_to_turtle1 = atan2(self.pose1.y - self.pose2.y, self.pose1.x - self.pose2.x)
+        
+        # Calcular la diferencia de ángulo
+        angle_diff = angle_to_turtle1 - self.pose2.theta
+        
+        # Normalizar la diferencia de ángulo
+        while angle_diff > 3.14159:
+            angle_diff -= 6.28318
+        while angle_diff < -3.14159:
+            angle_diff += 6.28318
+
+        # Crear mensaje de velocidad
+        msg = Twist()
+        
+        # Control de velocidad
+        linear_speed = 2.0  # Velocidad lineal
+        angular_speed = 4.0 * angle_diff  # Velocidad angular proporcional al error
+        
+        msg.linear.x = linear_speed
+        msg.angular.z = angular_speed
+        
+        # Publicar el comando de velocidad
+        self.publisher_.publish(msg)
+
+def main(args=None):
+    rclpy.init(args=args)
+    node = ChaseTurtleNode()
+    rclpy.spin(node)
+    node.destroy_node()
+    rclpy.shutdown()
+
+if __name__ == '__main__':
+    main()
+```
+
+### Configurar el entorno
+
+Antes de ejecutar el nodo, asegúrese de:
+
+Agregar el nodo en el archivo setup.py
+
+Compilar el workspace:
+
+```bash
+cd abc_ws/
+colcon build --packages-select my_pkg
+```
+
+Cargar el entorno:
+
+```bash
+source install/setup.bash
+```
+
+###   comandos de ejecución
+
+Ejecute los siguientes comandos en terminales separadas:
+
+🔹 Terminal 1 – Simulación:
+
+```bash
+ros2 run turtlesim turtlesim_node
+```
+
+🔹 Terminal 2 – Control:
+
+```bash
+ros2 run turtlesim turtle_teleop_key
+```
+
+🔹 Terminal 3 – Nodo de persecución:
+
+```bash
+ros2 run my_pkg chase_turtle
+```
+![ejecucion](imagenes/atrapado.png)
+
+
+
+
+
