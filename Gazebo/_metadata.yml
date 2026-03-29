@@ -1,0 +1,22 @@
+format:
+  html:
+    include-in-header:
+      - text: |
+          <style>
+          body::before {
+            content: "";
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100vw;
+            height: 300vh;
+            background-image: url('/Gazebo/imagenes_G/gazebo.png');
+            background-repeat: no-repeat;
+            background-position: center;
+            background-size: 200vh; /* Haciendo la imagen muchísimo más grande */
+            opacity: 0.15; /* Incrementando agresivamente la opacidad para mejorar la nitidez */
+            z-index: -999;
+            pointer-events: none;
+          }
+          </style>

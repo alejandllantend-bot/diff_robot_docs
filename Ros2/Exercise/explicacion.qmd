@@ -1,0 +1,197 @@
+# Explicación del código por bloques.
+
+## Importación de librerías
+```bahs
+import rclpy
+from rclpy.node import Node
+from geometry_msgs.msg import Twist
+from turtlesim.msg import Pose
+from math import atan2, sqrt
+```
+En este bloque se importan las bibliotecas necesarias:
+
+rclpy: permite trabajar con ROS 2 en Python
+Node: clase base para crear nodos
+Twist: mensaje para enviar velocidades (movimiento)
+Pose: contiene posición y orientación de la tortuga
+atan2, sqrt: funciones matemáticas para cálculo de ángulos y distancias
+
+## Definiciónl nodo.
+```bahs
+class ChaseTurtleNode(Node):
+```
+Se define una clase que representa el nodo. Al heredar de Node, puede integrarse al sistema de ROS 2.
+
+## Inicialización del nodo
+```bahs
+def __init__(self):
+    super().__init__('chase_turtle')
+```
+Se inicializa el nodo con el nombre chase_turtle, el cual será visible dentro del sistema.
+
+## Creación del publicador
+```bahs
+self.publisher_ = self.create_publisher(Twist, '/turtle2/cmd_vel', 10)
+```
+Este bloque crea un publicador que:
+
+- Envía mensajes tipo Twist
+- Al tópico /turtle2/cmd_vel
+- Controla el movimiento de la tortuga enemiga
+
+## Creación de suscriptores
+Estos suscriptores permiten obtener información en tiempo real.
+
+```bahs
+self.subscription1 = self.create_subscription(
+    Pose, '/turtle1/pose', self.listener_callback1, 10)
+```
+Se suscribe a la posición de la tortuga principal.
+
+```bahs
+self.subscription2 = self.create_subscription(
+    Pose, '/turtle2/pose', self.listener_callback2, 10)
+```
+Se suscribe a la posición de la tortuga enemiga.
+
+## Variables de almacenamiento.
+```bahs
+self.pose1 = Pose()
+self.pose2 = Pose()
+```
+Se inicializan variables para guardar la posición de ambas tortugas.
+
+## Temporizador
+```bahs
+self.timer = self.create_timer(0.1, self.timer_callback)
+```
+Define un temporizador que ejecuta la función timer_callback cada 0.1 segundos, permitiendo que el movimiento sea continuo.
+
+## Mensaje de inicio.
+```bahs
+self.get_logger().info('Chase Turtle Node ha sido iniciado')
+```
+Muestra en la terminal que el nodo está activo.
+
+## Funciones callback (recepción de datos)
+```bahs
+def listener_callback1(self, msg):
+    self.pose1 = msg
+```
+Actualiza la posición de la tortuga principal.
+
+```bahs
+def listener_callback2(self, msg):
+    self.pose2 = msg
+```
+Actualiza la posición de la tortuga enemiga.
+
+## Lógica principal de persecución.
+
+```bahs
+def timer_callback(self):
+```
+Esta función contiene toda la lógica del comportamiento del sistema.
+
+- Cálculo de distancia
+```bahs
+distance = sqrt((self.pose1.x - self.pose2.x)**2 + (self.pose1.y - self.pose2.y)**2)
+```
+Calcula la distancia entre las dos tortugas usando la fórmula euclidiana.
+
+- Detección de captura
+```bahs
+if distance < 1.0:
+    self.get_logger().info('💀 ¡El enemigo te ha atrapado!')
+    self.publisher_.publish(Twist())
+    return
+```
+Si la distancia es menor a un umbral (1.0), se considera que hubo captura
+Se imprime el mensaje de derrota
+Se envía un mensaje vacío (Twist()) para detener la tortuga
+Se finaliza la ejecución de esta iteración
+
+- Cálculo del ángulo objetivo
+```bahs
+angle_to_turtle1 = atan2(self.pose1.y - self.pose2.y, self.pose1.x - self.pose2.x)
+```
+Calcula el ángulo que debe seguir la tortuga enemiga para dirigirse hacia la principal.
+
+- Diferencia angular
+```bahs
+angle_diff = angle_to_turtle1 - self.pose2.theta
+```
+Determina cuánto debe girar la tortuga para alinearse con el objetivo.
+
+- Normalización del ángulo
+```bahs
+while angle_diff > 3.14159:
+    angle_diff -= 6.28318
+while angle_diff < -3.14159:
+    angle_diff += 6.28318
+```
+Asegura que el ángulo esté dentro del rango válido 
+[
+−
+𝜋
+,
+𝜋
+]
+[−π,π], evitando movimientos incorrectos.
+
+- Creación del mensaje de velocidad
+```bahs
+msg = Twist()
+```
+Se crea un mensaje de movimiento.
+
+- Control de movimiento
+```bahs
+linear_speed = 2.0
+angular_speed = 4.0 * angle_diff
+```
+Velocidad lineal constante
+Velocidad angular proporcional al error (control tipo proporcional)
+```bahs
+msg.linear.x = linear_speed
+msg.angular.z = angular_speed
+```
+Se asignan las velocidades al mensaje.
+
+- Publicación del movimiento
+```bahs
+self.publisher_.publish(msg)
+```
+
+Se envía el comando a la tortuga enemiga para que se mueva.
+
+## Función principal.
+```bahs
+def main(args=None):
+```
+Punto de entrada del programa.
+
+```bahs
+rclpy.init(args=args)
+```
+Inicializa ROS 2.
+```bahs
+node = ChaseTurtleNode()
+```
+Crea el nodo.
+```bahs
+rclpy.spin(node)
+```
+Mantiene el nodo en ejecución.
+```bahs
+node.destroy_node()
+rclpy.shutdown()
+```
+Libera recursos y finaliza correctamente.
+
+## Ejecución del script.
+```bahs
+if __name__ == '__main__':
+    main()
+```
+Permite ejecutar el archivo directamente como programa principal.

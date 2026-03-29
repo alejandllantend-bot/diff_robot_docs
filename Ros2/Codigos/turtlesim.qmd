@@ -1,6 +1,6 @@
 # Interacción de Nodos con Turtlesim.
 
-![](imagenes/turtlesim.mp4)
+![](/Ros2/imagenes/turtlesim.mp4)
 
 El nodo turtlesim_node actúa como suscriptor (subscriber), mientras que el nodo turtle_teleop_key funciona como publicador (publisher). Este último envía comandos de velocidad a través del tópico /turtle1/cmd_vel, los cuales son recibidos por turtlesim para generar el movimiento de la tortuga en la ventana gráfica.
 

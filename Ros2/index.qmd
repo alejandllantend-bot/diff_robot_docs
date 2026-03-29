@@ -1,0 +1,26 @@
+# Guía de ROS2
+
+Bienvenido a la sección de ROS2. Selecciona uno de los siguientes botones para ver el contenido y acceder a sus lecciones:
+
+::: {.panel-tabset .nav-pills}
+
+## Conceptos
+- [Plan de Trabajo](Conceptos/plan.qmd)
+- [Instalación de ROS2](Conceptos/Instalacion.qmd)
+- [Conceptos Básicos](Conceptos/Conceptos.qmd)
+- [Workspace en ROS2](Conceptos/workspace.qmd)
+- [Paquetes en ROS2](Conceptos/paquete.qmd)
+
+## Ejemplos
+- [Crear un Paquete](Codigos/Crear_paquete.qmd)
+- [Primer Nodo en Python](Codigos/first_node.qmd)
+- [Nodo Publisher](Codigos/publisher.qmd)
+- [Nodo Subscriber](Codigos/subscriber.qmd)
+- [Interacción con Turtlesim](Codigos/turtlesim.qmd)
+
+## Ejercicios
+- [Descripción del Ejercicio](Exercise/Descripcion_exercise.qmd)
+- [Ejercicio: Chase Turtle](Exercise/exercise.qmd)
+- [Explicación del Ejercicio](Exercise/explicacion.qmd)
+
+:::

@@ -1,32 +1,20 @@
 ---
-title: "Guias"
+title: "GUIAS DE LABORATORIO"
 ---
 
-This is a Quarto website.
+<style>
+  #title-block-header {
+    text-align: center;
+    margin-top: 10vh; /* Baja el título hacia el centro de la pantalla */
+  }
+</style>
 
-To learn more about Quarto websites visit <https://quarto.org/docs/websites>.
+::: {.img-lateral .img-izquierda}
+[![Ir a ROS2](/Ros2/imagenes/ros2i.png)](Ros2/index.qmd)
+:::
 
----
-title: "GUÍA DE INSTALACIÓN Y MANEJO DE ROS2 JAZZY"
-author: "Dayely Alejandra Gutierrez Llanten"
-affiliation: "The University"
-format:
-  html:
-    theme: cosmo
-    toc: true
-    toc-location: left
-    css: styles.css 
----
-{{< include plan.qmd >}}
-{{< include instalar_ros2.qmd >}}
-{{< include workspace.qmd >}}
-{{< include conceptos_basicos.qmd >}}
-{{< include paquete.qmd >}}
-{{< include packages.qmd >}}
-{{< include primer_nodo.qmd >}}
-{{< include publisher.qmd >}}
-{{< include subscriber.qmd >}}
-{{< include turtlesim.qmd >}}
+::: {.img-lateral .img-derecha}
+[![Ir a Gazebo](/Gazebo/imagenes_G/gazebo.png)](Gazebo/index.qmd)
+:::
 
-{{< include example_chase_turtle.qmd >}}
-{{< include chase_turtle.qmd >}}
+

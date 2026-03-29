@@ -1,0 +1,13 @@
+# Guía de Gazebo
+
+Bienvenido a la sección de Gazebo. Selecciona uno de los siguientes botones para ver el contenido y acceder a sus lecciones:
+
+::: {.panel-tabset .nav-pills}
+
+## Conceptos
+- [Instalación de Gazebo](conceptos/instalacion_gazebo.qmd)
+
+## Código y Proyectos
+- [Mi Carro URDF](codigo_my_car/my_car_urdf.qmd)
+
+:::

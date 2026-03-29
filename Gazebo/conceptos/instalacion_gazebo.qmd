@@ -4,8 +4,8 @@ Gazebo es un simulador de robots en 3D que se utiliza junto con ROS 2 para dise�
 
 Una de sus principales ventajas es que simula condiciones bastante cercanas a la realidad, lo que permite detectar errores de diseño o programación sin riesgos. Además, al integrarse con ROS 2, puedes usar los mismos nodos, tópicos y servicios que usarías en un robot físico, haciendo que la transición entre simulación y realidad sea mucho más sencilla.
 
-![Cmake](imagenes_G/cmake.png)
-![Robot_developer](imagenes_G/robot_dev.png)
+![](/Gazebo/imagenes_G/cmake.png)
+![](/Gazebo/imagenes_G/robot_dev.png)
 
 Como parte del entorno de trabajo para simulaciones con Gazebo, se recomienda instalar las extensiones “CMake Tools” y “ROS 2 Developer Tools”, ya que facilitan la gestión de proyectos, la compilación de paquetes y la navegación del código cuando se trabaja con modelos y simulaciones integradas con ROS 2.
 
@@ -53,7 +53,7 @@ Desde un enfoque técnico, RViz permite visualizar información proveniente de d
 
 Además, RViz utiliza el árbol de transformaciones (TF2) para posicionar correctamente cada elemento en el espacio, garantizando coherencia entre los distintos sistemas de coordenadas. Esto lo convierte en una herramienta fundamental para depuración, monitoreo y validación de algoritmos de percepción, localización y navegación en robótica.
 
-![RViz](imagenes_G/rviz.png)
+![](/Gazebo/imagenes_G/rviz.png)
 
 Para visualizar un robot en RViz, primero se debe abrir una terminal en Ubuntu y ejecutar el comando:
 

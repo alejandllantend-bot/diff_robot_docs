@@ -11,11 +11,11 @@ cd abc_ws/
 
 mkdir src/
 ```
-![](imagenes/abc.png)
+![](/Ros2/imagenes/abc.png)
 
 Este comando crea el directorio abc_ws, que funcionará como el espacio de trabajo principal, y dentro de él la carpeta src, donde se almacenarán los paquetes y archivos de código del proyecto.
 
-![](imagenes/colcon.png)
+![](/Ros2/imagenes/colcon.png)
 
 Una vez creado el workspace, es necesario compilarlo para que ROS 2 genere la estructura completa del entorno de trabajo. Para ello, ubíquese dentro del directorio del workspace ejecutando:
 
@@ -54,7 +54,7 @@ guarda los registros generados durante la compilación.
 
 Después de compilar el workspace, es necesario cargar su entorno para que ROS 2 pueda reconocer los paquetes que se encuentren dentro de este espacio de trabajo. Para ello, ejecute el siguiente comando en la terminal:
 
-![](imagenes/install.png)
+![](/Ros2/imagenes/install.png)
 
 ```bash
 cd install/
@@ -76,7 +76,7 @@ Nota: Si desea que esta configuración se cargue automáticamente cada vez que a
 ```bash
 source ~/abc_ws/install/setup.bash
 ```
-![](imagenes/bash.png)
+![](/Ros2/imagenes/bash.png)
 
 Con esto, el workspace quedará disponible automáticamente en cada nueva sesión de terminal.
 

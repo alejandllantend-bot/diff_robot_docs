@@ -1,6 +1,6 @@
 # Primer nodo en Python en ROS2
 
-![](imagenes/node.png)
+![](/Ros2/imagenes/node.png)
 
 Para crear nuestro primer nodo, primero debemos ubicarnos en la carpeta del paquete donde se almacenarán los archivos del nodo. Para ello, abrimos la terminal en Ubuntu y nos dirigimos a la carpeta interna del paquete con los siguientes comandos:
 
@@ -16,7 +16,7 @@ ls
 ```
 Finalmente, abrimos Visual Studio Code para visualizar el archivo creado. Allí podremos observar que el archivo first_node.py aparece dentro de la carpeta my_pkg, y será en este archivo donde escribiremos el código de nuestro primer nodo en Python.
 
-![](imagenes/vsc.png)
+![](/Ros2/imagenes/vsc.png)
 
 Abre el archivo first_node.py, copia y pega el siguiente código dentro del archivo para crear el primer nodo en Python en ROS 2.
 
@@ -37,7 +37,7 @@ if __name__ == "__main__":
     main()
 
 ```
-![](imagenes/chmod.png)
+![](/Ros2/imagenes/chmod.png)
 
 Inicialmente, el archivo se encuentra inactivo, por lo que es necesario darle permisos de ejecución para poder utilizarlo como un nodo en Python dentro de ROS 2. Para activar el archivo, utilizamos el siguiente comando en la terminal de Ubuntu:
 
@@ -54,7 +54,7 @@ Finalmente, podemos comprobar que el archivo funciona ejecutándolo directamente
 ./first_node.py
 ```
 
-![](imagenes/hello_word.png)
+![](/Ros2/imagenes/hello_word.png)
 
 Si todo está correcto, el script se ejecutará y podremos confirmar que nuestro primer nodo funciona correctamente dentro de ROS 2. Al ejecutarlo, en la terminal de Ubuntu deberá mostrarse el mensaje:
 
@@ -62,11 +62,11 @@ Hello_world
 
 La aparición de este mensaje indica que el archivo first_node.py se está ejecutando correctamente y que el entorno está configurado adecuadamente para comenzar a desarrollar nodos en Python.
 
-![](imagenes/nodo.png)
+![](/Ros2/imagenes/nodo.png)
 Para ejecutar el nodo utilizando el comando estándar de ROS 2 Jazzy Jalisco, es necesario registrarlo previamente en el archivo setup.py del paquete. Esto permite que el nodo sea reconocido como un ejecutable dentro del sistema ROS 2. 
 
 Para ello, se debe agregar el nombre del nodo en la sección entry_points, asociándolo con el archivo correspondiente. Una vez realizado este paso y recompilado el workspace, el nodo podrá ejecutarse mediante el comando:
-![](imagenes/ros2_run_node.png)
+![](/Ros2/imagenes/ros2_run_node.png)
 ```bash
 ros2 run my_pkg node
 ```

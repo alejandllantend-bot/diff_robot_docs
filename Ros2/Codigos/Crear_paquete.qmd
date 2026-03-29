@@ -2,7 +2,7 @@
 
 Para iniciar la creación del paquete en ROS 2, primero se debe abrir la terminal en Ubuntu y ubicarse dentro de la carpeta src del workspace, que es donde se almacenan los paquetes del proyecto. 
 
-![](imagenes/pkg.png)
+![](/Ros2/imagenes/pkg.png)
 
 Para hacerlo, se utiliza el siguiente comando:
 ```bash
@@ -29,10 +29,10 @@ code .
 ```
 
 
-![](imagenes/ok.png)
+![](/Ros2/imagenes/ok.png)
 
 Para finalizar, se ejecuta el comando colcon build, el cual permite compilar el paquete dentro del workspace en ROS 2. Este proceso toma el código que se encuentra en la carpeta src y genera los archivos necesarios para que el paquete pueda ser utilizado correctamente dentro del sistema.
 
-![](imagenes/fin.png)
+![](/Ros2/imagenes/fin.png)
 
 Durante este proceso, la herramienta colcon organiza y prepara los paquetes según su tipo de construcción (por ejemplo, ament_python o ament_cmake). Además, crea las carpetas build, install y log, donde se almacenan los archivos de compilación, los paquetes instalados y los registros del proceso.

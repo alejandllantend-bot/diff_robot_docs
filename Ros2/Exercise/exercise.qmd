@@ -4,7 +4,7 @@ A continuación, se presentan los pasos necesarios para implementar el nodo de p
 
 ### Crear el script de Python ejecutable
 
-![crear script chase_turtle.py](imagenes/chase_turtle.png)
+![crear script chase_turtle.py](/Ros2/imagenes/chase_turtle.png)
 
 ### Copiar el código en Visual Studio Code.
 
@@ -129,7 +129,7 @@ ros2 run turtlesim turtle_teleop_key
 ```bash
 ros2 run my_pkg chase_turtle
 ```
-![ejecucion](imagenes/atrapado.png)
+![ejecucion](/Ros2/imagenes/atrapado.png)
 
 
 

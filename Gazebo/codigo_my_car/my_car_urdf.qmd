@@ -28,7 +28,7 @@ para verificar que el codigo funciona ejecuta en tu terminal el siguiente comand
 ```bash
 ros2 launch urdf_tutorial display.launch.py model:=/home/ersonal/my_car.urdf
 ```
-![](imagenes_G/base_link.png)
+![](/Gazebo/imagenes_G/base_link.png)
 
 En ROS, casi siempre se llama `base_link` al cuerpo principal del robot. Es el punto de referencia para todas las demás piezas.
 ```bahs
@@ -66,7 +66,7 @@ y dentro del tag `<visual>` se agrega la siguiente línea de código:
 ```
 Quedando de la siguiente manera:
 
-![](imagenes_G/azul.png)
+![](/Gazebo/imagenes_G/azul.png)
 
 ## Ruedas
 
@@ -91,7 +91,7 @@ Se procede a la creación de la primera rueda del robot móvil, iniciando con la
     </joint>
 
 ```
-![](imagenes_G/rueda_der.png)
+![](/Gazebo/imagenes_G/rueda_der.png)
 ## Rueda izquierda.
 
 ```xml
@@ -112,7 +112,7 @@ Se procede a la creación de la primera rueda del robot móvil, iniciando con la
     </joint>
 
 ```
-![](imagenes_G/ruedas.png)
+![](/Gazebo/imagenes_G/ruedas.png)
 ```bahs
 geometry
 ```
@@ -166,7 +166,7 @@ Este bloque de código define la rueda loca (o caster wheel). En un robot de dos
         <origin xyz="0.2 0 -0.05" rpy="0 0 0" />
     </joint>
 
-![](imagenes_G/rueda_loca.png)
+![](/Gazebo/imagenes_G/rueda_loca.png)
 
 ```bahs
 sphere radius="0.05"
@@ -244,6 +244,6 @@ Ruedas laterales: Cilindros de radio 10 cm pegados a los lados del chasis. Como 
 
 Rueda Loca: Una esfera de radio 5 cm pegada debajo de la parte delantera para dar estabilidad.
 
-![](imagenes_G/robot_complet.png)
+![](/Gazebo/imagenes_G/robot_complet.png)
 
 

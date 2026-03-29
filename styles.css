@@ -1,1 +1,58 @@
 /* css styles */
+
+/* Variables para ajustar transparencia y tamaño de las imágenes de fondo */
+:root {
+    --bg-image-opacity: 0.87;
+    /* Ajusta la transparencia (0.0 a 1.0) */
+    --bg-image-size: 500px;
+    /* Ajusta el tamaño máximo (ej. 300px, 40%, 35vw) */
+}
+
+/* Contenedor de las imágenes de transfondo */
+.img-lateral {
+    position: fixed;
+    /* Fija la imagen en la pantalla */
+    top: 70%;
+    /* Centrado vertical */
+    transform: translateY(-50%);
+    z-index: 10;
+    /* Envía la imagen al frente para poder hacer click */
+    width: var(--bg-image-size);
+    opacity: var(--bg-image-opacity);
+    transition: all 0.3s ease-in-out;
+    /* Transición suave para animar el acercamiento */
+}
+
+/* Efecto al pasar la flecha por encima (iluminar y agrandar) */
+.img-lateral:hover {
+    opacity: 1.0;
+    /* Quita toda la transparencia */
+    filter: drop-shadow(0px 0px 25px rgba(0, 150, 255, 0.6));
+    /* Efecto de brillo o luz */
+    transform: translateY(-50%) scale(1.05);
+    /* Agranda la imagen ligeramente */
+    cursor: pointer;
+    /* Cambia el cursor a una 'manito' */
+}
+
+/* Asegurar que la imagen ocupe su contenedor */
+.img-lateral img {
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+}
+
+/* Posición específica izquierda / derecha */
+.img-izquierda {
+    left: 2rem;
+}
+
+.img-derecha {
+    right: 2rem;
+}
+
+/* Centrado vertical para los botones */
+.v-center-container {
+    min-height: 45vh;
+    align-items: center;
+}

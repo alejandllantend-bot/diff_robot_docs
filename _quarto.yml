@@ -2,12 +2,13 @@ project:
   type: website
 
 website:
-  title: "Guias"
+  title: "Guias de robótica"
   navbar:
     left:
-      - href: index.qmd
-        text: Home
-      - about.qmd
+      - href: Ros2/index.qmd
+        text: ROS2
+      - href: Gazebo/index.qmd
+        text: Gazebo  
 
 format:
   html:

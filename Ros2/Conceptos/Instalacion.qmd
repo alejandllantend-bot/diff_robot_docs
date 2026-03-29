@@ -1,5 +1,5 @@
 # Instalar ROS_2 JAZZY en Ubuntu.
-![](imagenes/ros2_jazzy.png)
+![](/Ros2/imagenes/ros2_jazzy.png)
 
 El procedimiento se divide en tres etapas principales:
 
@@ -61,11 +61,11 @@ ros2
 
 Si el sistema muestra el mensaje “command not found”, significa que ROS 2 fue instalado correctamente, pero no se ha configurado el entorno. En la imagen anexada se muestra el resultado esperado cuando el entorno está correctamente configurado.
 
-![](imagenes/entorno_ros2.png)
+![](/Ros2/imagenes/entorno_ros2.png)
 
 Luego, presione Ctrl + Shift + E para abrir una nueva ventana de terminal en Ubuntu. En esta nueva terminal deberá verificar la existencia del archivo setup.bash dentro del directorio de instalación (observe la imagen de referencia para confirmar el procedimiento).
 
-![](imagenes/ubuntu_ros2.png)
+![](/Ros2/imagenes/ubuntu_ros2.png)
 
 Una vez verificada la presencia del archivo, regrese a su terminal principal y ejecute el siguiente comando:
 
@@ -82,7 +82,7 @@ Para evitar repetir este procedimiento cada vez que se abra una nueva terminal, 
 gedit .bashrc
 ```
 
-![](imagenes/setup.bash.png)
+![](/Ros2/imagenes/setup.bash.png)
 
 se desplegará una ventana con el archivo de configuración. Al final del archivo, agregue la línea mencionada, guarde los cambios y cierre la ventana. De esta manera, cada vez que se abra una nueva terminal, el entorno de ROS 2 se cargará automáticamente sin necesidad de configurarlo manualmente.
 
