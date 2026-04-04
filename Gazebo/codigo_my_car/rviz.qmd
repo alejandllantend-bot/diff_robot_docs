@@ -1,0 +1,51 @@
+En esta etapa procederemos a consolidar la configuración visual de nuestro robot. Esto evitará tener que reconfigurar la escena desde cero en futuras ejecuciones. Para lograrlo, guardaremos el estado de RViz de la siguiente manera:
+
+1. **Creación del directorio de almacenamiento:**
+   Dirígete a Visual Studio Code y, dentro de la raíz del paquete `my_robot_description_car`, crea una nueva carpeta denominada `rviz`.
+
+2. **Guardar el archivo desde la interfaz gráfica:**
+   Una vez que el modelo esté ejecutándose en RViz y posea la configuración deseada, guárdala pulsando `Ctrl + Shift + S`. Aparecerá un cuadro de diálogo donde asignarás el nombre `urdf_config_car.rviz`, guardándolo inicialmente en tu directorio personal (Home). Al hacerlo, notarás cómo se actualiza el nombre en la barra superior de la ventana de RViz.
+
+![](/Gazebo/imagenes_G/guard.png)
+
+3. **Mover el archivo al paquete del proyecto:**
+   Finaliza la ejecución de RViz en la terminal. A continuación, abre una terminal de Ubuntu y usa el comando `ls` para comprobar que el archivo se ha guardado correctamente en tu directorio personal.
+
+![](/Gazebo/imagenes_G/ls.png)
+
+   Seguidamente, traslada la configuración hacia la carpeta que creaste en el primer paso mediante el siguiente comando:
+
+```bash
+mv urdf_config_car.rviz abc_ws/src/my_robot_description_car/rviz/
+```
+
+4. **Verificación final en el editor:**
+   Regresa a Visual Studio Code. Expande la carpeta `rviz` y comprueba que nuestro archivo `.rviz` ahora se encuentra allí.
+
+![](/Gazebo/imagenes_G/code_rviz.png)
+
+**Ruta del archivo de configuración de RViz**
+
+![](/Gazebo/imagenes_G/-d.png)
+
+Agregamos la siguiente linea en el archivo launch.
+
+```xml
+<let name="rviz_config_path"
+    value="$(find-pkg-share my_robot_description_car)/rviz/urdf_config_car.rviz" />
+```
+Este bloque define una variable que almacena la ruta del archivo de configuración de RViz. Dicho archivo (.rviz) contiene la disposición de la interfaz, incluyendo los elementos de visualización, vistas, y configuraciones previamente guardadas, lo que permite cargar automáticamente un entorno ya configurado para el robot.
+
+**Uso del argumento para cargar la configuración**
+
+```xml
+args="-d $(var rviz_config_path)"
+```
+Esta línea se utiliza dentro del nodo rviz2 para indicarle que debe iniciar utilizando el archivo de configuración definido previamente. El argumento -d permite cargar directamente dicha configuración, evitando tener que ajustar manualmente los parámetros cada vez que se ejecuta RViz.
+
+Al incluir estas líneas, se logra que RViz abra siempre con una configuración predefinida, mostrando automáticamente el robot, los ejes, y demás elementos necesarios. Esto mejora la eficiencia del flujo de trabajo y garantiza una visualización consistente durante el desarrollo en ROS 2.
+
+::: {.callout-warning}
+Al igual que con las carpetas `urdf` y `launch`, es indispensable agregar la carpeta `rviz` al archivo `CMakeLists.txt` de tu espacio de trabajo para que el sistema de compilación de ROS 2 la reconozca e instale correctamente.
+:::
+

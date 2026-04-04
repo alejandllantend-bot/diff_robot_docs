@@ -1,0 +1,51 @@
+## Inercia en Esferas: Parametrizando la Rueda Loca
+
+![](/Gazebo/imagenes_G/sphere_inertia.png)
+Para concluir por completo con nuestro proceso físico de asignación de masas y dotar de comportamiento dinámico universal al robot, terminaremos enfocándonos en proveerle volumen inercial a nuestra rueda loca motriz frontal (*Caster Wheel*).
+
+Puesto que esta rueda de apoyo inferior fue modelada estéticamente bajo el uso del componente tridimensional primitivo esférico (`<sphere>`), no responderá de forma física certera evaluándolo como a las lógicas mecánicas de la "Caja" o del "Cilindro". Las esferas simétricas puras requieren obligadamente que se procese la matemática respectiva de su propia y exclusiva matriz de colisión (Tensor inercial).
+
+### 1. Desarrollando el Macro Esférico (`sphere_inertia`)
+
+Procederemos a estructurar nuestra tercera y última macro de auto-cálculo para inercia depositándola directamente en `common_properties.xacro`. Ingresa este último formato volumétrico calculador integrándolo en la parte inferior de tu listado macro actual:
+
+```xml
+<xacro:macro name="sphere_inertia" params="m r o_xyz o_rpy">
+    <inertial>
+        <mass value="${m}" />
+        <origin xyz="${o_xyz}" rpy="${o_rpy}" />
+        
+        <!-- Matriz tensora inercial algorítmica para Esferas Simétricas Sólidas -->
+        <inertia ixx="${(2/5) * m * r * r}" ixy="0" ixz="0"
+                 iyy="${(2/5) * m * r * r}" iyz="0"
+                 izz="${(2/5) * m * r * r}" />
+    </inertial>
+</xacro:macro>
+```
+
+**Analizando la simplificación logarítmica del Tensor Esférico:**
+- A diferencia de los modelos poligonales que exigían una asimilación forzada con variables extra como largos de cara asimétricos (`l`) o sus caras tridimensionales rectangulares exclusivas (`x, y, z`), una figura perfectamente curva de un punto neutro es idéntica en proporciones en todo momento indistintamente del ángulo de contacto. Sólamente va a requerir alimentarse del peso paramétrico (`m`) interconectado geométricamente a su variable medida central originaria: Su radio rotativo estético (`r`).
+- Como es posible evidenciar dentro de las respectivas etiquetas focales en los vectores limitantes (`ixx`, `iyy`, e `izz`), al reaccionar idénticamente igual sobre los costados paralelos, la física universaliza el dictamen general promediando repetitivamente bajo la ecuación oficial `(2/5 * Masa * Radio²)` para generar los tres planos del tensor.
+
+### 2. Aplicando Inercia Sólida al Eslabón Frontal
+
+Nuestra rueda bola omnidireccional dictaminadora (rueda loca delantera de apoyo) es lógicamente quien absorberá la herencia generativa de esta programación teórica.
+
+Deberás ubicar el cuerpo físico del frente `<link name="caster_wheel_link">` que alojaste re-ordenadamente en tu módulo integrador de carrocería `movile_base.xacro`. Posteriormente procede a emular la inserción macroesférica (`<xacro:sphere_inertia... />`) dándole cabida temporal estricta justo durante el cierre del encapsulado `<visual>`.
+
+La organización del enlace eslabón resultaría bajo el siguiente espectro:
+
+```xml
+<link name="caster_wheel_link">
+    <!-- El espacio que recubre previamente a </visual> queda indemne -->
+    
+    <!-- Integración Lógica Gravitacional Esférica al frente asfáltico -->
+    <xacro:sphere_inertia m="0.5" r="${wheel_radius / 2.0}"
+                          o_xyz="0 0 0" o_rpy="0 0 0" />
+</link>
+```
+
+**Evaluación pormenorizada de los parámetros paramétricos transferidos:**
+- **Masa Base Liviana `m="0.5"`**: Dentro del balance en pesos pro-simulador del estándar RViz/Gazebo, la pequeña rueda boba focal front-lateral jamás será el punto mayor receptor primario estructural asediado por las baterías industriales masivas ni los chasis; la proveeremos asertiva y directamente dotándole en el URDF con la ligereza referencial neutra de un *Medio Kilogramo (0.5 kg)*, previniendo asimetrías severas desbalanceadas ante impactos o virajes bruscos de giros omnidireccionales en Gazebo.
+- **Geometría correlativa de Esfera `r`**: Fiel a nuestra filosofía principal y esquivando con recelo roturas algorítmicas con flotabilidad asfáltica en etapas inerciales a futuro, jamás insertaremos directivas independientes fijas aquí. Por consiguiente transferiremos nuestra matemática cruzada paramétrica procreada ex profeso para ella en el pasado URDF: `${wheel_radius / 2.0}` (dividiéndola así en exactitud equivalente y relativa ante la goma del aro mayor del set vector trasero).
+- **Consistencia Inalterable Ortogonal `o_rpy="0 0 0"`**: El atributo de las constantes primitivas esféricas establece que la redacción ortográfica visual original jamás ha necesitado compensación alguna o distorsión virtual de origen referenciado (ya que un globo perfectamente pulcro posado contra la superficie asfáltica emitirá la mismísima física si se rueda visualmente bajo Yaw, Roll o Pitch). Por tanto procedemos a obviar compensaciones paramétricas extrañas asumiendo firmemente la traspasabilidad neutra general en base absoluta a ceros nulos cruzados (`0 0 0`).

@@ -4,7 +4,9 @@ Se inicia el desarrollo de un modelo robótico mediante su descripción en forma
 
 ```bash
 touch my_car.urdf
+```
 
+```bash
 code my_car.urdf
 ```
 
@@ -23,7 +25,7 @@ El archivo my_car.urdf se abre en el editor de código, donde se debe comenzar a
     </link>
 </robot>
 ```
-para verificar que el codigo funciona ejecuta en tu terminal el siguiente comando y observas el resultado:
+para verificar que el codigo funciona ejecuta en tu terminal el siguiente comando y observas el resultado de cada cambio que realizas:
 
 ```bash
 ros2 launch urdf_tutorial display.launch.py model:=/home/ersonal/my_car.urdf

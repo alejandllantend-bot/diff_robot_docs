@@ -1,0 +1,84 @@
+## Parametrización del Radio de las Ruedas
+
+Para finalizar con el dimensionamiento general de nuestra estructura móvil, pasaremos a definir el radio de las ruedas (`wheel_radius`). 
+
+¿Por qué resulta fundamental parametrizar el tamaño de la rueda? Cuando las llantas de un vehículo crecen estructuralmente, su diámetro empuja a toda la gran carrocería física hacia arriba, apartándola del asfalto. Al atar la altura de nuestro modelo a una variable analítica de las ruedas, garantizamos que al modificar estas, el chasis principal completo se eleve o descienda inteligentemente en idéntica proporción, evitando que la caja quede rozando o atravesando el escenario virtual.
+
+### 1. Declaración de la variable `wheel_radius`
+
+Nos dirigimos a la directiva global en la cabecera de `my_car.xacro` y agregamos la propiedad principal del radio para las ruedas. Le asignaremos un valor de arranque de `0.2` (el equivalente a 20 centímetros en factor de escala):
+
+```xml
+<xacro:property name="wheel_radius" value="0.2" />
+```
+
+### 2. Modificación de la geometría rodante trasera (Motriz)
+
+Como indica nuestro diseño, el vehículo consta de **dos ruedas motrices en el tren trasero** (rueda izquierda y derecha). Aplicaremos nuestra nueva variable sustituyendo el valor fijo `radius` dentro de su etiqueta geométrica cilíndrica `<cylinder>`. Actualiza ambas secciones:
+
+```xml
+<!-- Rueda Motriz Izquierda Trasera -->
+<link name="left_wheel_link">
+    <visual>
+        <geometry>
+            <cylinder radius="${wheel_radius}" length="0.05" />
+        </geometry>
+    </visual>
+</link>
+
+<!-- Rueda Motriz Derecha Trasera -->
+<link name="right_wheel_link">
+    <visual>
+        <geometry>
+            <cylinder radius="${wheel_radius}" length="0.05" />
+        </geometry>
+    </visual>
+</link>
+```
+
+### 3. Elevación del Pivote Central (base_joint)
+
+Como adelantábamos, al amarrar la geometría a las variables vamos por muy buen camino. Sin embargo, tenemos que compensar mecánicamente esta distancia vertical para que el carro no penetre la superficie simulada.
+
+Para ello, modificaremos nuestra conexión maestra de apoyo (el origen estructural que levanta el chasis `base_link` desde el nivel de referencia plano `base_footprint`). En el pivote global `base_joint`, sustituiremos de su eje escalar `Z` las constantes estáticas, por la altura variable de `${wheel_radius}`.
+
+De esta manera el bloque central asimilará que tiene que flotar verticalmente en directa proporción al espacio del radio geométrico que imponen sus propios neumáticos:
+
+```xml
+<joint name="base_joint" type="fixed">
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <!-- Distanciamiento vertical atado siempre paramétricamente al neumático -->
+    <origin xyz="0 0 ${wheel_radius}" rpy="0 0 0"/>
+</joint>
+```
+
+### 4. Ajustes matemáticos en la Rueda Loca Delantera (Caster Wheel)
+
+Nuestro esquema estructural incluye una rueda libre direccional o de apoyo, dispuesta en la **sección delantera** (conocida como "rueda loca"). Por una cuestión de distribución aerodinámica y de pesos esta debe ser de menor formato; estableceremos lógicamente que su geometría es equivalente a *la mitad del tamaño de las traccionadoras traseras*.
+
+Abre el componente `<caster_wheel_link>` (la malla esférica frontal) y sustituye el radio genérico utilizando una división matemática de la propiedad global:
+
+```xml
+<link name="caster_wheel_link">
+    <visual>
+        <geometry>
+            <sphere radius="${wheel_radius / 2.0}" />
+        </geometry>
+    </visual>
+</link>
+```
+
+Por último, al ser cincuenta por ciento más baja que el tren rodante posterior, si dejamos su unión en cero absoluto no alcanzará la línea de tierra, dejando la nariz de nuestro vehículo rebotando en el aire. Para que se consolide como un auténtico y seguro punto triple de apoyo frontal, el eje de nuestro brazo estructural en la parte de adelante tiene que inclinarse o desplazarse apuntando al suelo en esta diferencia precisa.
+
+Para lograr esta caída que compensa la pieza, ve al enganche frontal (`base_caster_wheel_joint`) y reemplaza su descenso fijo anterior de `-0.05` en la línea del origen Z por nuestra derivación de compensación en negativo `${-wheel_radius / 2.0}`:
+
+```xml
+<joint name="base_caster_wheel_joint" type="fixed">
+    ...
+    <!-- Caída paramétrica frontal compensatoria del desnivel -->
+    <origin xyz="${base_length / 3.0} 0 ${-wheel_radius / 2.0}" rpy="0 0 0" />
+</joint>
+```
+
+¡Espléndido resultado paramétrico! Has concluido exitosamente las configuraciones de relaciones interdependientes en Xacro, garantizando un URDF frontal-trasero que predice inteligentemente las reestructuraciones y que previene modelos desnivelados en posteriores etapas.

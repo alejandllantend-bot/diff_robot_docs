@@ -1,0 +1,97 @@
+# Archivo de lanzamiento
+
+## Display.launch.xml
+
+En esta etapa se describe el proceso para configurar un archivo de lanzamiento dentro del paquete.
+
+Primero, se debe establecer un directorio específico para organizar estos archivos. Ubicado en la raíz del paquete `my_robot_description_car`, se crea una nueva carpeta denominada `launch`. Esto se puede realizar haciendo clic derecho en el explorador de archivos y seleccionando la opción para crear un nuevo directorio.
+
+Una vez dispuesta la carpeta `launch`, se procede a generar un nuevo archivo en su interior, el cual se llamará `display.launch.xml`. Este archivo alojará el código de lanzamiento necesario para levantar y configurar los nodos de la visualización.
+
+::: {.callout-warning}
+Es indispensable registrar la carpeta `launch` en el archivo `CMakeLists.txt`. De este modo, ROS 2 será capaz de identificar e instalar estos recursos adecuadamente, habilitando su ejecución posterior.
+:::
+
+```xml
+<launch>
+    <let name="urdf_path"
+         value="$(find-pkg-share my_robot_description_car)/urdf/my_car.urdf" />
+    
+    <node pkg="robot_state_publisher" exec="robot_state_publisher">
+        <param name="robot_description"
+               value="$(command 'xacro $(var urdf_path)')" />
+    </node>
+
+    <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
+
+    <node pkg="rviz2" exec="rviz2" output="screen" />
+        
+</launch>
+```
+## Explicación del código.
+
+### Inicio del archivo launch
+
+```xml
+<launch>
+```
+Este bloque define el inicio del archivo de lanzamiento, donde se agrupan todos los nodos y configuraciones que serán ejecutados dentro del sistema en ROS 2.
+
+### Definición de la ruta del URDF
+
+```xml
+<let name="urdf_path"
+     value="$(find-pkg-share my_robot_description_car)/urdf/my_car.urdf" />
+```
+Se crea una variable que almacena la ruta del archivo URDF del robot. Esta se obtiene automáticamente dentro del paquete, lo que facilita la portabilidad y evita errores al manejar rutas manuales.
+
+### Nodo robot_state_publisher
+
+```xml
+<node pkg="robot_state_publisher" exec="robot_state_publisher">
+```
+Este nodo se encarga de leer la descripción del robot y publicar las transformaciones entre sus diferentes partes, permitiendo representar correctamente su estructura en el sistema.
+
+### Parámetro robot_description
+
+```xml
+<param name="robot_description"
+       value="$(command 'xacro $(var urdf_path)')" />
+```
+Aquí se carga el archivo URDF del robot y se procesa mediante xacro, generando el parámetro robot_description, el cual contiene toda la información estructural necesaria para representar el robot.
+
+### Nodo joint_state_publisher_gui
+
+```xml
+<node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
+```
+
+Este nodo proporciona una interfaz gráfica que permite manipular manualmente las articulaciones del robot, facilitando la verificación de su movimiento y comportamiento.
+
+### Nodo rviz2
+
+```xml
+<node pkg="rviz2" exec="rviz2" output="screen" />
+```
+
+Este nodo ejecuta RViz, herramienta que permite visualizar el robot en un entorno tridimensional y analizar su estructura y estados en tiempo real.
+
+### Cierre del archivo launch
+
+```xml
+</launch>
+```
+Indica el final del archivo de lanzamiento, cerrando la configuración de los nodos que serán ejecutados.
+
+al tener nuestro archivo display.launch.xml listo, se procede a compilar el workspace para verificar que no haya errores:
+
+```bash
+colcon build
+source install/setup.bash
+```
+y para visualizar el robot se ejecuta el siguiente comando:
+
+```bash
+ros2 launch my_robot_description_car display.launch.xml
+```
+este comando despliega el archivo de lanzamiento y abre RViz con el robot cargado.

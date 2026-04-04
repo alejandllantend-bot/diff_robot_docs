@@ -1,0 +1,60 @@
+## Uso de Macros en Xacro (Opcional)
+
+Si observas detenidamente tu archivo `my_car.xacro`, notarás que el código de nuestras dos ruedas (`right_wheel_link` y `left_wheel_link`) **es exactamente el mismo en su interior**; lo único que cambia entre ambos bloques es el nombre ("right" o "left").
+
+::: {.callout-note}
+**¿Es obligatorio usar Macros en este robot?**
+Para un vehículo tan sencillo con solo dos ruedas, realizar este paso *no es estrictamente necesario* y el robot funcionará perfectamente con los bloques que ya tienes. 
+
+Sin embargo, en robótica profesional se construyen modelos con 4, 6 o decenas de piezas estructurales repetitivas. Escribir manualmente cada uno de esos componentes saturaría el archivo y consumiría mucho tiempo de diseño. Por lo tanto, si alguna vez necesitas instanciar el mismo código varias veces, el uso de **Macros de Xacro** se vuelve una necesidad imperativa para programar de forma profesional, estructurada y veloz.
+:::
+
+A continuación, aprenderemos cómo reemplazar nuestras ruedas estáticas construyendo una "Plantilla".
+
+### 1. Definición de la Macro base
+
+Una macro funciona como una función tradicional de programación: definimos el esquema del algoritmo una sola vez, y lo usamos a voluntad inyectándole variables al llamarlo.
+
+Justo después de que termina tu estructura de `base_link`, crearemos el envoltorio de la Macro usando el tag `<xacro:macro>`. Lo bautizaremos con el nombre abstracto `wheel_link` e indicaremos que va a recibir un parámetro llamado `prefix` (prefijo):
+
+```xml
+<xacro:macro name="wheel_link" params="prefix">
+    <!-- El prefijo se inyecta dinámicamente usando ${prefix} para bautizar al Link -->
+    <link name="${prefix}_wheel_link">
+
+    </link>
+</xacro:macro>
+```
+
+### 2. Integración del código visual 
+
+El siguiente paso es muy simple. Toma el contenido de la etiqueta `<visual>` de tu rueda actual (que ya incluye las variables de radio y anchura que desarrollamos antes) y colócalo en las entrañas de la Macro que diseñamos:
+
+```xml
+<xacro:macro name="wheel_link" params="prefix">
+    <link name="${prefix}_wheel_link">
+        <visual>
+            <geometry>
+                <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0" />
+            <material name="grey" />
+        </visual>
+    </link>
+</xacro:macro>
+```
+
+### 3. Invocando las ruedas dinámicamente
+
+¡Nuestra plantilla ya está lista para operar! Esto significa que **puedes seleccionar y eliminar de tu archivo los dos bloques enormes de código antiguo** donde programaste a mano la rueda izquierda y derecha.
+
+Para reemplazarlos, en el mismo lugar donde estaban, realizaremos la "invocación" directa hacia nuestra Macro. Para ello agregaremos solamente dos líneas de código usando la etiqueta de macro y pasándole el parámetro *prefix* respectivo:
+
+```xml
+<!-- Invocación de las llantas motrices -->
+<xacro:wheel_link prefix="right" />
+<xacro:wheel_link prefix="left" />
+```
+
+Con estas instrucciones tan simples, el analizador de URDF clonará automáticamente la geometría para generar un eslabón `right_wheel_link` y un `left_wheel_link`. 
+¡Incuso si quisieras configurar un vehículo todoterreno de 8 ruedas en el futuro, solo necesitarías escribir 8 líneas sumamente cortas para generar toda su tracción física!

@@ -1,0 +1,51 @@
+## Inercia en Cilindros: Parametrizando las Ruedas
+![](/Gazebo/imagenes_G/cylinder_inertia.png)
+Para que nuestro vehículo accione su modelo contra el suelo de forma lógica, así como le dimos densidad gravitacional al chasis frontal, debemos proveer propiedades de impacto e inercia a la superficie de los neumáticos motrices. 
+
+No obstante, en el mundo real simulado mediante cálculos, un bloque rectangular distribuye su centro de masa a través del espacio de una forma abrumadoramente distinta en comparación a cómo lo efectúa una estructura esférica o cilíndrica rodante. Por lo tanto, no podemos usar la `box_inertia` que creamos en la lección pasada; Gazebo requiere que construyamos una matriz analítica que refleje las ecuaciones restrictivas exclusivas de los cilindros.
+
+### 1. Desarrollando el Macro Cilíndrico (`cylinder_inertia`)
+
+Al igual que construimos un encapsulado matemático generalizado de código Xacro para resolver polígonos ortogonales en el centro de control intermedio, formularemos la función hermana para solventar el volumen interior equivalente de los cilindros del conjunto motriz.
+
+Dirígete nuevamente hacia la hoja principal global de constantes `common_properties.xacro` e inserta esta segunda Macro de cálculo a continuación de tu bloque previo (`box_inertia`):
+
+```xml
+<xacro:macro name="cylinder_inertia" params="m r l o_xyz o_rpy">
+    <inertial>
+        <mass value="${m}" />
+        <origin xyz="${o_xyz}" rpy="${o_rpy}" />
+        
+        <!-- Matriz Inercial de volumen para un Cilindro Sólido -->
+        <inertia ixx="${(m/12) * (3*r*r + l*l)}" ixy="0" ixz="0"
+                 iyy="${(m/12) * (3*r*r + l*l)}" iyz="0"
+                 izz="${(m/2) * (r*r)}" />
+    </inertial> 
+</xacro:macro>
+```
+
+**Analizando la algoritmia diferencial del bloque Cilíndrico:**
+- A diferencia del encapsulado anterior enfocado en "Tramos X, Y o Z", esta está formulada para la estructuración paramétrica pura radial recibiendo radio (`r`), largo transversal (`l`), acoplados con nuestra masa pre-fijada (`m`) y compensaciones focales abstractas base (`o_xyz` y `o_rpy`).
+- Las etiquetas primarias de Tensor (`ixx`, `iyy`, `izz`) desechan entonces el cruce ortogonal de las caras por ejecutar matemáticamente bajo cálculo la compleja variante estandarizada para referirnos dinámicamente sobre el radio central de un cilindro rodante continuo, promediando el cociente en tercios del cuadrado de dichos márgenes frente a la inyección física volumétrica en kilogramos.
+
+### 2. Adhiriendo la matriz Inercial a la tracción Motriz
+
+Nuevamente destaca la impresionante proeza logística que realizamos al programar [nuestras ruedas bajo un llamado unificado genérico de Xacro (`wheel_link`)](wheel_link.qmd). Al tener una sola macro programada dictaminando la fisionomía virtual rodante de nuestra máquina, **no tendremos que programar manualmente la adición inercial cilíndrica dos veces**. Lo controlaremos de modo imperativo para ambas simultáneamente.
+
+Abre el archivo constructivo organizador primario `movile_base.xacro` e inspecciona tu sector concentrador maestro asignado bajo la macro de llantas (`<xacro:macro name="wheel_link" ...>`). Ejecutaremos o llamaremos el proceso calculador (`<xacro:cylinder_inertia.../>`) bajo el marco secuencial estructural inferior tras consolidar nuestra capa de modelo visual nativo estético (`</visual>`). Así luciera finalizada la integración:
+
+```xml
+        <!-- ... Cierre del código de la etiqueta visual primitiva -->
+        </visual>
+        
+        <!-- Implementación del llamado dinámico a la Propiedad Inercial física -->
+        <xacro:cylinder_inertia m="1.0" r="${wheel_radius}" l="${wheel_length}"
+                                o_xyz="0 0 0" o_rpy="${pi / 2.0} 0 0" />
+    </link>
+<!-- Cierre absoluto de xacro:macro de las llantas referencial -->
+```
+
+**Evaluación del traspaso y envío inercial pre-fijado:**
+- **Atributo Integral `m="1.0"`**: Consignamos categóricamente al espacio URDF que ambas llantas (derecha o izquierda) aportan un gramaje físico igual de base a un kilogramo sobre el total global rodante en el puente de Gazebo.
+- **Asignación Geométrica Variable `r` y `l`**: Consolidamos con robustez el hecho de inyectarle la fisionomía proporcional fidedigna delegándole para procesar internamente las variables base `${wheel_radius}` asociándola al radio final de la ecuación física y delegando nuestro referencial de anchura al parámetro equivalente de la lógica matemática cruzada paralela.
+- **Cohesión Estática Relativa `o_rpy`**: En la asignación modeladora visual inicial URDF nuestro cilindro nos figuraba originalmente perpendicular/estancado de canto. Debimos en aquel tutorial torcer su apariencia unos 90° (`pi/2.0`) bajo los estándares del asiente vectorial nativo global (Roll). Al ejecutar bajo la macro este desfase o corrección en el bloque `o_rpy`, dotamos de compatibilidad cruzada a Gazebo para indicarle explícitamente que la inercia (la gran caja o volumen tensora) tiene mandatoriamente que aplicarse bajo la inclinación paramétrica misma simulando un cilindro rodante para coincidir paralelamente a los puntos de colisión asfáltica.

@@ -6,8 +6,8 @@ Bienvenido a la sección de ROS2. Selecciona uno de los siguientes botones para 
 
 ## Conceptos
 - [Plan de Trabajo](Conceptos/plan.qmd)
-- [Instalación de ROS2](Conceptos/Instalacion.qmd)
 - [Conceptos Básicos](Conceptos/Conceptos.qmd)
+- [Instalación de ROS2](Conceptos/Instalacion.qmd)
 - [Workspace en ROS2](Conceptos/workspace.qmd)
 - [Paquetes en ROS2](Conceptos/paquete.qmd)
 
@@ -20,7 +20,7 @@ Bienvenido a la sección de ROS2. Selecciona uno de los siguientes botones para 
 
 ## Ejercicios
 - [Descripción del Ejercicio](Exercise/Descripcion_exercise.qmd)
-- [Ejercicio: Chase Turtle](Exercise/exercise.qmd)
 - [Explicación del Ejercicio](Exercise/explicacion.qmd)
+- [Ejercicio: Chase Turtle](Exercise/exercise.qmd)
 
 :::

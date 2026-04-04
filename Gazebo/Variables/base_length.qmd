@@ -1,0 +1,58 @@
+## Parametrización del Robot con Xacro
+
+![](/Gazebo/imagenes_G/xacro.png)
+
+Una de las principales ventajas de utilizar Xacro es la posibilidad de declarar **propiedades** (similares a las variables en cualquier lenguaje de programación). Esto nos permite definir valores globales una sola vez y referenciarlos en múltiples lugares del código.
+
+El objetivo es que si necesitamos modificar las dimensiones del robot en el futuro, baste con cambiar el valor de la variable en lugar de buscar y modificar múltiples números de forma manual por todo el archivo.
+
+En esta primera parte, comenzaremos definiendo las variables fundamentales de nuestro robot, partiendo por la longitud de su base.
+
+### 1. Declaración y uso de variables base
+
+Nuestra primera variable será la longitud principal de la estructura (`base_length`). Para inicializarla, agrega la siguiente línea en la parte superior del archivo `my_car.xacro` (justo debajo de la declaración del robot):
+
+```xml
+<xacro:property name="base_length" value="0.6" />
+```
+
+Actualmente, la geometría de la caja en el bloque `base_link` posee valores estáticos (números directos) para su largo, ancho y alto. Al reemplazar el valor fijo del largo (`0.6`) por nuestra nueva variable dinámica, el código quedará de la siguiente manera:
+
+```xml
+<link name="base_link">
+    <visual>
+        <geometry>
+            <box size="${base_length} 0.4 0.2" />
+        </geometry>
+...
+```
+
+![](/Gazebo/imagenes_G/base_length.png)
+
+### 2. Geometría proporcional mediante operaciones
+
+Al introducir variables, no solo buscamos poder cambiar un valor superficialmente, sino lograr que el diseño entero se adapte matemáticamente a dicho cambio. Por ejemplo, si aumentamos el tamaño de la base, queremos que las ruedas se reposicionen de manera automática para mantener las mismas proporciones de distancia.
+
+En lugar de definir la posición `x` de las ruedas (el tag `<origin>`) usando números directos como `0.15` y `0.2`, podemos aprovechar a que Xacro soporta operaciones aritméticas y vincular estos orígenes a nuestra variable `base_length`:
+
+- Para las **ruedas derecha e izquierda**: Reemplazaremos el origen en `x` actual de `0.15` por la ecuación `${base_length / 4.0}` (ya que 0.6 ÷ 4 = 0.15).
+- Para la **rueda loca (caster wheel)**: Cambiaremos su origen en `x` de `0.2` a `${base_length / 3.0}` (ya que 0.6 ÷ 3 = 0.2).
+
+Al hacer esto, el vehículo mantendrá siempre su simetría sin importar qué valor asignemos a `base_length` después.
+
+### 3. Aprovechando constantes matemáticas
+
+![](/Gazebo/imagenes_G/pi.png)
+
+Xacro también nos proporciona un acceso directo a funciones y constantes matemáticas estándar, lo cual nos ahorra la carga de tener que escribir decimales estáticos. 
+
+En la configuración de rotación (`rpy` - Roll, Pitch, Yaw) de los cilindros que representan las ruedas, habíamos utilizado un valor aproximado de `1.57 0 0` para rotar y fijar las ruedas a la base.
+
+Para lograr un modelado completamente preciso y paramétrico, podemos reemplazar el valor escrito fijamente de `1.57` por `${pi / 2.0}`:
+
+```xml
+<!-- Ejemplo aplicativo -->
+<origin xyz="0 0 0" rpy="${pi/2.0} 0 0"/>
+```
+
+Con estas bases sentadas, en la siguiente sección continuaremos declarando y estableciendo el resto de las variables (como el ancho, el alto de la base, y los radios de las ruedas) para que nuestro robot quede totalmente parametrizado.

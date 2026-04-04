@@ -1,0 +1,44 @@
+# Colisiones en Gazebo (`<collision>`)
+
+En Gazebo, no basta con definir la apariencia visual de un robot (`<visual>`); también es fundamental definir sus propiedades de colisión mediante la etiqueta `<collision>`.
+
+**¿Por qué son importantes las colisiones?**
+El motor de físicas de Gazebo necesita las geometrías de colisión para calcular los contactos y las interacciones físicas entre el robot y el entorno (como el suelo, obstáculos u otros modelos). Sin la etiqueta `<collision>`, el robot no tendría cuerpo físico: la gravedad lo haría atravesar el piso como si fuera un fantasma. Para optimizar el rendimiento de la simulación continua, se recomienda encarecidamente utilizar geometrías primitivas y simples (como cajas, esferas o cilindros) para las colisiones, dejando los detalles visuales de alta resolución exclusivamente para la etiqueta `<visual>`.
+
+A continuación, agregamos la etiqueta `<collision>` a los diversos enlaces (`links`) de nuestro robot. Por convención, esta etiqueta se añade después de la sección `<visual>`.
+
+### Chasis (`base_link`)
+Se utiliza una geometría de caja (`box`) con el origen desplazado para que coincida correctamente con el modelo visual del chasis.
+
+```xml
+<collision>
+    <origin xyz="0 0 ${base_height / 2.0}" rpy="0 0 0" />
+    <geometry>
+        <box size="${base_length} ${base_width} ${base_height}" />
+    </geometry>
+</collision>
+```
+
+### Ruedas Motrices (`wheel_link`)
+Se define una geometría de colisión esférica con su respectivo radio y rotación. Es común usar cilindros o esferas para representar ruedas.
+
+```xml
+<collision>
+    <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
+    <geometry>  
+        <sphere radius="${wheel_radius}" />
+    </geometry>
+</collision>
+```
+
+### Rueda Loca (`caster_wheel_link`)
+Al igual que las ruedas motrices, se utiliza una geometría esférica, ajustada al tamaño menor correspondiente.
+
+```xml
+<collision>
+    <origin xyz="0 0 0" rpy="0 0 0" />
+    <geometry>
+        <sphere radius="${wheel_radius / 2.0}" />
+    </geometry>
+</collision>
+```

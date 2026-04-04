@@ -1,0 +1,42 @@
+## Transición de URDF a Xacro
+
+En esta sección, migraremos nuestro modelo base de URDF a Xacro (XML Macros). Xacro nos permitirá parametrizar el robot, crear macros reutilizables y estructurar el código de una manera mucho más limpia y escalable.
+
+Sigue estos pasos para realizar la conversión:
+
+1. **Renombrar el archivo del modelo:**
+   Dirígete a la carpeta `urdf` de tu paquete y cambia la extensión del archivo `my_car.urdf`. Ahora deberá llamarse `my_car.xacro`.
+
+2. **Actualizar la cabecera del archivo:**
+   Abre el nuevo archivo `my_car.xacro`. En la etiqueta principal `<robot>`, es indispensable declarar el espacio de nombres de Xacro para habilitar sus funciones. Modifica la etiqueta de apertura para que quede así:
+
+```xml
+<robot name="my_car" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+```
+
+3. **Modificar el archivo de lanzamiento:**
+   Dado que acabamos de cambiar el nombre y la extensión del archivo del modelo, debemos actualizar esta referencia en nuestro archivo `display.launch.xml`. 
+   
+   Abre dicho archivo y busca la variable donde definiste la ruta del modelo. Modifícala para que ahora apunte a `my_car.xacro`.
+
+4. **Compilar y validar los cambios:**
+   Abre tu terminal, compila el espacio de trabajo para registrar la nueva configuración y lanza la visualización para comprobar que todo sigue funcionando correctamente:
+
+```bash
+colcon build
+source install/setup.bash
+ros2 launch my_robot_description_car display.launch.xml
+```
+
+::: {.callout-note}
+**Solución de problemas:** Si al lanzar el comando el robot no se visualiza en RViz2 o se arroja algún error, puede deberse a que el sistema no ha actualizado los cambios internos correctamente. Si esto ocurre, cierra Visual Studio Code, vuelve a abrirlo y ejecuta nuevamente el proceso de compilación y lanzamiento.
+:::
+
+5. **Optimización con instalación simbólica (Symlink):**
+   Si la visualización es correcta, detén la ejecución en la terminal (`Ctrl + C`). Para agilizar nuestro flujo de trabajo a partir de ahora, resulta sumamente útil compilar usando enlaces simbólicos. Esto nos evitará la tarea de tener que volver a compilar el paquete con `colcon build` cada vez que hagamos una modificación en los archivos del robot:
+
+```bash
+colcon build --symlink-install
+source install/setup.bash
+```
+   De este modo, los cambios futuros que realices en el archivo Xacro se reconocerán automáticamente en la siguiente ejecución sin requerir compilaciones adicionales.

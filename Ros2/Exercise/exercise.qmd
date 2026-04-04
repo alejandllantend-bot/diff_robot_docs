@@ -1,4 +1,4 @@
-## Desarrollo del ejercicio paso a paso.
+## Desarrollo del ejercicio.
 
 A continuación, se presentan los pasos necesarios para implementar el nodo de persecución en ROS 2 utilizando Turtlesim.
 

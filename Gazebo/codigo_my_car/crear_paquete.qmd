@@ -1,0 +1,72 @@
+## Creación de la estructura del paquete.
+En esta sección se describe el proceso para crear la estructura básica de un paquete en ROS 2 que contendrá la descripción de un robot, la cual será utilizada posteriormente en herramientas de visualización como RViz.
+![](/Gazebo/imagenes_G/crear_pkg.png)
+
+Ubicado dentro del directorio src del workspace, se crea un nuevo paquete con el siguiente comando:
+
+```bash
+ros2 pkg create my_robot_description_car
+```
+Este comando genera automáticamente la estructura base del paquete, incluyendo archivos como:
+
+package.xml
+CMakeLists.txt
+carpetas include y src
+
+Una vez creado el paquete, se ingresa a su directorio:
+
+cd my_robot_description_car
+ls
+
+Aquí se pueden visualizar los archivos y carpetas generados por defecto.
+Dado que este paquete estará orientado a la descripción del robot (URDF) y no al desarrollo en C++, se eliminan las carpetas innecesarias:
+```bash
+rm -rf include/ src/
+```
+Se crea una carpeta específica para almacenar los archivos de descripción del robot:
+```bash
+mkdir urdf
+```
+Esta carpeta permitirá organizar adecuadamente los modelos del robot, facilitando su uso en etapas posteriores como la visualización y simulación.
+
+Se regresa al directorio principal del workspace:
+```bash
+cd ..
+```
+Luego, se utiliza el siguiente comando para mover el archivo my_car.urdf a la carpeta urdf creada previamente:
+
+```bash
+mv my_car.urdf abc_ws/src/my_robot_description_car/urdf/
+```
+Este paso es fundamental, ya que ubica el archivo en la estructura correcta del paquete, lo cual es necesario para su correcta integración con herramientas de ROS 2.
+
+Finalmente, se accede nuevamente al directorio src del workspace y se abre el proyecto en el editor de código Visual Studio Code para continuar con la edición y configuración de los archivos:
+
+```bash
+cd abc_ws/src/
+ls
+code .
+```
+
+![](/Gazebo/imagenes_G/ok_pk.png)
+![](/Gazebo/imagenes_G/code.png)
+
+Al abrir el proyecto en Visual Studio Code, se puede observar la estructura del paquete my_robot_description_car, dentro del cual se encuentra la carpeta urdf que contiene el archivo my_car.urdf. Asimismo, se identifican los archivos principales del paquete, como CMakeLists.txt y package.xml.
+
+En el archivo CMakeLists.txt se realiza una limpieza básica, eliminando configuraciones innecesarias.
+
+![](/Gazebo/imagenes_G/list.txt.png)
+
+Esta limpieza permite simplificar el paquete y enfocarlo únicamente en la gestión de archivos URDF y su posterior visualización.
+
+```bash
+install(
+    DIRECTORY urdf
+    DESTINATION share/${PROJECT_NAME}/
+)
+```
+Esta instrucción se utiliza dentro del sistema de compilación de ROS 2 para indicar que la carpeta urdf debe ser incluida durante el proceso de instalación del paquete. Una vez guardado el archivo, se procede a compilar el workspace utilizando el comando colcon build.
+
+::: {.callout-warning}
+Es necesario registrar la carpeta urdf en el archivo CMakeLists.txt para que ROS 2 pueda localizar y utilizar los archivos de descripción del robot durante la ejecución de herramientas de visualización y simulación.
+:::
