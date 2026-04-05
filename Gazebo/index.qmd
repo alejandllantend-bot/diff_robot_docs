@@ -4,10 +4,28 @@ Bienvenido a la sección de Gazebo. Selecciona uno de los siguientes botones par
 
 ::: {.panel-tabset .nav-pills}
 
-## Conceptos
-- [Instalación de Gazebo](conceptos/instalacion_gazebo.qmd)
+## Teoría
+- [Instalar Gazebo](Teoria/instalar_gz.qmd)
+- [Conceptos Básicos](Teoria/conceptos.qmd)
+- [Inercia](Teoria/box_inertia.qmd)
 
 ## Código y Proyectos
 - [Mi Carro URDF](codigo_my_car/my_car_urdf.qmd)
+
+## Variables
+- [Base Height](Variables/base_height.qmd)
+- [Base Length](Variables/base_length.qmd)
+- [Base Width](Variables/base_width.qmd)
+- [Wheel Length](Variables/wheel_length.qmd)
+- [Wheel Radius](Variables/wheel_radius.qmd)
+
+## Articulaciones
+- [Base Móvil](articulaciones/movile_base.qmd)
+
+## Collision
+- [Colisiones](collision/collision.qmd)
+
+## Macros
+- [Wheel Link](macros/wheel_link.qmd)
 
 :::
