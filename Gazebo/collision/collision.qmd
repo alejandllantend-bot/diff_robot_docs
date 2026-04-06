@@ -11,34 +11,34 @@ A continuación, agregamos la etiqueta `<collision>` a los diversos enlaces (`li
 Se utiliza una geometría de caja (`box`) con el origen desplazado para que coincida correctamente con el modelo visual del chasis.
 
 ```xml
-<collision>
-    <origin xyz="0 0 ${base_height / 2.0}" rpy="0 0 0" />
-    <geometry>
-        <box size="${base_length} ${base_width} ${base_height}" />
-    </geometry>
-</collision>
+        <collision>
+            <geometry>
+                <box size="${base_length} ${base_width} ${base_height}" />
+            </geometry>
+            <origin xyz="0 0 ${base_height / 2.0}" rpy="0 0 0" />
+        </collision>
 ```
 
 ### Ruedas Motrices (`wheel_link`)
 Se define una geometría de colisión esférica con su respectivo radio y rotación. Es común usar cilindros o esferas para representar ruedas.
 
 ```xml
-<collision>
-    <origin xyz="0 0 0" rpy="${pi/2} 0 0" />
-    <geometry>  
-        <sphere radius="${wheel_radius}" />
-    </geometry>
-</collision>
+        <collision>
+            <geometry>  
+                <sphere radius="${wheel_radius}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </collision>
 ```
 
 ### Rueda Loca (`caster_wheel_link`)
 Al igual que las ruedas motrices, se utiliza una geometría esférica, ajustada al tamaño menor correspondiente.
 
 ```xml
-<collision>
-    <origin xyz="0 0 0" rpy="0 0 0" />
-    <geometry>
-        <sphere radius="${wheel_radius / 2.0}" />
-    </geometry>
-</collision>
+        <collision>
+            <geometry>
+                <sphere radius="${wheel_radius / 2.0}" />
+            </geometry>
+            <origin xyz="0 0 0" rpy="0 0 0" />
+        </collision>
 ```

@@ -16,9 +16,9 @@ gz sim
 
 Esta instrucción desplegará la pantalla principal (o dashboard general) del simulador. Desde este panel inicial podrás visualizar y acceder a distintos mundos de ejemplo, entornos y configuraciones predefinidas.
 
-![](/Gazebo/imagenes_G/gz.png)
+![](imag_c/gz.png)
 
-Una vez aquí, si haces clic en la opción que dice **"Empty"** (Entorno Vacío) y posteriormente en el botón **"Run"**, entrarás al espacio tridimensional de trabajo, que inicialmente consistirá en una cuadrícula plana al infinito. En este ambiente es donde pondremos a prueba la física de nuestro robot más adelante a través de sus propias herramientas de desarrollo.
+Una vez aquí, si haces clic en la opción que dice **"Empty"** y posteriormente en el botón **"Run"**, entrarás al espacio tridimensional de trabajo, que inicialmente consistirá en una cuadrícula plana al infinito. En este ambiente es donde pondremos a prueba la física de nuestro robot más adelante a través de sus propias herramientas de desarrollo.
 
 ### 2. Acceso Directo por Comandos (Atajo)
 
@@ -34,5 +34,3 @@ gz sim empty.sdf
 **¿Qué es la extensión `.sdf`?**
 Son las siglas de *Simulation Description Format* (Formato de Descripción de Simulaciones). Así como en ROS 2 utilizamos el estándar URDF/Xacro para armar minuciosamente a un robot, Gazebo utiliza su formato nativo XML propio (el SDF) para describir y retener las posiciones del suelo, el cielo, la luz direccional del Sol y las configuraciones atmosféricas de su universo.
 :::
-
-Con esta base lista, estás preparado para pasar a la siguiente etapa: aprender a trasladar la maquinaria virtual que hemos programado hacia el interior de este simulador de gravedad usando herramientas de integración.

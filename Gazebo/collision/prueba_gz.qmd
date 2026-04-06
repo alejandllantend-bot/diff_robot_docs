@@ -1,0 +1,45 @@
+# Prueba de Visualización en Gazebo
+
+![](/Gazebo/imagenes_G/terminal.png)
+
+El propósito de esta prueba es visualizar y validar nuestro modelo robótico dentro del entorno de simulación de Gazebo. A través de este ejercicio, comprobaremos que la estructura, las propiedades visuales y las geometrías de colisión que hemos definido en nuestros archivos URDF/Xacro se interpretan y renderizan correctamente.
+
+Para desplegar el robot en el simulador, trabajaremos con tres terminales de Ubuntu. Sigue estos pasos:
+
+### 1. Activar el publicador de estado del robot
+
+En la **primera terminal**, navega hacia el directorio donde tienes almacenada tu descripción URDF:
+
+```bash
+cd ~/abc_ws/src/my_robot_description_car/urdf
+```
+
+Ejecuta el siguiente comando para iniciar el nodo `robot_state_publisher`. Este paso es crucial porque procesa nuestro archivo `my_car.xacro` y publica toda la información de la estructura del robot en la red de ROS 2 bajo el tópico `/robot_description`, haciéndola accesible para Gazebo:
+
+```bash
+ros2 run robot_state_publisher robot_state_publisher --ros-args -p robot_description:="$(xacro my_car.xacro)"
+```
+
+### 2. Iniciar el simulador Gazebo
+
+Abre una **segunda terminal**, ve a tu directorio base y lanza el entorno de simulación de Gazebo utilizando un "mundo" vacío (empty):
+
+```bash
+cd ~
+ros2 launch ros_gz_sim gz_sim.launch.py gz_args:="empty.sdf -r"
+```
+*(Nota: El argumento `-r` le indica al simulador que comience a correr el tiempo inmediatamente al abrir la ventana, evitando que inicie en estado de pausa).*
+
+### 3. Generar el robot en la simulación (Spawning)
+
+En la **tercera terminal**, utilizaremos el paquete de simulación de ROS-Gazebo para leer la descripción publicada en el tópico de nuestro robot y materializarlo ("spawn") dentro del mundo que ya tenemos abierto:
+
+```bash
+ros2 run ros_gz_sim create -topic robot_description
+```
+
+### Resultados Esperados
+
+Si ejecutaste correctamente los tres comandos, deberás ver instantáneamente la base de nuestro robot materializarse en el centro visual de Gazebo. Si esto no ocurre o ves mensajes de error, revisa las terminales: podrías tener un error de sintaxis en tus archivos Xacro o tal vez te faltó inicializar tu entorno (utilizando el comando de "source" de tu workspace de ROS 2).
+
+![](/Gazebo/imagenes_G/gz_robot.png)

@@ -1,18 +1,7 @@
-## Inercia y Físicas Básicas en Gazebo
+### 1. Desarrollando un Macro de Inercia (Caja Básica)
 
 ![](/Gazebo/imagenes_G/inertial.png)
 
-Cuando desarrollamos simulaciones y utilizamos únicamente a **RViz**, lo único que nos interesa son las etiquetas `<visual>` para mostrar estéticamente al modelo. Sin embargo, para que **Gazebo** (que es un motor físico riguroso) pueda calcular cómo interactúa tu robot con el ambiente, la gravedad, un derrape o una colisión, necesita obligatoriamente que definamos las propiedades químicas y tangibles de los engranajes.
-
-Esta valiosa información física se encapsula en la etiqueta `<inertial>`.
-
-**¿Para qué sirve y qué es la Inercia?**
-Radica en la métrica funcional que determina cómo un objeto volumétrico se resiste o favorece el movimiento en un plano físico. Para esto, Gazebo necesita conocer tres claves de cada uno de tus Links:
-1. **La Masa** (El peso real del componente en kilogramos).
-2. **Su Punto Origen** (Dónde estará balanceado su centro de gravedad principal).
-3. **Su Tensor de Inercia** (Una matriz geométrica de ecuaciones que determina cuán fácil o difícil es rotarlo en sus distintos ejes dependiente estricta de su forma).
-
-### 1. Desarrollando un Macro de Inercia (Caja Básica)
 
 Desarrollar y calcular a ojo de halcón las matrices tensoras para cada pieza de un vehículo es un trabajo inhumano. Aprovecharemos la alta modularidad que nos brinda `Xacro` para crear una *Macro* que auto calcule estas ecuaciones complejas en el sub-proceso. Usaremos la versión de cálculo estandarizada para figuras tridimensionales planas (Cajas y Prismas rectangulares).
 
