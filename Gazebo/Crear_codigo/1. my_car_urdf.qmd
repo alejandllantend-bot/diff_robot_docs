@@ -72,7 +72,7 @@ Quedando de la siguiente manera:
 
 ## Ruedas
 
-Se procede a la creación de la primera rueda del robot móvil, iniciando con las ruedas. En esta etapa se definirá su estructura dentro del modelo URDF, especificando tanto sus propiedades geométricas como su relación con el chasis del robot. Para ello, se debe agregar el siguiente código al archivo my_car.urdf:
+Se procede a la creación de las ruedas del robot móvil. En esta etapa se definirá su estructura dentro del modelo URDF, especificando tanto sus propiedades geométricas como su relación con el chasis del robot.
 
 ## Rueda derecha.
 ```xml
@@ -94,6 +94,7 @@ Se procede a la creación de la primera rueda del robot móvil, iniciando con la
 
 ```
 ![](/Gazebo/imagenes_G/rueda_der.png)
+
 ## Rueda izquierda.
 
 ```xml
@@ -115,6 +116,7 @@ Se procede a la creación de la primera rueda del robot móvil, iniciando con la
 
 ```
 ![](/Gazebo/imagenes_G/ruedas.png)
+
 ```bahs
 geometry
 ```
@@ -167,6 +169,7 @@ Este bloque de código define la rueda loca (o caster wheel). En un robot de dos
         <child link="caster_wheel_link" />
         <origin xyz="0.2 0 -0.05" rpy="0 0 0" />
     </joint>
+```
 
 ![](/Gazebo/imagenes_G/rueda_loca.png)
 
@@ -174,6 +177,7 @@ Este bloque de código define la rueda loca (o caster wheel). En un robot de dos
 sphere radius="0.05"
 ``` 
 A diferencia de las ruedas principales que eran cilindros, aquí usas una esfera con un radio de 0.05 m (5 cm). Se usa una esfera en simulación para simplificar el contacto con el suelo, ya que puede "rodar" en cualquier dirección.
+
 ```bahs
 origin xyz="0 0 0" rpy="0 0 0"
 ```
@@ -191,11 +195,11 @@ origin xyz="0.2 0 -0.05" rpy="0 0 0"
 ```
 Define la posición exacta de la rueda respecto al centro del robot:
 
-x="0.2": Se mueve 20 cm hacia adelante.
+**x="0.2":** Se mueve 20 cm hacia adelante.
 
-y="0": Se mantiene en el centro (eje de simetría).
+**y="0":** Se mantiene en el centro (eje de simetría).
 
-z="-0.05": Se baja 5 cm respecto al centro del base_link.
+**z="-0.05":** Se baja 5 cm respecto al centro del base_link.
 
 ## Base footprint.
 
@@ -213,7 +217,8 @@ z="-0.05": Se baja 5 cm respecto al centro del base_link.
 El Link "Fantasma"
 ```
 Fíjate que este bloque está vacío (no tiene visual, ni geometry, ni collision).
-¿Qué es?: Es un enlace puramente matemático o virtual.
+
+**¿Qué es?:** Es un enlace puramente matemático o virtual.
 Su función es representar la proyección del robot en el suelo. Es el punto Z=0.
 Los algoritmos de navegación y los mapas en ROS necesitan un punto de referencia que siempre esté tocando el piso, independientemente de si el robot salta, se inclina o tiene el chasis muy alto.
 Este joint conecta el punto del suelo (base_footprint) con el cuerpo del robot (base_link).

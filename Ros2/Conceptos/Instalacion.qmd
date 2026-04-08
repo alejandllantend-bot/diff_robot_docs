@@ -88,11 +88,7 @@ se desplegará una ventana con el archivo de configuración. Al final del archiv
 
 ## Finalización de la instalación y configuración del entorno. 
 
-<div style="display: flex; align-items: center; gap: 30px;">
 
-<img src="imagenes/happy_robot-gif.gif" width="180">
-
-<div style="flex: 1;">
 Con la ejecución correcta de los pasos anteriores, se da por finalizada la instalación de ROS 2 Jazzy, así como la configuración permanente de su entorno de trabajo. A partir de este momento, el sistema se encuentra listo para ejecutar comandos y desarrollar aplicaciones robóticas dentro de Ubuntu.
 
 En la siguiente sección se realizarán ejercicios prácticos de prueba, cuyo objetivo es comprender el manejo básico de ROS 2, su estructura interna y la interacción entre sus componentes. Se trabajará con la ejecución de nodos y la comunicación mediante tópicos (modelo publicador–suscriptor), además de explorar otros mecanismos como servicios y acciones.

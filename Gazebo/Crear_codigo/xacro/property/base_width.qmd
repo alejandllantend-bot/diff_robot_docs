@@ -12,7 +12,7 @@ Originalmente, nuestra base tiene estipulado un ancho fijo de `0.4`. Para hacer 
 
 Con la variable ya disponible en el sistema, buscamos la etiqueta `<geometry>` dentro del bloque `base_link` y sustituimos el valor numérico correspondiente al ancho por el acceso a nuestra nueva variable `${base_width}`. De este modo, la declaración de la geometría de caja quedará de la siguiente manera:
 
-```xml
+```bahs
 <link name="base_link">
     <visual>
         <geometry>
@@ -22,9 +22,11 @@ Con la variable ya disponible en el sistema, buscamos la etiqueta `<geometry>` d
 </link>
 ```
 
-![](/Gazebo/imagenes_G/base_width.png)
+
 
 ### 2. Reposicionamiento Automático de las Ruedas Laterales
+
+![](imag_x/base_width.png)
 
 Al modificar el ancho de la estructura central, es absolutamente necesario ajustar en conjunto la posición de anclaje de las ruedas motrices derecha e izquierda. De lo contrario, si ampliamos la caja y las ruedas siguen fijas, estas terminarán solapadas dentro de la estructura general (o quedarán flotando distanciadas si decidimos encoger la caja).
 

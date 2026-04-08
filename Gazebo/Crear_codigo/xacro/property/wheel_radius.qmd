@@ -16,7 +16,7 @@ Nos dirigimos a la directiva global en la cabecera de `my_car.xacro` y agregamos
 
 Como indica nuestro diseño, el vehículo consta de **dos ruedas motrices en el tren trasero** (rueda izquierda y derecha). Aplicaremos nuestra nueva variable sustituyendo el valor fijo `radius` dentro de su etiqueta geométrica cilíndrica `<cylinder>`. Actualiza ambas secciones:
 
-```xml
+```bahs
 <!-- Rueda Motriz Izquierda Trasera -->
 <link name="left_wheel_link">
     <visual>
@@ -44,7 +44,7 @@ Para ello, modificaremos nuestra conexión maestra de apoyo (el origen estructur
 
 De esta manera el bloque central asimilará que tiene que flotar verticalmente en directa proporción al espacio del radio geométrico que imponen sus propios neumáticos:
 
-```xml
+```bahs
 <joint name="base_joint" type="fixed">
     <parent link="base_footprint" />
     <child link="base_link" />
@@ -59,7 +59,7 @@ Nuestro esquema estructural incluye una rueda libre direccional o de apoyo, disp
 
 Abre el componente `<caster_wheel_link>` (la malla esférica frontal) y sustituye el radio genérico utilizando una división matemática de la propiedad global:
 
-```xml
+```bahs
 <link name="caster_wheel_link">
     <visual>
         <geometry>
@@ -73,12 +73,10 @@ Por último, al ser cincuenta por ciento más baja que el tren rodante posterior
 
 Para lograr esta caída que compensa la pieza, ve al enganche frontal (`base_caster_wheel_joint`) y reemplaza su descenso fijo anterior de `-0.05` en la línea del origen Z por nuestra derivación de compensación en negativo `${-wheel_radius / 2.0}`:
 
-```xml
+```bahs
 <joint name="base_caster_wheel_joint" type="fixed">
     ...
     <!-- Caída paramétrica frontal compensatoria del desnivel -->
     <origin xyz="${base_length / 3.0} 0 ${-wheel_radius / 2.0}" rpy="0 0 0" />
 </joint>
 ```
-
-¡Espléndido resultado paramétrico! Has concluido exitosamente las configuraciones de relaciones interdependientes en Xacro, garantizando un URDF frontal-trasero que predice inteligentemente las reestructuraciones y que previene modelos desnivelados en posteriores etapas.

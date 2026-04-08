@@ -1,6 +1,6 @@
 ## Creación de la estructura del paquete.
 En esta sección se describe el proceso para crear la estructura básica de un paquete en ROS 2 que contendrá la descripción de un robot, la cual será utilizada posteriormente en herramientas de visualización como RViz.
-![](/Gazebo/imagenes_G/crear_pkg.png)
+![](img_cod/crear_pkg.png)
 
 Ubicado dentro del directorio src del workspace, se crea un nuevo paquete con el siguiente comando:
 
@@ -14,9 +14,10 @@ CMakeLists.txt
 carpetas include y src
 
 Una vez creado el paquete, se ingresa a su directorio:
-
+```bash
 cd my_robot_description_car
 ls
+```
 
 Aquí se pueden visualizar los archivos y carpetas generados por defecto.
 Dado que este paquete estará orientado a la descripción del robot (URDF) y no al desarrollo en C++, se eliminan las carpetas innecesarias:
@@ -48,16 +49,16 @@ ls
 code .
 ```
 
-![](/Gazebo/imagenes_G/ok_pk.png)
-![](/Gazebo/imagenes_G/code.png)
+![](img_cod/ok_pk.png)
+![](img_cod/code.png)
 
 Al abrir el proyecto en Visual Studio Code, se puede observar la estructura del paquete my_robot_description_car, dentro del cual se encuentra la carpeta urdf que contiene el archivo my_car.urdf. Asimismo, se identifican los archivos principales del paquete, como CMakeLists.txt y package.xml.
 
 En el archivo CMakeLists.txt se realiza una limpieza básica, eliminando configuraciones innecesarias.
 
-![](/Gazebo/imagenes_G/list.txt.png)
+![](img_cod/list.txt.png)
 
-Esta limpieza permite simplificar el paquete y enfocarlo únicamente en la gestión de archivos URDF y su posterior visualización.
+Esta limpieza permite simplificar el paquete y enfocarlo únicamente en la gestión de archivos URDF y su posterior visualización.Para lograr esto, es necesario añadir la instrucción dentro del sistema de compilación de ROS 2, asegurando que la carpeta urdf (así como cualquier otra carpeta de recursos creada) sea incluida correctamente durante el proceso de instalación para que el sistema pueda localizarla. 
 
 ```bash
 install(
@@ -65,8 +66,8 @@ install(
     DESTINATION share/${PROJECT_NAME}/
 )
 ```
-Esta instrucción se utiliza dentro del sistema de compilación de ROS 2 para indicar que la carpeta urdf debe ser incluida durante el proceso de instalación del paquete. Una vez guardado el archivo, se procede a compilar el workspace utilizando el comando colcon build.
+Una vez guardado el archivo con estos cambios, se procede a compilar el workspace utilizando el comando colcon build para aplicar la configuración.
 
 ::: {.callout-warning}
-Es necesario registrar la carpeta urdf en el archivo CMakeLists.txt para que ROS 2 pueda localizar y utilizar los archivos de descripción del robot durante la ejecución de herramientas de visualización y simulación.
+Es necesario registrar las carpetas creadas en el archivo CMakeLists.txt para que ROS 2 pueda localizar y utilizar los archivos de descripción del robot durante la ejecución de herramientas de visualización y simulación.
 :::

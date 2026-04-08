@@ -24,12 +24,15 @@ Al ejecutar este comando, se abrirá la interfaz gráfica de RViz mostrando el m
 
 # Que es la inercia
 
-Cuando desarrollamos simulaciones y utilizamos únicamente a **RViz**, lo único que nos interesa son las etiquetas `<visual>` para mostrar estéticamente al modelo. Sin embargo, para que **Gazebo** (que es un motor físico riguroso) pueda calcular cómo interactúa tu robot con el ambiente, la gravedad, un derrape o una colisión, necesita obligatoriamente que definamos las propiedades químicas y tangibles de los engranajes.
+Cuando desarrollamos simulaciones y utilizamos únicamente a RViz, lo único que nos interesa son las etiquetas `<visual>` para mostrar estéticamente al modelo. Sin embargo, para que Gazebo (que es un motor físico riguroso) pueda calcular cómo interactúa tu robot con el ambiente, la gravedad, un derrape o una colisión, necesita obligatoriamente que definamos las propiedades químicas y tangibles de los engranajes.
 
 Esta valiosa información física se encapsula en la etiqueta `<inertial>`.
 
-**¿Para qué sirve y qué es la Inercia?**
+**¿Para qué sirve la Inercia?**
 Radica en la métrica funcional que determina cómo un objeto volumétrico se resiste o favorece el movimiento en un plano físico. Para esto, Gazebo necesita conocer tres claves de cada uno de tus Links:
+
 1. **La Masa** (El peso real del componente en kilogramos).
+
 2. **Su Punto Origen** (Dónde estará balanceado su centro de gravedad principal).
+
 3. **Su Tensor de Inercia** (Una matriz geométrica de ecuaciones que determina cuán fácil o difícil es rotarlo en sus distintos ejes dependiente estricta de su forma).

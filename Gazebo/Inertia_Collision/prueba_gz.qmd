@@ -1,10 +1,9 @@
 # Prueba de Visualización en Gazebo
-
-![](/Gazebo/imagenes_G/terminal.png)
-
 El propósito de esta prueba es visualizar y validar nuestro modelo robótico dentro del entorno de simulación de Gazebo. A través de este ejercicio, comprobaremos que la estructura, las propiedades visuales y las geometrías de colisión que hemos definido en nuestros archivos URDF/Xacro se interpretan y renderizan correctamente.
 
 Para desplegar el robot en el simulador, trabajaremos con tres terminales de Ubuntu. Sigue estos pasos:
+
+![](/Gazebo/imagenes_G/terminal.png)
 
 ### 1. Activar el publicador de estado del robot
 
@@ -40,6 +39,6 @@ ros2 run ros_gz_sim create -topic robot_description
 
 ### Resultados Esperados
 
-Si ejecutaste correctamente los tres comandos, deberás ver instantáneamente la base de nuestro robot materializarse en el centro visual de Gazebo. Si esto no ocurre o ves mensajes de error, revisa las terminales: podrías tener un error de sintaxis en tus archivos Xacro o tal vez te faltó inicializar tu entorno (utilizando el comando de "source" de tu workspace de ROS 2).
+Si ejecutaste correctamente los tres comandos, deberás ver instantáneamente la base de nuestro robot materializarse en el centro visual de Gazebo. Si esto no ocurre o ves mensajes de error, revisa las terminales: podrías tener un error de sintaxis en tus archivos Xacro o tal vez te faltó compilar e inicializar tu entorno.
 
 ![](/Gazebo/imagenes_G/gz_robot.png)

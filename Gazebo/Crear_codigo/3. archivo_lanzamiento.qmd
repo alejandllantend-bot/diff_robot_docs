@@ -30,66 +30,50 @@ Es indispensable registrar la carpeta `launch` en el archivo `CMakeLists.txt`. D
 ```
 ## Explicación del código.
 
-### Inicio del archivo launch
-
-```xml
+```bahs
 <launch>
 ```
 Este bloque define el inicio del archivo de lanzamiento, donde se agrupan todos los nodos y configuraciones que serán ejecutados dentro del sistema en ROS 2.
 
-### Definición de la ruta del URDF
-
-```xml
+```bahs
 <let name="urdf_path"
      value="$(find-pkg-share my_robot_description_car)/urdf/my_car.urdf" />
 ```
 Se crea una variable que almacena la ruta del archivo URDF del robot. Esta se obtiene automáticamente dentro del paquete, lo que facilita la portabilidad y evita errores al manejar rutas manuales.
 
-### Nodo robot_state_publisher
-
-```xml
+```bahs
 <node pkg="robot_state_publisher" exec="robot_state_publisher">
 ```
 Este nodo se encarga de leer la descripción del robot y publicar las transformaciones entre sus diferentes partes, permitiendo representar correctamente su estructura en el sistema.
 
-### Parámetro robot_description
-
-```xml
+```bahs
 <param name="robot_description"
        value="$(command 'xacro $(var urdf_path)')" />
 ```
 Aquí se carga el archivo URDF del robot y se procesa mediante xacro, generando el parámetro robot_description, el cual contiene toda la información estructural necesaria para representar el robot.
 
-### Nodo joint_state_publisher_gui
-
-```xml
+```bahs
 <node pkg="joint_state_publisher_gui" exec="joint_state_publisher_gui" />
 ```
 
 Este nodo proporciona una interfaz gráfica que permite manipular manualmente las articulaciones del robot, facilitando la verificación de su movimiento y comportamiento.
 
-### Nodo rviz2
-
-```xml
+```bahs
 <node pkg="rviz2" exec="rviz2" output="screen" />
 ```
 
 Este nodo ejecuta RViz, herramienta que permite visualizar el robot en un entorno tridimensional y analizar su estructura y estados en tiempo real.
 
-### Cierre del archivo launch
-
-```xml
+```bahs
 </launch>
 ```
-Indica el final del archivo de lanzamiento, cerrando la configuración de los nodos que serán ejecutados.
-
-al tener nuestro archivo display.launch.xml listo, se procede a compilar el workspace para verificar que no haya errores:
+Indica el final del archivo de lanzamiento, cerrando la configuración de los nodos que serán ejecutados. Al tener nuestro archivo display.launch.xml listo, se procede a compilar el workspace para verificar que no haya errores:
 
 ```bash
 colcon build
 source install/setup.bash
 ```
-y para visualizar el robot se ejecuta el siguiente comando:
+y para visualizar el robot se ejecuta el siguiente comando.
 
 ```bash
 ros2 launch my_robot_description_car display.launch.xml

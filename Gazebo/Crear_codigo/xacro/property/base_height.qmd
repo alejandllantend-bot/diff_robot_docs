@@ -4,7 +4,7 @@ Para completar todas las dimensiones 3D de nuestro chasis, continuaremos definie
 
 ### 1. Declaración de la variable `base_height`
 
-Abre la cabecera general de tu archivo `my_car.xacro` (junto al bloque de propiedades creados en las lecciones previas) y añade esta nueva variable numérica asignándole el valor referencial `0.2`:
+Junto al bloque de propiedades creados en las lecciones previas, añade esta nueva variable numérica asignándole el valor referencial `0.2`:
 
 ```xml
 <xacro:property name="base_height" value="0.2" />
@@ -18,7 +18,7 @@ Para solucionar de raíz cualquier colisión de texturas, debemos alzar nuestra 
 
 Modifica tanto la etiqueta de volumen (`<geometry>`) aplicando la última variable, como de origen (`<origin>`) en la estructura del `base_link`, para que dejen de usar números fijos y queden completamente en base a nuestra triple parametrización, como se muestra a continuación:
 
-```xml
+```bahs
 <link name="base_link">
     <visual>
         <geometry>
@@ -39,8 +39,12 @@ Con `base_length`, `base_width` y `base_height` completadas y correlacionadas an
 Para ver los frutos de estas implementaciones, puedes ejecutar esta prueba experimental rápida:
 
 1. Ve hacia el archivo `my_car.xacro` y exagera intencionalmente el número de la longitud cambiando su variable a `1.0`:
+
    `<xacro:property name="base_length" value="1.0" />`
+
 2. Guarda el archivo y ejecuta tu sistema de lanzamiento para abrir nuestro entorno en RViz.
+
+![](imag_x/largo.png)
 
 Podrás notar en el acto el verdadero propósito y potencial de Xacro: Tu chasis no solo creció mucho más alargado, **el mecanismo calculó en el background todas nuestras ecuaciones de división relocalizando al vuelo de manera idéntica la distribución de tus tres apoyos rodantes**. Todas y cada una las ruedas calcularán sus propios offsets manteniendo de forma escalada sus espacios con los nuevos bordes; sin requerir que modifiques coordinadas para cada llanta a mano. 
 

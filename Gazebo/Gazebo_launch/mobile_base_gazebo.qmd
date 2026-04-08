@@ -1,0 +1,98 @@
+Para que nuestro robot cobre vida en la simulación, necesitamos conectar su descripción física (URDF) con el motor de física y los sistemas de control de Gazebo. Para lograr esto, vamos a crear un nuevo archivo llamado `mobile_base_gazebo.xacro` dentro del directorio `urdf` del paquete `mi_robot_description_car`.
+
+A continuación, añade el siguiente código dentro del archivo `mobile_base_gazebo.xacro`:
+
+```xml
+<?xml version="1.0"?>
+<robot xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+
+    <gazebo reference="caster_wheel_link">
+        <mu1 value="0.1" />
+        <mu2 value="0.1" />
+    </gazebo>
+    
+    <gazebo>
+        <plugin
+            filename="gz-sim-diff-drive-system"
+            name="gz::sim::systems::DiffDrive">
+            <left_joint>base_left_wheel_joint</left_joint>
+            <right_joint>base_right_wheel_joint</right_joint>
+            <wheel_separation>0.45</wheel_separation>
+            <wheel_radius>0.1</wheel_radius>
+            <frame_id>odom</frame_id>
+            <child_frame_id>base_footprint</child_frame_id>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin
+            filename="gz-sim-joint-state-publisher-system"
+            name="gz::sim::systems::JointStatePublisher">
+            <joint_name>base_left_wheel_joint</joint_name>
+            <joint_name>base_right_wheel_joint</joint_name>
+        </plugin>
+    </gazebo>
+
+</robot>
+```
+### ¿Qué hace este código y por qué es importante?
+
+Este archivo contiene la configuración específica para Gazebo mediante el uso de *plugins* y configuraciones de enlaces. Su importancia radica en que transforma un modelo 3D estático en un robot móvil y funcional dentro del entorno simulado. Específicamente, este código realiza tres tareas fundamentales:
+
+1. **Fricción de la Rueda Loca (Caster Wheel):** Reduce significativamente la fricción (`mu1` y `mu2`) del `caster_wheel_link`. Esto es importante porque permite que la rueda loca se deslice suavemente sobre el suelo sin oponer resistencia, emulando su comportamiento pasivo real cuando el robot avanza o gira.
+
+2. **Plugin de Tracción Diferencial (`DiffDrive`):** Añade el controlador cinemático diferencial de Gazebo. Le indica al simulador cuáles son las articulaciones de las ruedas motrices, la separación entre ellas y su radio. A través de este plugin el robot podrá recibir comandos de velocidad y moverse por el espacio. Además publica la transformación de la odometría (`odom`) hacia la base.
+
+3. **Plugin Publicador de Estado (`JointStatePublisher`):** Se encarga de leer el estado físico de las articulaciones de las ruedas en la simulación (posición y velocidad) y publicarlas por la red de ROS 2. Esto es vital para que las transformaciones (TF) relativas a las ruedas se actualicen correctamente en todo momento.
+
+### Inclusión en el Archivo Principal
+
+Para que Gazebo y ROS 2 reconozcan todas estas propiedades físicas y el plugin de tracción que acabamos de crear, es indispensable enlazar la configuración. 
+
+Abre tu archivo principal del chasis `my_car.xacro` y asegúrate de agregar la siguiente línea de inclusión (preferiblemente en la parte superior junto a los otros archivos incluidos):
+
+```xml
+<xacro:include filename="mobile_base_gazebo.xacro" />
+```
+
+### Compilación y Ejecución
+
+Una vez que hemos configurado todas las propiedades e integrado los puentes de comunicación, es momento de ver nuestro entorno en acción. Recuerda siempre compilar primero tu espacio de trabajo (por ejemplo, ejecutando `colcon build` y luego `source install/setup.bash`).
+
+Finalmente, ejecuta el *launch file* principal utilizando el siguiente comando:
+
+```bash
+ros2 launch my_robot_bringup my_car_gazebo.launch.xml
+```
+
+Al ejecutarlo, este comando iniciará de forma simultánea **Gazebo** y **RViz 2**. Podrás visualizar tu modelo robótico y comprobar que las uniones, colisiones y la comunicación actúan correctamente en tiempo real.
+
+Si deseas probar el movimiento del robot en Gazebo mientras la simulación se encuentra activa, abre una nueva terminal y ejecuta el siguiente comando para enviar valores de velocidad de prueba:
+
+```bash
+ros2 topic pub -r 1 /cmd_vel geometry_msgs/msg/Twist "{linear: {x: 0.5}, angular: {z: 0.5}}"
+```
+
+Esto hará que el robot comience a dar vueltas de forma constante.
+
+Por otro lado, si prefieres tener el control total y manejar el robot manualmente desde tu teclado, abre una nueva terminal e inicia el nodo de teleoperación con el siguiente comando:
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
+
+A continuación, tienes un esquema visual (mapa de teclado) que muestra qué movimiento realiza cada tecla al presionarla en la terminal. Las flechas indican la dirección a la que se moverá tu robot:
+
+```text
+ ↖ Adelante-Izquierda    ↑ Adelante     ↗ Adelante-Derecha
+          [ U ]            [ I ]              [ O ]
+
+ ⟲ Giro-Izquierda        ■ Detener      ⟳ Giro-Derecha
+          [ J ]            [ K ]              [ L ]
+
+ ↙ Atrás-Izquierda       ↓ Atrás        ↘ Atrás-Derecha
+          [ M ]            [ , ]              [ . ]
+```
+
+> **Nota:** Cualquier otra tecla presionada detendrá el robot por razones de seguridad. Observa que el formato del teclado te da una idea espaciada muy intuitiva de hacia dónde irá el robot.

@@ -5,27 +5,45 @@ Bienvenido a la sección de Gazebo. Selecciona uno de los siguientes botones par
 ::: {.panel-tabset .nav-pills}
 
 ## Teoría
-- [Instalar Gazebo](Teoria/instalar_gz.qmd)
 - [Conceptos Básicos](Teoria/conceptos.qmd)
-- [Inercia](Teoria/box_inertia.qmd)
+- [Instalar Gazebo](Teoria/instalar_gz.qmd)
+- [Tablero Principal de Gazebo](Teoria/tablero_principal.qmd)
 
-## Código y Proyectos
-- [Mi Carro URDF](codigo_my_car/my_car_urdf.qmd)
+## Crear Código
 
-## Variables
-- [Base Height](Variables/base_height.qmd)
-- [Base Length](Variables/base_length.qmd)
-- [Base Width](Variables/base_width.qmd)
-- [Wheel Length](Variables/wheel_length.qmd)
-- [Wheel Radius](Variables/wheel_radius.qmd)
+::: {.panel-tabset .nav-pills}
 
-## Articulaciones
-- [Base Móvil](articulaciones/movile_base.qmd)
+### URDF
+- [My Car URDF](Crear_codigo/1.%20my_car_urdf.qmd)
+- [Crear Paquete](Crear_codigo/2.%20crear_paquete.qmd)
+- [Archivo Lanzamiento](Crear_codigo/3.%20archivo_lanzamiento.qmd)
+- [Guardar RViz](Crear_codigo/4.%20guardar_rviz.qmd)
 
-## Collision
-- [Colisiones](collision/collision.qmd)
+### Xacro
+- [Xacro](Crear_codigo/xacro/xacro.qmd)
+- [Base Length](Crear_codigo/xacro/property/base_length.qmd)
+- [Base Width](Crear_codigo/xacro/property/base_width.qmd)  
+- [Base Height](Crear_codigo/xacro/property/base_height.qmd)
+- [Wheel Radius](Crear_codigo/xacro/property/wheel_radius.qmd)
+- [Wheel Length](Crear_codigo/xacro/property/wheel_length.qmd)
+- [Macros](Crear_codigo/xacro/property/wheel_link.qmd)
+- [Division de archivos](Crear_codigo/xacro/movi_propi.qmd)
 
-## Macros
-- [Wheel Link](macros/wheel_link.qmd)
+:::
 
+## Inercia y Colisiones
+- [Prueba de funcionamiento de Gazebo](Inertia_Collision/prueba_gz.qmd)
+- [Box Inertia](Inertia_Collision/Cod_Inertia/box_inertia.qmd)
+- [Cylinder Inertia](Inertia_Collision/Cod_Inertia/cylinder_inertia.qmd)
+- [Sphere Inertia](Inertia_Collision/Cod_Inertia/sphere_inertia.qmd)
+- [Collision](Inertia_Collision/collision.qmd)
+
+## Gazebo Launch
+- [Crear launch](Gazebo_launch/codigo.qmd)
+- [Comunicacion con gz](Gazebo_launch/gazebo_bridge.qmd)
+- [Puente ros2 y gz](Gazebo_launch/mobile_base_gazebo.qmd)
+
+## World gz
+- [crear world](World_Gz/crear_world.qmd)
+- [Agregar camara](World_Gz/Camara.qmd)
 :::

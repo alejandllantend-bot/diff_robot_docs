@@ -1,3 +1,0 @@
-creamos un nuevo archivo llamado gazebo_bridge.yaml dentro de config, que esta dentro de my robot bringup
-
-y dentro de este archivo va estar el codigo:

@@ -1,0 +1,56 @@
+# Configuración del Gazebo Bridge
+
+Para permitir la comunicación bidireccional entre ROS 2 y Gazebo, necesitamos configurar un puente que traduzca los tipos de mensajes entre ambos sistemas. Para ello, creamos un nuevo archivo de configuración llamado `gazebo_bridge.yaml`. 
+
+Este archivo debe ubicarse dentro de la carpeta `config` de nuestro paquete principal (`my_robot_bringup`).
+
+A continuación se presenta el código completo del archivo que deberás agregar:
+
+```yaml
+- ros_topic_name: "/clock"
+  gz_topic_name: "/clock"
+  ros_type_name: "rosgraph_msgs/msg/Clock"
+  gz_type_name: "gz.msgs.Clock"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/joint_states"
+  gz_topic_name: "/world/empty/model/my_car/joint_state"
+  ros_type_name: "sensor_msgs/msg/JointState"
+  gz_type_name: "gz.msgs.Model"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/tf"
+  gz_topic_name: "/model/my_car/tf"
+  ros_type_name: "tf2_msgs/msg/TFMessage"
+  gz_type_name: "gz.msgs.Pose_V"
+  direction: GZ_TO_ROS
+
+- ros_topic_name: "/cmd_vel"
+  gz_topic_name: "/model/my_car/cmd_vel"
+  ros_type_name: "geometry_msgs/msg/Twist"
+  gz_type_name: "gz.msgs.Twist"
+  direction: ROS_TO_GZ
+```
+
+<br>
+
+### Explicación por Cuadrantes
+
+El archivo está dividido en cuatro bloques lógicos o cuadrantes, cada uno encargado de una tarea específica en el movimiento y representación térmica o espacial de nuestro robot:
+
+**1. Sincronización de Tiempo (Clock):**
+* **Funcionalidad:** Mantiene sincronizado el "reloj virtual" de ROS 2 en función al tiempo del simulador Gazebo. Esto es crucial para que funciones de estimación o navegación no tengan retrasos asíncronos.
+* **Dirección:** De Gazebo leyendo hacia ROS 2 (`GZ_TO_ROS`).
+
+**2. Estado de Articulaciones (Joint States):**
+* **Funcionalidad:** Enlaza la métrica de posición y movimiento específico de las articulaciones del carro (como el giro y la inercia de las ruedas). Estas transformaciones permiten que programas de visualización como RViz 2 puedan leer el robot moviendo sus partes correctamente.
+* **Dirección:** De Gazebo leyendo hacia ROS 2 (`GZ_TO_ROS`).
+
+**3. Árbol de Transformadas (TF):**
+* **Funcionalidad:** Transfiere la información global referencial (`Odometría` y `transformaciones temporales`), indicando dónde se encuentra exactamente el vehículo (`my_car`) o sus partes conjuntas en el espacio de simulación. 
+* **Dirección:** De Gazebo leyendo hacia ROS 2 (`GZ_TO_ROS`).
+
+**4. Comandos de Velocidad (Cmd Vel):**
+* **Funcionalidad:** Este es el bloque que permite el telecontrol. Traduce los mandos direccionales tipo Twist en ROS 2 (por ejemplo, desde las teclas usando teleop o un script de maniobra automática) hacia la simulación `my_car` en Gazebo para mover los motores.
+* **Dirección:** De ROS 2 ordenando hacia Gazebo (`ROS_TO_GZ`).
+
