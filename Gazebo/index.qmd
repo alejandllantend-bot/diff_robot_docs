@@ -46,4 +46,5 @@ Bienvenido a la sección de Gazebo. Selecciona uno de los siguientes botones par
 ## World gz
 - [crear world](World_Gz/crear_world.qmd)
 - [Agregar camara](World_Gz/Camara.qmd)
+- [Conclusion](World_Gz/final%20del%20proyecto.qmd)
 :::

@@ -1,0 +1,26 @@
+# Conclusión del Proyecto
+
+¡Felicidades! Has completado exitosamente el proyecto de diseño y simulación de un robot utilizando **ROS 2** y **Gazebo**.
+
+A lo largo de este proyecto, has aprendido los conceptos fundamentales para la creación de un robot en el entorno de simulación: desde el diseño de su estructura física con URDF y Xacro, hasta la integración de sus componentes mediante los plugins de Gazebo. Además, exploraste cómo inspeccionar la información sensorial y visualizar tu robot utilizando la potente herramienta **RViz 2**.
+
+Con estos conocimientos, ahora estás completamente preparado para llevar tus propias ideas a la realidad. **El siguiente paso es crear un robot totalmente a tu gusto, ajustando su tamaño, geometría y características.** También tienes la capacidad de construir mundos simulados diferentes y más complejos al desarrollado en las prácticas, interactuando con todas las herramientas avanzadas que Gazebo y RViz tienen para ofrecerte.
+
+### Control y Movimiento del Robot
+
+Para interactuar y poner a prueba tu creación dentro del entorno, puedes hacer uso de los comandos de movimiento en la terminal (nodo de *teleop*). 
+
+A continuación, tienes un esquema visual (mapa de teclado) que muestra qué movimiento realiza cada tecla al presionarla en la terminal. Las flechas indican la dirección a la que se moverá tu robot:
+
+```text
+ ↖ Adelante-Izquierda    ↑ Adelante     ↗ Adelante-Derecha
+          [ U ]            [ I ]              [ O ]
+
+ ⟲ Giro-Izquierda        ■ Detener      ⟳ Giro-Derecha
+          [ J ]            [ K ]              [ L ]
+
+ ↙ Atrás-Izquierda       ↓ Atrás        ↘ Atrás-Derecha
+          [ M ]            [ , ]              [ . ]
+```
+
+¡Sigue explorando y creando nuevos proyectos increíbles en el mundo de la robótica!

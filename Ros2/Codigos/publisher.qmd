@@ -153,43 +153,43 @@ msg.data = "Hi, this " + self.robot_name_ + " is C3PO from the robot station"
 ```
 Se asigna el contenido del mensaje que será publicado.
 
-11️⃣ Publicación del mensaje
+1️⃣ Publicación del mensaje
 ```bash
 self.publisher_.publish(msg)
 ```
 Esta línea envía el mensaje al tópico robot_news, permitiendo que otros nodos suscriptores puedan recibirlo.
 
-12️⃣ Función principal
+2️⃣ Función principal
 ```bash
 def main(args=None):
 ```
 Esta función es el punto de inicio del programa.
 
-13️⃣ Inicialización de ROS 2
+3️⃣ Inicialización de ROS 2
 ```bash
 rclpy.init(args=args)
 ```
 Inicializa la comunicación con el sistema ROS 2.
 
-14️⃣ Creación del nodo
+4️⃣ Creación del nodo
 ```bash
 node=RobotStationNode()
 ```
 Aquí se crea una instancia del nodo que se definió anteriormente.
 
-15️⃣ Ejecución del nodo
+5️⃣ Ejecución del nodo
 ```bash
 rclpy.spin(node)
 ```
 Mantiene el nodo en ejecución para que continúe publicando mensajes.
 
-16️⃣ Cierre del sistema ROS
+6️⃣ Cierre del sistema ROS
 ```bash
 rclpy.shutdown()
 ```
 Finaliza correctamente la ejecución del sistema ROS 2.
 
-17️⃣ Ejecución del programa
+7️⃣ Ejecución del programa
 
 ```bash
 if __name__ == "__main__":
@@ -197,7 +197,7 @@ if __name__ == "__main__":
 ```
 Esta condición permite ejecutar la función main() cuando el archivo se ejecuta directamente.
 
-![](/Ros2/imagenes/station.mp4)
+![](/Ros2/imagenes/station.png)
 
 ## Ejecución del nodo publicador
 

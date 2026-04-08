@@ -1,6 +1,6 @@
 # Interacción de Nodos con Turtlesim.
 
-![](/Ros2/imagenes/turtlesim.mp4)
+![](/Ros2/imagenes/turtlesim.png)
 
 El nodo turtlesim_node actúa como suscriptor (subscriber), mientras que el nodo turtle_teleop_key funciona como publicador (publisher). Este último envía comandos de velocidad a través del tópico /turtle1/cmd_vel, los cuales son recibidos por turtlesim para generar el movimiento de la tortuga en la ventana gráfica.
 
@@ -20,9 +20,13 @@ el cual permite controlar la tortuga mediante el teclado, enviando instrucciones
 
 Una vez ejecutado el nodo de turtlesim en una terminal y el nodo de control por teclado en otra, se establece una comunicación entre ambos mediante el modelo publish/subscribe de ROS 2.
 
-Adicionalmente, es posible cambiar el nombre del nodo de turtlesim utilizando el comando:
-```bash
-ros2 run turtlesim turtlesim_node --ros-args -r __node:=tortugin
-```
-Este cambio puede visualizarse en la herramienta rqt_graph, donde se muestra la interacción entre los nodos y los tópicos del sistema.
+Las teclas de dirección y sus respectivas funciones son:
+
+- <kbd>↑</kbd> (Flecha Arriba): Mover la tortuga hacia adelante.
+- <kbd>↓</kbd> (Flecha Abajo): Mover la tortuga hacia atrás.
+- <kbd>←</kbd> (Flecha Izquierda): Girar la tortuga hacia la izquierda (sentido antihorario).
+- <kbd>→</kbd> (Flecha Derecha): Girar la tortuga hacia la derecha (sentido horario).
+
+
+
 

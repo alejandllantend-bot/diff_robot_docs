@@ -5,7 +5,7 @@ Bienvenido a la sección de ROS2. Selecciona uno de los siguientes botones para 
 ::: {.panel-tabset .nav-pills}
 
 ## Conceptos
-- [Plan de Trabajo](Conceptos/plan.qmd)
+- [Planteamiento de la practica](Conceptos/plan.qmd)
 - [Conceptos Básicos](Conceptos/Conceptos.qmd)
 - [Instalación de ROS2](Conceptos/Instalacion.qmd)
 - [Workspace en ROS2](Conceptos/workspace.qmd)
@@ -18,9 +18,9 @@ Bienvenido a la sección de ROS2. Selecciona uno de los siguientes botones para 
 - [Nodo Subscriber](Codigos/subscriber.qmd)
 - [Interacción con Turtlesim](Codigos/turtlesim.qmd)
 
-## Ejercicios
+## Ejercicio
 - [Descripción del Ejercicio](Exercise/Descripcion_exercise.qmd)
-- [Explicación del Ejercicio](Exercise/explicacion.qmd)
+- [Explicación del codigo](Exercise/explicacion.qmd)
 - [Ejercicio: Chase Turtle](Exercise/exercise.qmd)
 
 :::
