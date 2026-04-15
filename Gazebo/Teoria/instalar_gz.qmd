@@ -4,7 +4,7 @@ Gazebo es un simulador de robots en 3D que se utiliza junto con ROS 2 para dise�
 
 Una de sus principales ventajas es que simula condiciones bastante cercanas a la realidad, lo que permite detectar errores de diseño o programación sin riesgos. Además, al integrarse con ROS 2, puedes usar los mismos nodos, tópicos y servicios que usarías en un robot físico, haciendo que la transición entre simulación y realidad sea mucho más sencilla.
 
-## Instalación de ROS-GZ
+## Instalación de GZ.
 Para instalar Gazebo y las herramientas necesarias en ROS 2, primero se debe abrir una terminal en Ubuntu y ejecutar el siguiente comando. Durante este proceso, el sistema solicitará la contraseña del usuario para continuar con la instalación. Este paquete permite la integración entre ROS 2 y Gazebo, facilitando la simulación de robots en un entorno virtual.
 
 ```bash

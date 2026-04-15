@@ -2,21 +2,85 @@
 
 Antes de comenzar con los ejercicios prácticos, es importante recordar algunos conceptos fundamentales de la arquitectura de ROS 2. Este sistema se basa en un modelo distribuido donde diferentes componentes del software robótico se ejecutan de forma independiente y se comunican entre sí.
 
-### Nodos
+### Nodo (Node).
 
 Los nodos son los procesos principales dentro de ROS 2. Cada nodo realiza una tarea específica dentro del sistema, por ejemplo, controlar sensores, procesar información o enviar comandos a los actuadores. Un sistema robótico suele estar compuesto por varios nodos que trabajan de manera coordinada.
 
-### Tópicos
+### Tópico (Topic).
 
-Los tópicos permiten la comunicación entre nodos mediante el modelo publicador–suscriptor. Un nodo puede publicar información en un tópico, mientras que otros nodos pueden suscribirse a ese mismo tópico para recibir los datos. Este mecanismo es ampliamente utilizado para el intercambio continuo de información, como lecturas de sensores o comandos de control.
+Los tópicos permiten la comunicación entre nodos mediante el modelo publicador–suscriptor. Un nodo puede publicar información en un tópico, mientras que otros nodos pueden suscribirse a ese mismo tópico para recibir los datos.
 
-### Servicios
+### Publicador (Publisher).
+
+Nodo que envía información a un tópico. Publica mensajes de forma continua o periódica.
+
+### Suscriptor (Subscriber).
+
+Nodo que recibe información de un tópico al que está suscrito.
+
+### Servicio (Service).
 
 Los servicios permiten la comunicación entre nodos mediante un modelo cliente–servidor. A diferencia de los tópicos, los servicios se utilizan cuando se requiere enviar una solicitud y recibir una respuesta inmediata.
 
-### Acciones
+### Acción (Action).
 
 Las acciones se emplean para ejecutar tareas que requieren más tiempo de procesamiento. Permiten enviar una meta a un nodo y recibir retroalimentación sobre el progreso de la tarea hasta su finalización.
+
+### Workspace.
+
+Espacio de trabajo donde se desarrollan y organizan los paquetes de ROS 2.
+
+### Paquete (Package).
+
+Unidad organizativa que contiene código, configuraciones, launch y recursos necesarios para una funcionalidad específica.
+
+### Colcon.
+
+Herramienta de compilación utilizada en ROS 2 para construir paquetes dentro de un workspace.
+
+### Setup.bash.
+
+Script que configura las variables de entorno necesarias para trabajar con ROS 2.
+
+### Launch (Archivo de lanzamiento).
+
+Archivo que permite ejecutar múltiples nodos y configuraciones automáticamente en ROS 2.
+
+### Teleop (Teleoperación).
+
+Control manual de un robot mediante dispositivos de entrada como teclado o joystick.
+
+### URDF (Unified Robot Description Format).
+
+Formato utilizado para describir la estructura física de un robot, incluyendo enlaces, articulaciones y geometría.
+
+### Xacro.
+
+Extensión de URDF que permite reutilizar código mediante macros, facilitando la creación de modelos complejos.
+
+### Turtlesim.
+
+Simulador básico incluido en ROS 2 para aprendizaje y pruebas iniciales.
+
+### Topic echo.
+
+Comando para visualizar los mensajes publicados en un tópico.
+
+### Topic list.
+
+Comando que muestra los tópicos activos en el sistema.
+
+### Node list.
+
+Comando que muestra los nodos en ejecución.
+
+### ros2 run.
+
+Comando utilizado para ejecutar un nodo específico de un paquete.
+
+### ros2 launch.
+
+Comando que ejecuta un archivo launch con múltiples nodos.
 
 Con estos conceptos claros, en la siguiente sección se realizarán ejercicios prácticos que permitirán observar cómo los nodos se ejecutan, cómo se comunican mediante tópicos y cómo se puede visualizar la interacción entre ellos dentro del sistema.   
 
