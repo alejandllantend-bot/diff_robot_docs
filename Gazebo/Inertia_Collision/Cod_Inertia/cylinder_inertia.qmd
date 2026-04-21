@@ -34,17 +34,26 @@ Dirígete nuevamente hacia el archivo maestro `common_properties.xacro` e insert
 
 Nuevamente destaca la impresionante proeza logística que realizamos al programar [nuestras ruedas bajo un llamado unificado genérico de Xacro (`wheel_link`)]. Al tener una sola macro programada dictaminando la fisionomía virtual rodante de nuestra máquina, **no tendremos que programar manualmente la adición inercial cilíndrica dos veces**. Lo controlaremos de modo imperativo para ambas simultáneamente.
 
-Abre el archivo constructivo organizador `mobile_base.xacro` e inspecciona tu sector concentrador maestro asignado bajo la macro de llantas (`<xacro:macro name="wheel_link" ...>`). Ejecutaremos o llamaremos el proceso calculador (`<xacro:cylinder_inertia.../>`) bajo el marco secuencial estructural inferior tras consolidar nuestra capa de modelo visual nativo estético (`</visual>`). Así luciera finalizada la integración:
+Abre el archivo constructivo organizador `mobile_base.xacro` e inspecciona tu sector concentrador asignado bajo la macro de llantas (`<xacro:macro name="wheel_link" ...>`). Ejecutaremos o llamaremos el proceso calculador (`<xacro:cylinder_inertia.../>`) bajo el marco secuencial estructural inferior tras consolidar nuestra capa de modelo visual nativo estético (`</visual>`). Así luciera finalizada la integración:
 
 ```xml
-        <!-- ... Cierre del código de la etiqueta visual primitiva -->
-        </visual>
+        <xacro:macro name="wheel_link" params="prefix">
+        <link name="${prefix}_wheel_link">
+            <visual>
+                <geometry>
+                    <cylinder radius="${wheel_radius}" length="${wheel_length}" />
+                </geometry>
+                <origin xyz="0 0 0" rpy="${pi / 2.0} 0 0" />
+                <material name="grey" />
+            </visual>
+<!-- Implementación del llamado dinámico a la Propiedad Inercial física -->
+            <xacro:cylinder_inertia m="1.0" r="${wheel_radius}" l="${wheel_length}"
+                                    o_xyz="0 0 0" o_rpy="${pi / 2.0} 0 0" />
+        </link>
+    </xacro:macro>
+<!-- Cierre absoluto de xacro:macro de las llantas referencial -->     
         
-        <!-- Implementación del llamado dinámico a la Propiedad Inercial física -->
-        <xacro:cylinder_inertia m="1.0" r="${wheel_radius}" l="${wheel_length}"
-                                o_xyz="0 0 0" o_rpy="${pi / 2.0} 0 0" />
-    </link>
-<!-- Cierre absoluto de xacro:macro de las llantas referencial -->
+
 ```
 
 **¿Qué significan los valores que enviamos a la macro?**

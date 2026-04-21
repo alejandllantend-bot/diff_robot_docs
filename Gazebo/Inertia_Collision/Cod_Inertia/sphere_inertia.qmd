@@ -40,11 +40,17 @@ La organización del enlace eslabón resultaría bajo el siguiente espectro:
 
 ```xml
 <link name="caster_wheel_link">
-    <!-- El espacio que recubre previamente a </visual> queda indemne -->
     
-    <!-- Integración Lógica Gravitacional Esférica al frente asfáltico -->
+    <visual>
+        <geometry>
+            <sphere radius="${wheel_radius / 2.0}" />
+        </geometry>
+        <origin xyz="0 0 0" rpy="0 0 0" />
+        <material name="grey" />
+    </visual>
+    <!-- Integración Lógica Gravitacional Esférica -->
     <xacro:sphere_inertia m="0.5" r="${wheel_radius / 2.0}"
-                          o_xyz="0 0 0" o_rpy="0 0 0" />
+                            o_xyz="0 0 0" o_rpy="0 0 0" />
 </link>
 ```
 

@@ -8,6 +8,8 @@ El motor de físicas de Gazebo necesita las geometrías de colisión para calcul
 A continuación, agregamos la etiqueta `<collision>` a los diversos enlaces (`links`) de nuestro robot. Por convención, esta etiqueta se añade después de la sección `<visual>`.
 
 ### Chasis (`base_link`)
+![](img_in/collision_base.png)
+
 Se utiliza una geometría de caja (`box`) con el origen desplazado para que coincida correctamente con el modelo visual del chasis.
 
 ```xml
@@ -20,6 +22,7 @@ Se utiliza una geometría de caja (`box`) con el origen desplazado para que coin
 ```
 
 ### Ruedas Motrices (`wheel_link`)
+![](img_in/wheel_link.png)
 Se define una geometría de colisión esférica con su respectivo radio y rotación. Es común usar cilindros o esferas para representar ruedas.
 
 ```xml
@@ -32,6 +35,7 @@ Se define una geometría de colisión esférica con su respectivo radio y rotaci
 ```
 
 ### Rueda Loca (`caster_wheel_link`)
+![](img_in/caster_wheel.png)
 Al igual que las ruedas motrices, se utiliza una geometría esférica, ajustada al tamaño menor correspondiente.
 
 ```xml
