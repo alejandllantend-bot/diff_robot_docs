@@ -8,10 +8,13 @@ Ubicado dentro del directorio src del workspace, se crea un nuevo paquete con el
 ros2 pkg create my_robot_description_car
 ```
 Este comando genera automáticamente la estructura base del paquete, incluyendo archivos como:
-
+```bash
 package.xml
 CMakeLists.txt
 carpetas include y src
+```
+
+![](img_cod/ok_pkg.png)
 
 Una vez creado el paquete, se ingresa a su directorio:
 ```bash
@@ -49,7 +52,6 @@ ls
 code .
 ```
 
-![](img_cod/ok_pk.png)
 ![](img_cod/code.png)
 
 Al abrir el proyecto en Visual Studio Code, se puede observar la estructura del paquete my_robot_description_car, dentro del cual se encuentra la carpeta urdf que contiene el archivo my_car.urdf. Asimismo, se identifican los archivos principales del paquete, como CMakeLists.txt y package.xml.

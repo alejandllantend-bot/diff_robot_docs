@@ -14,7 +14,7 @@ Dirígete a la sección global de tu archivo `my_car.xacro`, y en tu lista orden
 
 A continuación, inyectaremos esta variable en el parámetro nativo `length` del primitivo `<cylinder>` tanto en nuestra red izquierda como en la derecha. Las mallas de contacto de nuestras ruedas pasarán ahora a quedar 100% definidas en base a propiedades (`wheel_radius` y `wheel_length`):
 
-```bahs
+```bash
 <!-- Sección de Rueda Izquierda -->
 <link name="left_wheel_link">
     <visual>
@@ -38,16 +38,18 @@ A continuación, inyectaremos esta variable en el parámetro nativo `length` del
 
 Anteriormente en el momento estipulado dentro de [la lección del Base Width](base_width.qmd) habíamos configurado parcialmente las proporciones de los ejes de nuestro robot para que reaccionaran al ancho de la carrocería, sumándole el número base estático de `0.05` como margen teórico equivalente de las ruedas. En aquel entonces la ecuación nos había quedado como: `${-(base_width + 0.05) / 2.0}`.
 
-Ahora nuestro diseño URDF es total y bidimensionalmente dinámico. Debemos modificar los anclajes del chasis trasero (`base_left_wheel_joint` y `base_right_wheel_joint`) **soltando por fin y para siempre ese número estipulado de 0.05**, insertando directo allí nuestra variable oficial de calibración cruzada: `${wheel_length}`.
+Ahora nuestro diseño URDF es total y bidimensionalmente dinámico. Debemos modificar los anclajes del chasis trasero (`base_left_wheel_joint` y `base_right_wheel_joint`) soltando por fin y para siempre ese número estipulado de 0.05, insertando directo allí nuestra variable oficial de calibración cruzada: `${wheel_length}`.
 
 El componente ahora lucirá verdaderamente paramétrico, capaz de operar y predecir de forma autónoma, tal y como refleja a continuación:
 
-```bahs
+```xml
 <joint name="base_right_wheel_joint" type="continuous">
-    <!-- El eje Y suma de manera completamente integral y variable el factor tanto del ancho del chasis como del ancho de la propia rueda -->
+
+<!-- El eje Y suma de manera completamente integral y variable el factor tanto del ancho del chasis como del ancho de la propia rueda -->
     <origin xyz="${-base_length / 4.0} ${-(base_width + wheel_length) / 2.0} 0" rpy="0 0 0" />
     <axis xyz="0 1 0" />
 </joint>
+
 <!-- Aplica esta fórmula dentro the base_left_wheel_joint, prestando atención a mantener la naturaleza de los signos posicionales que rigen un plano cartesiano opuesto -->
 
 <origin xyz="${-base_length / 4.0} ${(base_width + wheel_length) / 2.0} 0" rpy="0 0 0" />
@@ -61,7 +63,7 @@ El componente ahora lucirá verdaderamente paramétrico, capaz de operar y prede
 
 Para probar la consistencia de tu largo recorrido matemático sin importar los números, desafiamos que realices esta comprobación en tu entorno de RViz2: Dirígete a la parte superior directiva de tu archivo `my_car.xacro` y **distorsiona severamente tus valores**. Puedes introducir la configuración de prueba extrema dispuesta a continuación:
 
-```bahs
+```bash
     <xacro:property name="base_length" value="0.8" />
     <xacro:property name="base_width" value="0.4" />
     <xacro:property name="base_height" value="0.2" />

@@ -33,22 +33,23 @@ ros2 launch urdf_tutorial display.launch.py model:=/home/ersonal/my_car.urdf
 ![](/Gazebo/imagenes_G/base_link.png)
 
 En ROS, casi siempre se llama `base_link` al cuerpo principal del robot. Es el punto de referencia para todas las demás piezas.
-```bahs
+```bash
 visual 
 ```
 Indica cómo se va a renderizar el cuerpo en la pantalla.
-```bahs
+```bash
 geometry
 ```
 Define la forma geométrica del cuerpo.
-```bahs
+```bash
 box size="0.6 0.4 0.2"
 ```
 Define una caja (prisma rectangular) con las siguientes dimensiones en metros:
 Largo (X): 0.6 m (60 cm)
 Ancho (Y): 0.4 m (40 cm)
 Alto (Z): 0.2 m (20 cm)
-```bahs
+
+```bash
 origin xyz="0 0 0" rpy="0 0 0"
 ```
 Coloca el centro de esta caja exactamente en el origen de coordenadas (0,0,0) sin ninguna rotación.
@@ -117,34 +118,34 @@ Se procede a la creación de las ruedas del robot móvil. En esta etapa se defin
 ```
 ![](/Gazebo/imagenes_G/ruedas.png)
 
-```bahs
+```bash
 geometry
 ```
 Aquí se define la forma. El tag "cylinder" indica que es un cilindro con un radio de 0.1m (10 cm) y un largo (grosor) de 0.05m (5 cm).
-```bahs
+```bash
 origin xyz="0 0 0" rpy="1.57 0 0"
 ```
 Rota el cilindro 90 grados (1.57 radianes) sobre el eje X, se usa para "acostar" el cilindro y que ruede como una llanta.
-```bahs
+```bash
 axis xyz="0 1 0"
 ```
 Define el eje de rotación del motor. En este caso, es el eje Y (el eje "ancho" del cilindro), lo que permite que gire como una rueda.
-```bahs
+```bash
 joint name="base_right_wheel_joint" type="continuous"
 ```
 Define la unión entre el chasis y la rueda. type ="continuous" Indica que es una articulación que puede girar infinitamente sin límites
-```bahs
+```bash
 parent y child
 ```
 Establece la jerarquía. La base_link es el cuerpo principal (padre) y la right_wheel_link es la pieza que cuelga de ella (hijo). Si la base se mueve, la rueda se mueve con ella.
-```bahs
+```bash
 origin xyz="-0.15 -0.225 0"
 ```
 Define la posición donde se ancla la rueda respecto al centro del robot.
 x="-0.15": Un poco hacia atrás.
 y="-0.225": Desplazada a la derecha, "0.225" Desplazada a la izquierda.
 
-```bahs
+```bash
 axis xyz="0 1 0"
 ```
 Define el eje sobre el cual gira la rueda. El 1 en la segunda posición indica que la rueda girará alrededor del eje Y.
@@ -173,24 +174,24 @@ Este bloque de código define la rueda loca (o caster wheel). En un robot de dos
 
 ![](/Gazebo/imagenes_G/rueda_loca.png)
 
-```bahs
+```bash
 sphere radius="0.05"
 ``` 
 A diferencia de las ruedas principales que eran cilindros, aquí usas una esfera con un radio de 0.05 m (5 cm). Se usa una esfera en simulación para simplificar el contacto con el suelo, ya que puede "rodar" en cualquier dirección.
 
-```bahs
+```bash
 origin xyz="0 0 0" rpy="0 0 0"
 ```
 El centro de la esfera coincide con el origen del link.
-```bahs
+```bash
 type="fixed"
 ```
 A diferencia de las ruedas motorizadas (que eran continuous), esta es fija.
-```bahs
+```bash
 parent link="base_link"
 ```
 Se cuelga directamente del chasis principal.
-```bahs
+```bash
 origin xyz="0.2 0 -0.05" rpy="0 0 0" 
 ```
 Define la posición exacta de la rueda respecto al centro del robot:
@@ -213,7 +214,7 @@ Define la posición exacta de la rueda respecto al centro del robot:
     <link name="base_footprint" />
     
 ```
-```bahs
+```bash
 El Link "Fantasma"
 ```
 Fíjate que este bloque está vacío (no tiene visual, ni geometry, ni collision).
@@ -222,19 +223,19 @@ Fíjate que este bloque está vacío (no tiene visual, ni geometry, ni collision
 Su función es representar la proyección del robot en el suelo. Es el punto Z=0.
 Los algoritmos de navegación y los mapas en ROS necesitan un punto de referencia que siempre esté tocando el piso, independientemente de si el robot salta, se inclina o tiene el chasis muy alto.
 Este joint conecta el punto del suelo (base_footprint) con el cuerpo del robot (base_link).
-```bahs
+```bash
 type="fixed"
 ```
 Significa que la distancia entre el suelo y el chasis no cambia. Es una conexión rígida.
-```bahs
+```bash
 parent link="base_footprint"
 ```
 El origen del robot (el suelo) es el padre.
-```bahs
+```bash
 child link="base_link"
 ```
 El chasis es el hijo.
-```bahs
+```bash
 origin xyz="0 0 0.1" rpy="0 0 0"
 ```
 Le indica al sistema que el base_link (el centro de la caja de 20 cm de alto) está elevado 0.1 metros (10 cm) respecto al suelo. Como la caja mide 20 cm de alto, al subir su centro 10 cm, la base de la caja queda exactamente rozando el suelo.

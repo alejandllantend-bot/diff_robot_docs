@@ -18,7 +18,7 @@ Para solucionar de raíz cualquier colisión de texturas, debemos alzar nuestra 
 
 Modifica tanto la etiqueta de volumen (`<geometry>`) aplicando la última variable, como de origen (`<origin>`) en la estructura del `base_link`, para que dejen de usar números fijos y queden completamente en base a nuestra triple parametrización, como se muestra a continuación:
 
-```bahs
+```bash
 <link name="base_link">
     <visual>
         <geometry>
@@ -32,7 +32,7 @@ Modifica tanto la etiqueta de volumen (`<geometry>`) aplicando la última variab
 
 ---
 
-### ¡Pon a prueba el entorno paramétrico!
+### Pon a prueba el entorno paramétrico.
 
 Con `base_length`, `base_width` y `base_height` completadas y correlacionadas analíticamente con las ecuaciones de diseño (el posicionamiento modificado en origen), tienes ahora un chasis que procesa solo y responde inteligentemente.
 

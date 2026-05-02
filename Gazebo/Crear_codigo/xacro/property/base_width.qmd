@@ -12,7 +12,7 @@ Originalmente, nuestra base tiene estipulado un ancho fijo de `0.4`. Para hacer 
 
 Con la variable ya disponible en el sistema, buscamos la etiqueta `<geometry>` dentro del bloque `base_link` y sustituimos el valor numérico correspondiente al ancho por el acceso a nuestra nueva variable `${base_width}`. De este modo, la declaración de la geometría de caja quedará de la siguiente manera:
 
-```bahs
+```bash
 <link name="base_link">
     <visual>
         <geometry>

@@ -5,8 +5,8 @@ Bienvenido a la sección de Gazebo. Selecciona uno de los siguientes botones par
 ::: {.panel-tabset .nav-pills}
 
 ## Teoría
-- [Conceptos Básicos](Teoria/conceptos.qmd)
 - [Instalar Gazebo](Teoria/instalar_gz.qmd)
+- [Conceptos Básicos](Teoria/conceptos.qmd)
 - [Tablero Principal de Gazebo](Teoria/tablero_principal.qmd)
 
 ## Crear Código

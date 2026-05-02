@@ -16,7 +16,7 @@ Nos dirigimos a la directiva global en la cabecera de `my_car.xacro` y agregamos
 
 Como indica nuestro diseño, el vehículo consta de **dos ruedas motrices en el tren trasero** (rueda izquierda y derecha). Aplicaremos nuestra nueva variable sustituyendo el valor fijo `radius` dentro de su etiqueta geométrica cilíndrica `<cylinder>`. Actualiza ambas secciones:
 
-```bahs
+```bash
 <!-- Rueda Motriz Izquierda Trasera -->
 <link name="left_wheel_link">
     <visual>
@@ -36,15 +36,15 @@ Como indica nuestro diseño, el vehículo consta de **dos ruedas motrices en el 
 </link>
 ```
 
-### 3. Elevación del Pivote Central (base_joint)
+### 3. Elevación del soporte principal (base_joint)
 
-Como adelantábamos, al amarrar la geometría a las variables vamos por muy buen camino. Sin embargo, tenemos que compensar mecánicamente esta distancia vertical para que el carro no penetre la superficie simulada.
+Al amarrar la geometría a las variables vamos por muy buen camino. Sin embargo, tenemos que compensar mecánicamente esta distancia vertical para que el carro no penetre la superficie simulada.
 
 Para ello, modificaremos nuestra conexión maestra de apoyo (el origen estructural que levanta el chasis `base_link` desde el nivel de referencia plano `base_footprint`). En el pivote global `base_joint`, sustituiremos de su eje escalar `Z` las constantes estáticas, por la altura variable de `${wheel_radius}`.
 
 De esta manera el bloque central asimilará que tiene que flotar verticalmente en directa proporción al espacio del radio geométrico que imponen sus propios neumáticos:
 
-```bahs
+```bash
 <joint name="base_joint" type="fixed">
     <parent link="base_footprint" />
     <child link="base_link" />
@@ -55,11 +55,11 @@ De esta manera el bloque central asimilará que tiene que flotar verticalmente e
 
 ### 4. Ajustes matemáticos en la Rueda Loca Delantera (Caster Wheel)
 
-Nuestro esquema estructural incluye una rueda libre direccional o de apoyo, dispuesta en la **sección delantera** (conocida como "rueda loca"). Por una cuestión de distribución aerodinámica y de pesos esta debe ser de menor formato; estableceremos lógicamente que su geometría es equivalente a *la mitad del tamaño de las traccionadoras traseras*.
+Nuestro esquema estructural incluye una rueda libre direccional o de apoyo, (conocida como "rueda loca"). Por una cuestión de distribución aerodinámica y de pesos esta debe ser de menor formato; estableceremos lógicamente que su geometría es equivalente a *la mitad del tamaño de las traccionadoras traseras*.
 
-Abre el componente `<caster_wheel_link>` (la malla esférica frontal) y sustituye el radio genérico utilizando una división matemática de la propiedad global:
+Abre el componente `<caster_wheel_link>` y sustituye el radio genérico utilizando una división matemática de la propiedad global:
 
-```bahs
+```bash
 <link name="caster_wheel_link">
     <visual>
         <geometry>
@@ -71,9 +71,9 @@ Abre el componente `<caster_wheel_link>` (la malla esférica frontal) y sustituy
 
 Por último, al ser cincuenta por ciento más baja que el tren rodante posterior, si dejamos su unión en cero absoluto no alcanzará la línea de tierra, dejando la nariz de nuestro vehículo rebotando en el aire. Para que se consolide como un auténtico y seguro punto triple de apoyo frontal, el eje de nuestro brazo estructural en la parte de adelante tiene que inclinarse o desplazarse apuntando al suelo en esta diferencia precisa.
 
-Para lograr esta caída que compensa la pieza, ve al enganche frontal (`base_caster_wheel_joint`) y reemplaza su descenso fijo anterior de `-0.05` en la línea del origen Z por nuestra derivación de compensación en negativo `${-wheel_radius / 2.0}`:
+Para lograr esta caída que compensa la pieza, ve al enganche frontal (`base_caster_wheel_joint`) y reemplaza su descenso fijo anterior de `-0.05` en la línea del origen Z por `${-wheel_radius / 2.0}`:
 
-```bahs
+```bash
 <joint name="base_caster_wheel_joint" type="fixed">
     ...
     <!-- Caída paramétrica frontal compensatoria del desnivel -->

@@ -18,7 +18,7 @@ Nuestra primera variable será la longitud principal de la estructura (`base_len
 
 Actualmente, la geometría de la caja en el bloque `base_link` posee valores estáticos (números directos) para su largo, ancho y alto. Al reemplazar el valor fijo del largo (`0.6`) por nuestra nueva variable dinámica, el código quedará de la siguiente manera:
 
-```bahs
+```bash
 <link name="base_link">
     <visual>
         <geometry>
@@ -40,7 +40,7 @@ En lugar de definir la posición `x` de las ruedas (el tag `<origin>`) usando n�
 
 Al hacer esto, el vehículo mantendrá siempre su simetría sin importar qué valor asignemos a `base_length` después.
 
-### 3. Aprovechando constantes matemáticas
+### 3. Constantes matemáticas.
 
 ![](imag_x/pi.png)
 
