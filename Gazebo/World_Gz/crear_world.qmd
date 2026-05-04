@@ -36,6 +36,11 @@ Finalmente, en el archivo `my_car_gazebo.launch.xml` vamos a activar la siguient
 Guarda los cambios, compila el espacio de trabajo y ejecuta el archivo *launch*:
 
 ```bash
+colcon build
+source install/setup.bash
+```
+
+```bash
 ros2 launch my_robot_bringup my_car_gazebo.launch.xml
 ```
 

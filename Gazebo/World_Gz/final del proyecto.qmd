@@ -24,3 +24,9 @@ A continuación, tienes un esquema visual (mapa de teclado) que muestra qué mov
 ```
 
 ¡Sigue explorando y creando nuevos proyectos increíbles en el mundo de la robótica!
+
+**Nota:** En caso de que algo falle, la simulación no funcione como esperabas, o simplemente quieras revisar y comparar tu código, puedes ingresar a mi repositorio de GitHub y clonar el proyecto completo.
+
+Repositorio del proyecto:
+
+https://github.com/alejandllantend-bot/my_new_robot_diff.git

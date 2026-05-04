@@ -108,6 +108,10 @@ Finalmente, es crucial que el mundo de Gazebo cargue el plugin adecuado para pro
 ---
 
 Guarda todos los cambios, compila el espacio de trabajo y ejecuta el archivo *launch* para levantar Gazebo con tu nuevo robot instrumentado:
+```bash
+colcon build
+source install/setup.bash
+```
 
 ```bash
 ros2 launch my_robot_bringup my_car_gazebo.launch.xml
@@ -116,3 +120,9 @@ ros2 launch my_robot_bringup my_car_gazebo.launch.xml
 Para visualizar la imagen de la cámara en Rviz2, haz clic en el botón **Add**, busca la opción **Camera** y selecciónala con doble clic para agregarla. Luego, en el panel izquierdo, despliega las propiedades de la cámara recién añadida, busca la configuración **Topic** y selecciona el tópico correspondiente a la imagen. Una vez configurado, la cámara se activará y comenzará a transmitir en tiempo real el mundo de gazebo.
 
 ![](img_w/camera.png)
+
+En una nueva terminal inicia el nodo de teleoperación y mueve el robot con las flechas del teclado, podrás observar como la cámara capta el entorno.
+
+```bash
+ros2 run teleop_twist_keyboard teleop_twist_keyboard
+```
