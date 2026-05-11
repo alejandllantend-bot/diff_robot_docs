@@ -40,7 +40,7 @@ A continuación, añade el siguiente código dentro del archivo `mobile_base_gaz
 
 Este archivo contiene la configuración específica para Gazebo mediante el uso de *plugins* y configuraciones de enlaces. Su importancia radica en que transforma un modelo 3D estático en un robot móvil y funcional dentro del entorno simulado. Específicamente, este código realiza tres tareas fundamentales:
 
-1. **Fricción de la Rueda Loca (Caster Wheel):** Reduce significativamente la fricción (`mu1` y `mu2`) del `caster_wheel_link`. Esto es importante porque permite que la rueda loca se deslice suavemente sobre el suelo sin oponer resistencia, emulando su comportamiento pasivo real cuando el robot avanza o gira.
+1. **Fricción de la Rueda Loca (Caster Wheel):** Reduce significativamente la fricción (`mu1` y `mu2`) del `caster_wheel_link`. Esto es importante porque permite que la rueda loca se deslice suavemente sobre el suelo sin oponer resistencia.
 
 2. **Plugin de Tracción Diferencial (`DiffDrive`):** Añade el controlador cinemático diferencial de Gazebo. Le indica al simulador cuáles son las articulaciones de las ruedas motrices, la separación entre ellas y su radio. A través de este plugin el robot podrá recibir comandos de velocidad y moverse por el espacio. Además publica la transformación de la odometría (`odom`) hacia la base.
 

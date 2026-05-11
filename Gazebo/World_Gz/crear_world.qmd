@@ -7,7 +7,7 @@ Allí buscamos la herramienta **Resource Spawner**, que nos permitirá encontrar
 > [!NOTE]
 > La búsqueda de los modelos que deseas agregar se debe realizar en inglés.
 
-Una vez encuentres el modelo, puedes descargarlo y arrastrarlo hacia el panel donde se encuentra el robot. Utiliza las herramientas que aparecen en la parte superior del panel para mover o rotar los objetos según necesites.
+Una vez encuentres los objetos que deseas utilizar (para este caso, chair, wall, table), puedes descargarlo y arrastrarlo hacia el panel donde se encuentra el robot. Utiliza las herramientas que aparecen en la parte superior del panel para mover o rotar los objetos según necesites.
 
 ![](img_w/remove.png)
 

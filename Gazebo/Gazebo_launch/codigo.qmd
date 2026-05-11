@@ -35,8 +35,6 @@ Abre el archivo `package.xml` de tu nuevo paquete y añade las siguientes depend
   <exec_depend>ros_gz_bridge</exec_depend>
   <exec_depend>rviz2</exec_depend> 
 ```
-
-![](imag_bringup/package.png)
 ![](imag_bringup/depend.png)
 
 ## 4. Crear el archivo Launch
@@ -76,6 +74,36 @@ Dentro de la carpeta de tu paquete `my_robot_bringup`, crea un nuevo directorio 
           args="-d $(var rviz_config_path)" />
 </launch>
 ```
+
+```xml
+<node pkg="robot_state_publisher" exec="robot_state_publisher">
+        <param name="robot_description"
+               value="$(command 'xacro $(var urdf_path)')" />
+    </node>
+```
+Su trabajo es "gritar" a todo el sistema ROS cómo están conectadas las piezas de tu robot (basado en el archivo XACRO).
+
+```xml
+<node pkg="joint_state_publisher" exec="joint_state_publisher" name="joint_state_publisher">
+          <param name="robot_description_car" value="true"/>
+    </node>
+```
+Este nodo se encarga de tomar los datos de las articulaciones del robot como los ángulos de las ruedas (joints) y publicarlos en un topic para que el simulador sepa cómo moverlas.
+
+```xml
+<include file="$(find-pkg-share ros_gz_sim)/launch/gz_sim.launch.py">
+        <!--<arg name="gz_args" value="$(find-pkg-share my_robot_bringup)/world/test_my_world_gz.sdf" /> -->
+          <arg name="gz_args" value="empty.sdf -r" />
+</include>
+```
+Su función es abrir y ejecutar el entorno de simulación listo para trabajar, sin necesidad de configuraciones manuales adicionales.
+
+```xml
+<node pkg="ros_gz_bridge" exec="parameter_bridge">
+        <param name="config_file" value="$(var gazebo_config_path)" />
+    </node>
+```
+Su función es permitir la comunicación entre ROS 2 y Gazebo.
 
 ## 5. Compilar el espacio de trabajo
 

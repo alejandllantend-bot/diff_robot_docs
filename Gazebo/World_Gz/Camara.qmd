@@ -77,6 +77,60 @@ Dentro de este archivo, pega el siguiente código:
 </robot>
 ```
 
+**Frame óptico**
+
+```xml
+<link name="camera_link_optical" />
+<joint name="camera_optical_joint" type="fixed">
+    <origin rpy="${-pi/2} 0 ${-pi/2}"/>
+```
+
+Crea un frame especial para la cámara, ajusta la orientación a estándares de ROS 2, esto asegura que la imagen tenga la orientación correcta (ejes X, Y, Z).
+
+**Sensor de cámara en Gazebo**
+```xml
+<gazebo reference="camera_link">
+    <sensor name="camera" type="camera">
+```
+
+Aquí defines cómo funciona la cámara en simulación:
+
+- Campo de visión
+```xml
+<horizontal_fov>1.3962634</horizontal_fov>
+```
+- Resolución
+```xml
+<width>640</width>
+<height>480</height>
+```
+- Rango de visión
+```xml
+<near>0.1</near>
+<far>15</far>
+```
+- Ruido
+```xml
+<noise>
+Simula imperfecciones reales
+```
+- Frame y tópicos
+```xml
+<optical_frame_id>camera_link_optical</optical_frame_id>
+<camera_info_topic>camera/camera_info</camera_info_topic>
+<topic>camera/image_raw</topic>
+
+Define cómo se publica la imagen en ROS 2.
+
+**Configuración de ejecución**
+```xml
+<always_on>1</always_on>
+<update_rate>20</update_rate>
+<visualize>true</visualize>
+```
+
+Siempre activa, 20 Hz (20 imágenes por segundo), permite visualizarla en Gazebo
+
 A continuación, necesitamos asegurar que los mensajes de imagen y de información de la cámara fluyan correctamente de Gazebo hacia ROS 2 mediante `ros_gz_bridge`. Abre tu archivo `gazebo_bridge.yaml` y agrega las siguientes configuraciones:
 
 ```yaml
