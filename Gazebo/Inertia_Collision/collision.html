@@ -189,7 +189,7 @@ body::before {
 <p>A continuación, agregamos la etiqueta <code>&lt;collision&gt;</code> a los diversos enlaces (<code>links</code>) de nuestro robot. Por convención, esta etiqueta se añade después de la sección <code>&lt;visual&gt;</code>.</p>
 <section id="chasis-base_link" class="level3">
 <h3 class="anchored" data-anchor-id="chasis-base_link">Chasis (<code>base_link</code>)</h3>
-<p><img src="Cod_Inertia/img_in/collision_base.png" class="img-fluid"></p>
+<p><img src="../..\Cod_Inertia/img_in/collision_base.png" class="img-fluid"></p>
 <p>Se utiliza una geometría de caja (<code>box</code>) con el origen desplazado para que coincida correctamente con el modelo visual del chasis.</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode xml code-with-copy"><code class="sourceCode xml"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>        &lt;<span class="kw">collision</span>&gt;</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>            &lt;<span class="kw">geometry</span>&gt;</span>
@@ -296,7 +296,7 @@ body::before {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/alejandllantend-bot\.github\.io\/diff_robot_docs\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

@@ -223,6 +223,7 @@ body::before {
 <p>Guarda tu nuevo esquema base de interconexión matemática y reescribe las fuentes empaquetadas:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="ex">colcon</span> build <span class="at">--symlink-install</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> install/setup.bash</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ros2</span> launch my_robot_description_car display.launch.xml</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Lanza y revisa el visualizador de estados en tu cliente RViz. Para auditar y comprobar que tu simulación acató e ilustró las formulas del volumen inercial, deberás:</p>
 <ol type="1">
 <li>Dirigirte hacia tu jerarquía lateral de despliegues (RobotModel).</li>
@@ -309,7 +310,7 @@ body::before {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/alejandllantend-bot\.github\.io\/diff_robot_docs\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }

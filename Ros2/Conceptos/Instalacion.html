@@ -249,8 +249,13 @@ body::before {
 <p>Una vez verificada la presencia del archivo, regrese a su terminal principal y ejecute el siguiente comando:</p>
 <div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> /opt/ros/jazzy/setup.bash</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Con este comando se cargan las variables de entorno necesarias, quedando ROS 2 configurado y listo para su uso. No obstante, esta configuración solo aplica para la sesión actual de la terminal; si se cierra la ventana, será necesario volver a ejecutar el comando.</p>
-<p>Para evitar repetir este procedimiento cada vez que se abra una nueva terminal, se recomienda hacer la configuración permanente agregando la línea source /opt/ros/jazzy/setup.bash al archivo .bashrc, el cual se ejecuta automáticamente al iniciar Ubuntu. Para ello, abra una nueva terminal y ejecute el comando.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gedit</span> .bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Para evitar repetir este procedimiento cada vez que se abra una nueva terminal, se recomienda hacer la configuración permanente agregando la línea source /opt/ros/jazzy/setup.bash al archivo .bashrc.</p>
+<p>Primero, actualizamos los repositorios:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Luego, instalamos gedit:</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt install gedit</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Abre el archivo .bashrc y agrega la linea al final.</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">gedit</span> .bashrc</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p><img src="../..\Ros2/imagenes/setup.bash.png" class="img-fluid"></p>
 <p>se desplegará una ventana con el archivo de configuración. Al final del archivo, agregue la línea mencionada, guarde los cambios y cierre la ventana. De esta manera, cada vez que se abra una nueva terminal, el entorno de ROS 2 se cargará automáticamente sin necesidad de configurarlo manualmente.</p>
 <section id="finalización-de-la-instalación-y-configuración-del-entorno." class="level2">
@@ -339,7 +344,7 @@ body::before {
     }
       var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
       var mailtoRegex = new RegExp(/^mailto:/);
-        var filterRegex = new RegExp('/' + window.location.host + '/');
+        var filterRegex = new RegExp("https:\/\/alejandllantend-bot\.github\.io\/diff_robot_docs\/");
       var isInternal = (href) => {
           return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
       }
