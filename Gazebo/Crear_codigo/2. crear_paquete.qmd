@@ -35,7 +35,7 @@ Esta carpeta permitirá organizar adecuadamente los modelos del robot, facilitan
 
 Se regresa al directorio principal del workspace:
 ```bash
-cd ..
+cd 
 ```
 Luego, se utiliza el siguiente comando para mover el archivo my_car.urdf a la carpeta urdf creada previamente:
 

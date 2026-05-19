@@ -72,10 +72,15 @@ Este comando permite que la terminal actual reconozca el workspace recién cread
 Nota: Si desea que esta configuración se cargue automáticamente cada vez que abra una nueva terminal, recuerde que puede agregar el siguiente comando en el archivo .bashrc, tal como se explicó en la sección anterior:
 :::
 
-
 ```bash
 source ~/abc_ws/install/setup.bash
 ```
+
+Agregue la linea al final de .bashrc:
+```bash
+gedit .bashrc
+```
+
 ![](/Ros2/imagenes/bash.png)
 
 Con esto, el workspace quedará disponible automáticamente en cada nueva sesión de terminal.

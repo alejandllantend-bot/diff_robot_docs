@@ -60,6 +60,9 @@ colcon build --symlink-install
 source install/setup.bash
 ```
 
+```bash
+ros2 launch my_robot_description_car display.launch.xml
+```
 Lanza y revisa el visualizador de estados en tu cliente RViz. Para auditar y comprobar que tu simulación acató e ilustró las formulas del volumen inercial, deberás:
 
 1. Dirigirte hacia tu jerarquía lateral de despliegues (RobotModel).

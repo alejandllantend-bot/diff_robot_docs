@@ -78,4 +78,5 @@ y para visualizar el robot se ejecuta el siguiente comando.
 ```bash
 ros2 launch my_robot_description_car display.launch.xml
 ```
-este comando despliega el archivo de lanzamiento y abre RViz con el robot cargado.
+Este comando despliega el archivo de lanzamiento y abre RViz, para ver al robot cambias en Fixed Frame a base_footprint.
+Despues en Add seleccionas Robot Model, despliegas el apartado Model y en description topic le das click en el desplegable que esta al lado y seleccionas el topic robot_description.

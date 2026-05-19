@@ -8,7 +8,7 @@ El motor de físicas de Gazebo necesita las geometrías de colisión para calcul
 A continuación, agregamos la etiqueta `<collision>` a los diversos enlaces (`links`) de nuestro robot. Por convención, esta etiqueta se añade después de la sección `<visual>`.
 
 ### Chasis (`base_link`)
-![](Cod_Inertia/img_in/collision_base.png)
+![](/Cod_Inertia/img_in/collision_base.png)
 
 Se utiliza una geometría de caja (`box`) con el origen desplazado para que coincida correctamente con el modelo visual del chasis.
 

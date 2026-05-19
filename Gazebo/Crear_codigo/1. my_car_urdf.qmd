@@ -30,6 +30,13 @@ para verificar que el codigo funciona ejecuta en tu terminal el siguiente comand
 ```bash
 ros2 launch urdf_tutorial display.launch.py model:=/home/ersonal/my_car.urdf
 ```
+
+**Nota:** para que el codigo funcione debes reemplazar la ruta /home/ersonal/my_car.urdf por la ruta donde se encuentra tu archivo my_car.urdf
+```bash
+:=/home/______/my_car.urdf
+```
+
+
 ![](/Gazebo/imagenes_G/base_link.png)
 
 En ROS, casi siempre se llama `base_link` al cuerpo principal del robot. Es el punto de referencia para todas las demás piezas.
@@ -55,7 +62,7 @@ origin xyz="0 0 0" rpy="0 0 0"
 Coloca el centro de esta caja exactamente en el origen de coordenadas (0,0,0) sin ninguna rotación.
 
 
-Para cambiar el color del robot, se debe agregar el siguiente código al archivo my_car.urdf:
+Para cambiar el color de la base, se debe agregar el siguiente código al archivo my_car.urdf:
 
 ```xml
 <material name="blue">
@@ -74,6 +81,7 @@ Quedando de la siguiente manera:
 ## Ruedas
 
 Se procede a la creación de las ruedas del robot móvil. En esta etapa se definirá su estructura dentro del modelo URDF, especificando tanto sus propiedades geométricas como su relación con el chasis del robot.
+Agregamos las ruedas al final de nuestro archivo my_car.urdf, antes de la etiqueta de cierre </robot>
 
 ## Rueda derecha.
 ```xml
@@ -116,8 +124,21 @@ Se procede a la creación de las ruedas del robot móvil. En esta etapa se defin
     </joint>
 
 ```
+
+Para agregar color a las ruedas se agregan las siguientes lineas de codigo:
+```xml
+<material name="grey">
+    <color rgba="0.5 0.5 0.5 1" />
+</material>
+```
+y dentro del tag `<visual>` debajo de `<origin>` se agrega la siguiente línea de código:
+
+```xml
+<material name="grey" />
+```
 ![](/Gazebo/imagenes_G/ruedas.png)
 
+**Interpretación del código:**
 ```bash
 geometry
 ```
@@ -205,11 +226,14 @@ Define la posición exacta de la rueda respecto al centro del robot:
 ## Base footprint.
 
 ```xml
+<!-- Agregar antes del <joint name="base_right_wheel_joint"  -->
+
     <joint name="base_joint" type="fixed">
         <parent link="base_footprint" />
         <child link="base_link" />
         <origin xyz="0 0 0.1" rpy="0 0 0"/>
     </joint>
+<!-- Agregar antes del base_link -->
 
     <link name="base_footprint" />
     

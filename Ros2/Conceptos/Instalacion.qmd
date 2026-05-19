@@ -76,11 +76,25 @@ source /opt/ros/jazzy/setup.bash
 
 Con este comando se cargan las variables de entorno necesarias, quedando ROS 2 configurado y listo para su uso. No obstante, esta configuración solo aplica para la sesión actual de la terminal; si se cierra la ventana, será necesario volver a ejecutar el comando.
 
-Para evitar repetir este procedimiento cada vez que se abra una nueva terminal, se recomienda hacer la configuración permanente agregando la línea source /opt/ros/jazzy/setup.bash al archivo .bashrc, el cual se ejecuta automáticamente al iniciar Ubuntu. Para ello, abra una nueva terminal y ejecute el comando.
+Para evitar repetir este procedimiento cada vez que se abra una nueva terminal, se recomienda hacer la configuración permanente agregando la línea source /opt/ros/jazzy/setup.bash al archivo .bashrc.
+
+Primero, actualizamos los repositorios:
+
+```bash
+sudo apt update
+```
+
+Luego, instalamos gedit:
+
+```bash
+sudo apt install gedit
+```
+Abre el archivo .bashrc y agrega la linea al final.
 
 ```bash
 gedit .bashrc
 ```
+
 
 ![](/Ros2/imagenes/setup.bash.png)
 
